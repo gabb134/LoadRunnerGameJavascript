@@ -12,11 +12,14 @@
 		let objC2D = null;
 		let objCycleAnimation = null;
 		let objImageFond = null;
+		let imagePlateforme = null;
+		let objPlateformes = null;
 
 		function initAnimation() {
 			objCanvas = document.getElementById('monCanvas');
 			objC2D = objCanvas.getContext('2d');
 			initImageFond();
+			initPlateformes();
 			dessiner(); // Dessiner une première fois
 			animer();
 		}
@@ -26,8 +29,32 @@
 			objImageFond.src = 'backroundLoadRunner.png';
 		}
 		function initPlateformes(){
-			
-		}
+			objPlateformes = new Object();
+			imagePlateforme = new Image();
+			imagePlateforme.src = 'sol2Decoupe.png';
+		objPlateformes.tabPlateformes = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+										,[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+										 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+										 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+										 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+										 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+										 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+										 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+										 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+										 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+										 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+										 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+										 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+										 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+										 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+										 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+										 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+										 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+										 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+										 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]];
+
+
+													}
 
 
 		// Un cycle d'animation	
@@ -60,12 +87,18 @@
 		// Pour dessiner
 		function dessiner() {
 			dessinerFond();
+			dessinerPlateformes();
 		}
 		// Pour dessiner l'image de fond
 		function dessinerFond() {
 			objC2D.save();  // Sauvegarde le contexte
-			objC2D.drawImage(objImageFond, 0, 0, objCanvas.width, objCanvas.height);
+			objC2D.drawImage(objImageFond, 0, 0, objCanvas.width*3/4, objCanvas.height*3/4);
 			objC2D.restore(); // Restaure le contexte
+		}
+		function dessinerPlateformes(){
+
+			objC2D.drawImage(imagePlateforme, 0, 0);
+			objC2D.drawImage(imagePlateforme, 30, 30);
 		}
 
 	</script>
