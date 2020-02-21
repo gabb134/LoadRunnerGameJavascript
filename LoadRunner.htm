@@ -38,6 +38,10 @@
 			objImageFond = new Image();
 			objImageFond.src = 'backroundLoadRunner.png';
 		}
+
+		function initPersonnage(){
+			imagePersonnage.src = 'GokuDeplacementH.png'
+		}
 		function initPlateformesJeu() {
 			objPlateformes = new Object();
 			imagePlateforme.src = 'sol2Decoupe.png';
@@ -50,7 +54,7 @@
 			imageBalle5.src = 'balle5.png';
 			imageBalle6.src = 'balle6.png';
 			imageBalle7.src = 'balle7.png';
-			imagePersonnage.src = 'GokuDeplacementHorizontal.png'
+			
 			objPlateformes.binDessiner = false;
 			objPlateformes.tabPlateformes = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 				, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -137,7 +141,7 @@
 						case 8: objC2D.drawImage(imageBalle5, j * 30, i * 30+4);break;
 						case 9: objC2D.drawImage(imageBalle6, j * 30, i * 30+4);break;
 						case 10: objC2D.drawImage(imageBalle7, j * 30, i * 30+4);break;
-					//	case 20: objC2D.drawImage(imagePersonnage,1,1,25,30,j*30,i*30,30,30);break;
+						case 20: objC2D.drawImage(imagePersonnage,1,1,23,30,j*30,i*30,30,30);break;
 					}
 
 
