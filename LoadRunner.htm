@@ -30,6 +30,7 @@
 			objC2D = objCanvas.getContext('2d');
 			initImageFond();
 			initPlateformesJeu();
+			initPersonnage();
 			dessiner(); // Dessiner une première fois
 			animer();
 		}
@@ -112,12 +113,25 @@
 		function dessiner() {
 			dessinerFond();
 			dessinerPlateformesJeu();
+			dessinerPersonnages();
 		}
 		// Pour dessiner l'image de fond
 		function dessinerFond() {
 			objC2D.save();  // Sauvegarde le contexte
 			objC2D.drawImage(objImageFond, 0, 0, objCanvas.width, objCanvas.height - 100);
 			objC2D.restore(); // Restaure le contexte
+		}
+
+		function dessinerPersonnages() {
+			for (var i = 0; i < objPlateformes.tabPlateformes.length; i++) {
+
+				for (var j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
+					if (objPlateformes.tabPlateformes[i][j] == 20) {
+						objC2D.drawImage(imagePersonnage, 1, 1, 23, 30, j * 30, i * 30, 30, 30);
+					}
+
+				}
+			}
 		}
 		function dessinerPlateformesJeu() {
 
@@ -141,7 +155,6 @@
 						case 8: objC2D.drawImage(imageBalle5, j * 30, i * 30 + 4); break;
 						case 9: objC2D.drawImage(imageBalle6, j * 30, i * 30 + 4); break;
 						case 10: objC2D.drawImage(imageBalle7, j * 30, i * 30 + 4); break;
-						case 20: objC2D.drawImage(imagePersonnage, 1, 1, 23, 30, j * 30, i * 30, 30, 30); break;
 					}
 
 
