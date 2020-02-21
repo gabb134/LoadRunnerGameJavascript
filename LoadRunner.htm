@@ -68,8 +68,8 @@
 
 			objPlateformes.binDessiner = false;
 			objPlateformes.tabPlateformes = [
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				
+				
 				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 				[0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -130,12 +130,52 @@
 		// Pour dessiner l'image de fond
 		function dessinerFond() {
 			objC2D.save();  // Sauvegarde le contexte
-			objC2D.drawImage(objImageFond, 0, 0, objCanvas.width, objCanvas.height - 100);
+			objC2D.drawImage(objImageFond, 0, 0, objCanvas.width, objCanvas.height - 130);
 			objC2D.restore(); // Restaure le contexte
 		}
-		function dessinerScore(){
+		function dessinerScore() {
 			objC2D.save();  // Sauvegarde le contexte
-			objC2D.drawImage(objImageScore, 0, 600, objCanvas.width, 100);
+
+			//Image drangon ball z
+			objC2D.drawImage(objImageScore, 0, 540, objCanvas.width, 100);
+
+			//Score
+			objC2D.beginPath();
+			strTexteScore = "Score: " + "00000";
+			objC2D.textAlign = "center";
+			objC2D.textBaseLine = "bottom";
+			objC2D.font = '25pt fantasy';
+			//Temps
+			objC2D.beginPath();
+			strTextTemps = "Temps: " + "00:00";
+			objC2D.textAlign = "center";
+			objC2D.textBaseLine = "bottom";
+			objC2D.font = '25pt fantasy';
+
+			//Niveau
+			objC2D.beginPath();
+			strTexteNiveau = "Niveau: " + "1";
+			objC2D.textAlign = "center";
+			objC2D.textBaseLine = "bottom";
+			objC2D.font = '25pt fantasy';
+
+			//Vies
+			objC2D.beginPath();
+			strTextVies = "Vies: " + "5";
+			objC2D.textAlign = "center";
+			objC2D.textBaseLine = "bottom";
+			objC2D.font = '25pt fantasy';
+
+
+			objC2D.fillText(strTexteScore, 150, 585);
+
+			objC2D.fillText(strTextTemps, 150, 620);
+
+
+			objC2D.fillText(strTexteNiveau, 750, 585);
+
+			objC2D.fillText(strTextVies, 750, 620);
+
 			objC2D.restore(); // Restaure le contexte
 		}
 
@@ -146,7 +186,7 @@
 					if (objPlateformes.tabPlateformes[i][j] == 44) {
 						objPersonnages.PositionY = j;
 						objPersonnages.PositionX = i;
-						console.log(objPersonnages.DeplacementHorizontalX);
+					//	console.log(objPersonnages.DeplacementHorizontalX);
 						objC2D.drawImage(imagePersonnage, objPersonnages.DeplacementHorizontalX, objPersonnages.DeplacementHorizontalY, 23, 30, j * 30, i * 30, 30, 30);
 						//		objC2D.beginPath();
 						//		objC2D.rect(j*30, i*30, 150, 100);
@@ -191,17 +231,23 @@
 		function deplacerPersonnages() {
 			switch (event.keyCode) {
 				case 39:// Flèche-à-droite
-				
-				objPersonnages.DeplacementHorizontalX += 24.2;
-				if(objPersonnages.DeplacementHorizontalX >= 240){
-					
-					objPersonnages.DeplacementHorizontalX = 121;
-				}
-					
+				//console.log(objPersonnages.DeplacementHorizontalX);
+				console.log(objPersonnages.PositionY)
+					//on va augmenter les x pour aller a la prochaine image
+					objPersonnages.DeplacementHorizontalX += 24.2;
 
+					//on va voir si on a atteint la fin du sprite pour recommencer afin  de faire lanimation lorsquil va
+					if (objPersonnages.DeplacementHorizontalX >= 240) {
+
+						objPersonnages.DeplacementHorizontalX = 121;
+					}
+
+					//lespace avant devient vide
 					objPlateformes.tabPlateformes[objPersonnages.PositionX][objPersonnages.PositionY] = 0;
+					//on augmente la position des y pour avancer dans le tableau
 					objPersonnages.PositionY = objPersonnages.PositionY + 1;
 
+					//lespace apres devient la prochaine image
 					objPlateformes.tabPlateformes[objPersonnages.PositionX][objPersonnages.PositionY] = 44;
 
 
@@ -221,7 +267,7 @@
 </head>
 
 <body onload="initAnimation()">
-	<canvas id="monCanvas" width="900" height="700" tabindex="1" onkeydown="deplacerPersonnages()">
+	<canvas id="monCanvas" width="900" height="640" tabindex="1" onkeydown="deplacerPersonnages()">
 		Votre navigateur ne supporte pas la balise canvas
 	</canvas>
 </body>
