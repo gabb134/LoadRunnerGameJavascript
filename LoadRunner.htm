@@ -39,7 +39,7 @@
 			objImageFond.src = 'backroundLoadRunner.png';
 		}
 
-		function initPersonnage(){
+		function initPersonnage() {
 			imagePersonnage.src = 'GokuDeplacementH.png'
 		}
 		function initPlateformesJeu() {
@@ -54,7 +54,7 @@
 			imageBalle5.src = 'balle5.png';
 			imageBalle6.src = 'balle6.png';
 			imageBalle7.src = 'balle7.png';
-			
+
 			objPlateformes.binDessiner = false;
 			objPlateformes.tabPlateformes = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 				, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -116,7 +116,7 @@
 		// Pour dessiner l'image de fond
 		function dessinerFond() {
 			objC2D.save();  // Sauvegarde le contexte
-			objC2D.drawImage(objImageFond, 0, 0, objCanvas.width * 3 / 4, objCanvas.height * 3 / 4);
+			objC2D.drawImage(objImageFond, 0, 0, objCanvas.width, objCanvas.height - 100);
 			objC2D.restore(); // Restaure le contexte
 		}
 		function dessinerPlateformesJeu() {
@@ -131,17 +131,17 @@
 						objC2D.drawImage(imageEchelle, j * 30, i * 30);
 					}
 					if (objPlateformes.tabPlateformes[i][j] == 3) {
-						objC2D.drawImage(imageCorde, j * 30, i * 30+5);
+						objC2D.drawImage(imageCorde, j * 30, i * 30 + 5);
 					}
-					switch(objPlateformes.tabPlateformes[i][j]){
-						case 4:objC2D.drawImage(imageBalle1, j * 30, i * 30); break;
-						case 5: objC2D.drawImage(imageBalle2, j * 30, i * 30);break;
-						case 6: objC2D.drawImage(imageBalle3, j * 30, i * 30);break;
-						case 7:objC2D.drawImage(imageBalle4, j * 30, i * 30); break;
-						case 8: objC2D.drawImage(imageBalle5, j * 30, i * 30+4);break;
-						case 9: objC2D.drawImage(imageBalle6, j * 30, i * 30+4);break;
-						case 10: objC2D.drawImage(imageBalle7, j * 30, i * 30+4);break;
-						case 20: objC2D.drawImage(imagePersonnage,1,1,23,30,j*30,i*30,30,30);break;
+					switch (objPlateformes.tabPlateformes[i][j]) {
+						case 4: objC2D.drawImage(imageBalle1, j * 30, i * 30); break;
+						case 5: objC2D.drawImage(imageBalle2, j * 30, i * 30); break;
+						case 6: objC2D.drawImage(imageBalle3, j * 30, i * 30); break;
+						case 7: objC2D.drawImage(imageBalle4, j * 30, i * 30); break;
+						case 8: objC2D.drawImage(imageBalle5, j * 30, i * 30 + 4); break;
+						case 9: objC2D.drawImage(imageBalle6, j * 30, i * 30 + 4); break;
+						case 10: objC2D.drawImage(imageBalle7, j * 30, i * 30 + 4); break;
+						case 20: objC2D.drawImage(imagePersonnage, 1, 1, 23, 30, j * 30, i * 30, 30, 30); break;
 					}
 
 
@@ -149,11 +149,27 @@
 
 			}
 		}
+		function deplacerPersonnages() {
+			switch (event.keyCode) {
+				case 39:// Flèche-à-droite
+				console.log("A droite");
+					break;
+				case 37:// Flèche-à-gauche
+				console.log("A gauche");
+					break;
+				case 38:// Flèche-en-haut
+				console.log("En haut");
+					break;
+					case 40: // Flèche-en-bas
+					console.log("En bas");
+					break;
+			}
+		}
 	</script>
 </head>
 
 <body onload="initAnimation()">
-	<canvas id="monCanvas" width="1200" height="800">
+	<canvas id="monCanvas" width="900" height="700" tabindex="1" onkeydown="deplacerPersonnages()">
 		Votre navigateur ne supporte pas la balise canvas
 	</canvas>
 </body>
