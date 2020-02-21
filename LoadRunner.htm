@@ -24,6 +24,7 @@
 		let imageBalle7 = new Image();
 		let imagePersonnage = new Image();
 		let objPlateformes = null;
+		let objPersonnages = null;
 
 		function initAnimation() {
 			objCanvas = document.getElementById('monCanvas');
@@ -42,6 +43,9 @@
 
 		function initPersonnage() {
 			imagePersonnage.src = 'GokuDeplacementH.png'
+			objPersonnages = new Object();
+			objPersonnages.DeplacementHorizontalX = 1;
+			objPersonnages.DeplacementHorizontalY = 1;
 		}
 		function initPlateformesJeu() {
 			objPlateformes = new Object();
@@ -130,8 +134,15 @@
 			for (var i = 0; i < objPlateformes.tabPlateformes.length; i++) {
 
 				for (var j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
-					if (objPlateformes.tabPlateformes[i][j] == 20) {
-						objC2D.drawImage(imagePersonnage, 1, 1, 23, 30, j * 30, i * 30, 30, 30);
+					if (objPlateformes.tabPlateformes[i][j] == 44) {
+						objPersonnages.PositionY = j;
+						objPersonnages.PositionX = i;
+						objC2D.drawImage(imagePersonnage, objPersonnages.DeplacementHorizontalX, objPersonnages.DeplacementHorizontalY, 23, 30, j * 30, i * 30, 30, 30);
+						//		objC2D.beginPath();
+						//		objC2D.rect(j*30, i*30, 150, 100);
+						//		objC2D.stroke();
+						//	objC2D.stroke­();
+						objC2D.closePath();
 					}
 
 				}
@@ -144,6 +155,7 @@
 				for (var j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
 					if (objPlateformes.tabPlateformes[i][j] == 1) {
 						objC2D.drawImage(imagePlateforme, j * 30, i * 30);
+
 					}
 					if (objPlateformes.tabPlateformes[i][j] == 2) {
 						objC2D.drawImage(imageEchelle, j * 30, i * 30);
@@ -169,15 +181,40 @@
 		function deplacerPersonnages() {
 			switch (event.keyCode) {
 				case 39:// Flèche-à-droite
-				console.log("A droite");
+					objPersonnages.DeplacementHorizontalX += 22;
+
+
+
+					
+
+				objPlateformes.tabPlateformes[objPersonnages.PositionX][objPersonnages.PositionY] = 0;
+					objPersonnages.PositionY = objPersonnages.PositionY+1;
+				/*	alert(objPersonnages.PositionX)
+					alert(objPersonnages.PositionY)
+				for (var j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
+	document.write(objPlateformes.tabPlateformes[i][j]+ '-');
+}
+	document.write("<br>");
+}
+		
+*/
+
+
+
+
+
+
+					objPlateformes.tabPlateformes[objPersonnages.PositionX][objPersonnages.PositionY] = 44;
+
+
 					break;
 				case 37:// Flèche-à-gauche
-				console.log("A gauche");
+					console.log("A gauche");
 					break;
 				case 38:// Flèche-en-haut
-				console.log("En haut");
+					console.log("En haut");
 					break;
-					case 40: // Flèche-en-bas
+				case 40: // Flèche-en-bas
 					console.log("En bas");
 					break;
 			}
