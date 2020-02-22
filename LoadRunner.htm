@@ -52,6 +52,8 @@
 			objPersonnages = new Object();
 			objPersonnages.DeplacementHorizontalX = 1;
 			objPersonnages.DeplacementHorizontalY = 1;
+			objPersonnages.binDroite = false;
+			objPersonnages.binGauche = false;
 		}
 		function initPlateformesJeu() {
 			objPlateformes = new Object();
@@ -187,7 +189,7 @@
 						objPersonnages.PositionY = j;
 						objPersonnages.PositionX = i;
 					//	console.log(objPersonnages.DeplacementHorizontalX);
-						objC2D.drawImage(imagePersonnage, objPersonnages.DeplacementHorizontalX, objPersonnages.DeplacementHorizontalY, 23, 30, j * 30, i * 30, 30, 30);
+						objC2D.drawImage(imagePersonnage, objPersonnages.DeplacementHorizontalX, objPersonnages.DeplacementHorizontalY, 23, 30, j * 20, i * 30, 30, 30);
 						//		objC2D.beginPath();
 						//		objC2D.rect(j*30, i*30, 150, 100);
 						//		objC2D.stroke();
@@ -232,14 +234,17 @@
 			switch (event.keyCode) {
 				case 39:// Flèche-à-droite
 				//console.log(objPersonnages.DeplacementHorizontalX);
-				console.log(objPersonnages.PositionY)
+				if(objPersonnages.binGauche){
+						objPersonnages.DeplacementHorizontalX = 459.8;
+						objPersonnages.binGauche = false;
+					}
+				//console.log(objPersonnages.PositionY)
 					//on va augmenter les x pour aller a la prochaine image
 					objPersonnages.DeplacementHorizontalX += 24.2;
-
+					objPersonnages.binDroite =true;
 					//on va voir si on a atteint la fin du sprite pour recommencer afin  de faire lanimation lorsquil va
 					if (objPersonnages.DeplacementHorizontalX >= 240) {
-
-						objPersonnages.DeplacementHorizontalX = 121;
+						objPersonnages.DeplacementHorizontalX = 144.2;
 					}
 
 					//lespace avant devient vide
@@ -253,7 +258,28 @@
 
 					break;
 				case 37:// Flèche-à-gauche
+				objPersonnages.binGauche =true;
 					console.log("A gauche");
+					if(objPersonnages.binDroite){
+						objPersonnages.DeplacementHorizontalX = 459.8;
+						objPersonnages.binDroite = false;
+					}
+					
+					objPersonnages.DeplacementHorizontalX -= 24.2;
+					console.log(objPersonnages.DeplacementHorizontalX);
+					//on va voir si on a atteint la fin du sprite pour recommencer afin  de faire lanimation lorsquil va
+					if (objPersonnages.DeplacementHorizontalX <= 264) {
+
+						objPersonnages.DeplacementHorizontalX = 340;
+					}
+
+					//lespace avant devient vide
+					objPlateformes.tabPlateformes[objPersonnages.PositionX][objPersonnages.PositionY] = 0;
+					//on augmente la position des y pour avancer dans le tableau
+					objPersonnages.PositionY = objPersonnages.PositionY - 1;
+
+					//lespace apres devient la prochaine image
+					objPlateformes.tabPlateformes[objPersonnages.PositionX][objPersonnages.PositionY] = 44;
 					break;
 				case 38:// Flèche-en-haut
 					console.log("En haut");
