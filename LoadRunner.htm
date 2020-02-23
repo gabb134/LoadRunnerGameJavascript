@@ -13,6 +13,9 @@
 		let objCycleAnimation = null;
 		let objImageFond = null;
 		let objImageScore = null;
+		let tabObjMurs = null;
+		let objImageMurs = null;
+		let objMotif = null;
 		let imagePlateforme = new Image();
 		let imageEchelle = new Image();
 		let imageCorde = new Image();
@@ -31,6 +34,7 @@
 			objCanvas = document.getElementById('monCanvas');
 			objC2D = objCanvas.getContext('2d');
 			initImageFond();
+			initMurs();
 			initImageScore();
 			initPlateformesJeu();
 			initPersonnage();
@@ -70,8 +74,8 @@
 
 			objPlateformes.binDessiner = false;
 			objPlateformes.tabPlateformes = [
-				
-				
+
+
 				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 				[0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -88,9 +92,48 @@
 				[0, 0, 0, 0, 0, 0, 0, 4, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 10, 0, 0, 0],
 				[0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
 				[0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-				[0, 0, 0, 0, 2, 44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+				[0, 0, 0, 44,2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
 				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]];
 
+
+		}
+		//Contruire les murs
+		function initMurs() {
+			tabObjMurs = new Array();
+			let objMur = null;
+
+			objImageMurs = new Image();
+			objImageMurs.src = 'dbzMurs.jpg';
+
+			// Le mur de gauche (#0)
+			objMur = new Object();
+			//objMur.objImage = objImageMur;
+			objMur.intXDebut = 0;
+			objMur.intYDebut = 0;
+			objMur.intXFin = Math.floor(objCanvas.width / 30);
+			objMur.intYFin = objCanvas.height;
+			objMur.strCouleur = 'red';
+			tabObjMurs.push(objMur);
+
+			// Le mur du centre (en haut) (#1)
+            objMur = new Object();
+            //objMur.objImage = objImageMur;
+            objMur.intXDebut = 0;
+            objMur.intYDebut = 0;
+            objMur.intXFin = objCanvas.width;
+            objMur.intYFin = Math.floor(objCanvas.width / 30);
+           // objMur.strCouleur = 'midnightblue';
+            tabObjMurs.push(objMur);
+
+			 // Le mur de droite (#2)
+			 objMur = new Object();
+            // objMur.objImage = objImageMur;
+            objMur.intXDebut = objCanvas.width;
+            objMur.intYDebut = 0;
+            objMur.intXFin = objCanvas.width - Math.floor(objCanvas.width / 30);
+            objMur.intYFin = objCanvas.height;
+          //  objMur.strCouleur = 'midnightblue';
+            tabObjMurs.push(objMur);
 
 		}
 
@@ -125,6 +168,7 @@
 		// Pour dessiner
 		function dessiner() {
 			dessinerFond();
+			dessinerMurs();
 			dessinerScore();
 			dessinerPlateformesJeu();
 			dessinerPersonnages();
@@ -139,7 +183,10 @@
 			objC2D.save();  // Sauvegarde le contexte
 
 			//Image drangon ball z
-			objC2D.drawImage(objImageScore, 0, 540, objCanvas.width, 100);
+			objC2D.drawImage(objImageScore, 0, 570, objCanvas.width, 100);
+
+
+
 
 			//Score
 			objC2D.beginPath();
@@ -168,27 +215,44 @@
 			objC2D.textBaseLine = "bottom";
 			objC2D.font = '25pt fantasy';
 
+			//Titre
+			objC2D.beginPath();
+			strTextTitre = "Load Runner";
+			objC2D.textAlign = "center";
+			objC2D.textBaseLine = "bottom";
+			objC2D.font = '25pt fantasy';
+			
+			objC2D.fillText(strTextTitre, objCanvas.width/2,30);
 
-			objC2D.fillText(strTexteScore, 150, 585);
 
-			objC2D.fillText(strTextTemps, 150, 620);
+			objC2D.fillText(strTexteScore, 150, 610);
+
+			objC2D.fillText(strTextTemps, 150, 650);
 
 
-			objC2D.fillText(strTexteNiveau, 750, 585);
+			objC2D.fillText(strTexteNiveau, 810, 610);
 
-			objC2D.fillText(strTextVies, 750, 620);
+			objC2D.fillText(strTextVies, 810, 650);
+
+
+
+
+
 
 			objC2D.restore(); // Restaure le contexte
 		}
 
 		function dessinerPersonnages() { //drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+			objC2D.save();
+			objC2D.translate(30,30);
+			
 			for (var i = 0; i < objPlateformes.tabPlateformes.length; i++) {
 
 				for (var j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
 					if (objPlateformes.tabPlateformes[i][j] == 44) {
 						objPersonnages.PositionY = j;
 						objPersonnages.PositionX = i;
-					//	console.log(objPersonnages.DeplacementHorizontalX);
+						//	console.log(objPersonnages.DeplacementHorizontalX);
 						objC2D.drawImage(imagePersonnage, objPersonnages.DeplacementHorizontalX, objPersonnages.DeplacementHorizontalY, 23, 30, j * 20, i * 30, 30, 30);
 						//		objC2D.beginPath();
 						//		objC2D.rect(j*30, i*30, 150, 100);
@@ -199,8 +263,34 @@
 
 				}
 			}
+			objC2D.restore();
+		}
+		function dessinerMurs(){
+			objC2D.save();
+
+			objMotif = objC2D.createPattern(objImageMurs, 'repeat');
+
+			for (let intNoMur = 0; intNoMur < tabObjMurs.length; intNoMur++) {
+                let objMur = tabObjMurs[intNoMur];
+
+
+				objC2D.fillStyle = objMotif;
+				objC2D.beginPath();
+                objC2D.moveTo(objMur.intXDebut, objMur.intYDebut);
+                objC2D.lineTo(objMur.intXFin, objMur.intYDebut);
+                objC2D.lineTo(objMur.intXFin, objMur.intYFin);
+                objC2D.lineTo(objMur.intXDebut, objMur.intYFin);
+                objC2D.closePath();
+                objC2D.fill();
+
+			}
+
+
+			objC2D.restore();
 		}
 		function dessinerPlateformesJeu() {
+			objC2D.save();
+			objC2D.translate(30,30);
 
 			for (var i = 0; i < objPlateformes.tabPlateformes.length; i++) {
 				//objC2D.drawImage(imagePlateforme, 0, 0);
@@ -229,19 +319,20 @@
 				}
 
 			}
+			objC2D.restore();
 		}
 		function deplacerPersonnages() {
 			switch (event.keyCode) {
 				case 39:// Flèche-à-droite
-				//console.log(objPersonnages.DeplacementHorizontalX);
-				if(objPersonnages.binGauche){
+					//console.log(objPersonnages.DeplacementHorizontalX);
+					if (objPersonnages.binGauche) {
 						objPersonnages.DeplacementHorizontalX = 459.8;
 						objPersonnages.binGauche = false;
 					}
-				//console.log(objPersonnages.PositionY)
+					//console.log(objPersonnages.PositionY)
 					//on va augmenter les x pour aller a la prochaine image
 					objPersonnages.DeplacementHorizontalX += 24.2;
-					objPersonnages.binDroite =true;
+					objPersonnages.binDroite = true;
 					//on va voir si on a atteint la fin du sprite pour recommencer afin  de faire lanimation lorsquil va
 					if (objPersonnages.DeplacementHorizontalX >= 240) {
 						objPersonnages.DeplacementHorizontalX = 144.2;
@@ -258,13 +349,13 @@
 
 					break;
 				case 37:// Flèche-à-gauche
-				objPersonnages.binGauche =true;
+					objPersonnages.binGauche = true;
 					console.log("A gauche");
-					if(objPersonnages.binDroite){
+					if (objPersonnages.binDroite) {
 						objPersonnages.DeplacementHorizontalX = 459.8;
 						objPersonnages.binDroite = false;
 					}
-					
+
 					objPersonnages.DeplacementHorizontalX -= 24.2;
 					console.log(objPersonnages.DeplacementHorizontalX);
 					//on va voir si on a atteint la fin du sprite pour recommencer afin  de faire lanimation lorsquil va
@@ -293,7 +384,7 @@
 </head>
 
 <body onload="initAnimation()">
-	<canvas id="monCanvas" width="900" height="640" tabindex="1" onkeydown="deplacerPersonnages()">
+	<canvas id="monCanvas" width="960" height="670" tabindex="1" onkeydown="deplacerPersonnages()">
 		Votre navigateur ne supporte pas la balise canvas
 	</canvas>
 </body>
