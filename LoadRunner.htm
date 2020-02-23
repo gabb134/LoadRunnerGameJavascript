@@ -70,8 +70,8 @@
 
 			objPlateformes.binDessiner = false;
 			objPlateformes.tabPlateformes = [
-				
-				
+
+
 				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 				[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 				[0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -182,32 +182,31 @@
 		}
 
 		function dessinerPersonnages() { //drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-			for (var i = 0; i < objPlateformes.tabPlateformes.length; i++) {
+			for (let i = 0; i < objPlateformes.tabPlateformes.length; i++) {
 
-				for (var j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
+				for (let j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
 					if (objPlateformes.tabPlateformes[i][j] == 44) {
-						objPersonnages.PositionY = j;
-						objPersonnages.PositionX = i;
-					//	console.log(objPersonnages.DeplacementHorizontalX);
-						objC2D.drawImage(imagePersonnage, objPersonnages.DeplacementHorizontalX, objPersonnages.DeplacementHorizontalY, 23, 30, j * 20, i * 30, 30, 30);
-						//		objC2D.beginPath();
-						//		objC2D.rect(j*30, i*30, 150, 100);
-						//		objC2D.stroke();
-						//	objC2D.stroke­();
-						objC2D.closePath();
+						objPersonnages.PositionX = j;
+						objPersonnages.PositionY = i;
+						objPersonnages.PositionXPixel = j * 15;
+						objPersonnages.PositionYPixel = i * 30;
+
+						objC2D.drawImage(imagePersonnage, objPersonnages.DeplacementHorizontalX, objPersonnages.DeplacementHorizontalY, 23, 30, j * 15, i * 30, 30, 30);
+						//	console.log(j);
 					}
 
 				}
 			}
 		}
+
 		function dessinerPlateformesJeu() {
 
 			for (var i = 0; i < objPlateformes.tabPlateformes.length; i++) {
-				//objC2D.drawImage(imagePlateforme, 0, 0);
+
 				for (var j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
 					if (objPlateformes.tabPlateformes[i][j] == 1) {
 						objC2D.drawImage(imagePlateforme, j * 30, i * 30);
-
+						//	alert()
 					}
 					if (objPlateformes.tabPlateformes[i][j] == 2) {
 						objC2D.drawImage(imageEchelle, j * 30, i * 30);
@@ -230,43 +229,48 @@
 
 			}
 		}
+
 		function deplacerPersonnages() {
 			switch (event.keyCode) {
 				case 39:// Flèche-à-droite
-				//console.log(objPersonnages.DeplacementHorizontalX);
-				if(objPersonnages.binGauche){
+
+					if (objPersonnages.binGauche) {
 						objPersonnages.DeplacementHorizontalX = 459.8;
 						objPersonnages.binGauche = false;
 					}
-				//console.log(objPersonnages.PositionY)
+
 					//on va augmenter les x pour aller a la prochaine image
 					objPersonnages.DeplacementHorizontalX += 24.2;
-					objPersonnages.binDroite =true;
+					objPersonnages.binDroite = true;
 					//on va voir si on a atteint la fin du sprite pour recommencer afin  de faire lanimation lorsquil va
 					if (objPersonnages.DeplacementHorizontalX >= 240) {
 						objPersonnages.DeplacementHorizontalX = 144.2;
 					}
+					console.log(objPersonnages.PositionXPixel);
+					if (objPersonnages.PositionXPixel < objCanvas.width-30) {
+						//lespace avant devient vide
+						objPlateformes.tabPlateformes[objPersonnages.PositionYPixel / 30][objPersonnages.PositionXPixel / 15] = 0;
 
-					//lespace avant devient vide
-					objPlateformes.tabPlateformes[objPersonnages.PositionX][objPersonnages.PositionY] = 0;
-					//on augmente la position des y pour avancer dans le tableau
-					objPersonnages.PositionY = objPersonnages.PositionY + 1;
+						objPersonnages.PositionXPixel = (objPersonnages.PositionXPixel / 15) + 1;
 
-					//lespace apres devient la prochaine image
-					objPlateformes.tabPlateformes[objPersonnages.PositionX][objPersonnages.PositionY] = 44;
+						//lespace apres devient la prochaine image
+						objPlateformes.tabPlateformes[(objPersonnages.PositionYPixel / 30)][objPersonnages.PositionXPixel] = 44;
+					}
+
+
 
 
 					break;
 				case 37:// Flèche-à-gauche
-				objPersonnages.binGauche =true;
-					console.log("A gauche");
-					if(objPersonnages.binDroite){
+					objPersonnages.binGauche = true;
+					//	console.log("A gauche");
+					if (objPersonnages.binDroite) {
 						objPersonnages.DeplacementHorizontalX = 459.8;
 						objPersonnages.binDroite = false;
 					}
-					
+
 					objPersonnages.DeplacementHorizontalX -= 24.2;
-					console.log(objPersonnages.DeplacementHorizontalX);
+					//	console.log(objPersonnages.DeplacementHorizontalX);
 					//on va voir si on a atteint la fin du sprite pour recommencer afin  de faire lanimation lorsquil va
 					if (objPersonnages.DeplacementHorizontalX <= 264) {
 
@@ -274,12 +278,20 @@
 					}
 
 					//lespace avant devient vide
-					objPlateformes.tabPlateformes[objPersonnages.PositionX][objPersonnages.PositionY] = 0;
+
+					if (objPersonnages.PositionXPixel > 0) {
+
+					objPlateformes.tabPlateformes[objPersonnages.PositionYPixel / 30][objPersonnages.PositionXPixel / 15] = 0;
 					//on augmente la position des y pour avancer dans le tableau
-					objPersonnages.PositionY = objPersonnages.PositionY - 1;
+
+					objPersonnages.PositionXPixel = (objPersonnages.PositionXPixel / 15) - 1;
+
+
 
 					//lespace apres devient la prochaine image
-					objPlateformes.tabPlateformes[objPersonnages.PositionX][objPersonnages.PositionY] = 44;
+					objPlateformes.tabPlateformes[(objPersonnages.PositionYPixel / 30)][objPersonnages.PositionXPixel] = 44;
+
+					}
 					break;
 				case 38:// Flèche-en-haut
 					console.log("En haut");
