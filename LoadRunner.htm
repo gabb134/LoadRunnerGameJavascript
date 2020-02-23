@@ -48,7 +48,7 @@
 		}
 		function initImageScore() {
 			objImageScore = new Image();
-			objImageScore.src = 'dbz.jpg';
+			objImageScore.src = 'dbzNoir.jpg';
 		}
 
 		function initPersonnage() {
@@ -103,7 +103,7 @@
 			let objMur = null;
 
 			objImageMurs = new Image();
-			objImageMurs.src = 'dbzMurs.jpg';
+			objImageMurs.src = 'dbzMursNoir.jpg';
 
 			// Le mur de gauche (#0)
 			objMur = new Object();
@@ -221,6 +221,9 @@
 			objC2D.textAlign = "center";
 			objC2D.textBaseLine = "bottom";
 			objC2D.font = '25pt fantasy';
+
+			
+			objC2D.fillStyle = 'white';
 			
 			objC2D.fillText(strTextTitre, objCanvas.width/2,30);
 
@@ -233,6 +236,8 @@
 			objC2D.fillText(strTexteNiveau, 810, 610);
 
 			objC2D.fillText(strTextVies, 810, 650);
+
+		
 
 
 
