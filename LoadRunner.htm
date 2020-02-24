@@ -16,6 +16,12 @@
 		let tabObjMurs = null;
 		let objImageMurs = null;
 		let objMotif = null;
+		//	let miliSecondes = 0;
+		//	let secondes = 0;
+		//	let minutes = 0;
+		//	let compteurSecondes = 0;
+		//	let compteutMinutes = 0;
+		let objChrono = null;
 		let imagePlateforme = new Image();
 		let imageEchelle = new Image();
 		let imageCorde = new Image();
@@ -27,6 +33,7 @@
 		let imageBalle6 = new Image();
 		let imageBalle7 = new Image();
 		let imagePersonnage = new Image();
+		let imagePersonnageversLehaut = new Image();
 		let objPlateformes = null;
 		let objPersonnages = null;
 
@@ -35,7 +42,8 @@
 			objC2D = objCanvas.getContext('2d');
 			initImageFond();
 			initMurs();
-			initImageScore();
+			initScore();
+			initChrono();
 			initPlateformesJeu();
 			initPersonnage();
 			dessiner(); // Dessiner une première fois
@@ -46,13 +54,14 @@
 			objImageFond = new Image();
 			objImageFond.src = 'backroundLoadRunner.png';
 		}
-		function initImageScore() {
+		function initScore() {
 			objImageScore = new Image();
 			objImageScore.src = 'dbzNoir.jpg';
 		}
 
 		function initPersonnage() {
 			imagePersonnage.src = 'GokuDeplacementH.png'
+			imagePersonnageversLehaut = 'GokuDeplacementversLehaut.png';
 			objPersonnages = new Object();
 			objPersonnages.DeplacementHorizontalX = 1;
 			objPersonnages.DeplacementHorizontalY = 1;
@@ -92,7 +101,7 @@
 				[0, 0, 0, 0, 0, 0, 0, 4, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 0, 0, 0, 0, 0, 10, 0, 0, 0],
 				[0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
 				[0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-				[0, 0, 0, 44,2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+				[0, 0, 0, 44, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
 				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]];
 
 
@@ -116,26 +125,37 @@
 			tabObjMurs.push(objMur);
 
 			// Le mur du centre (en haut) (#1)
-            objMur = new Object();
-            //objMur.objImage = objImageMur;
-            objMur.intXDebut = 0;
-            objMur.intYDebut = 0;
-            objMur.intXFin = objCanvas.width;
-            objMur.intYFin = Math.floor(objCanvas.width / 30);
-           // objMur.strCouleur = 'midnightblue';
-            tabObjMurs.push(objMur);
+			objMur = new Object();
+			//objMur.objImage = objImageMur;
+			objMur.intXDebut = 0;
+			objMur.intYDebut = 0;
+			objMur.intXFin = objCanvas.width;
+			objMur.intYFin = Math.floor(objCanvas.width / 30);
+			// objMur.strCouleur = 'midnightblue';
+			tabObjMurs.push(objMur);
 
-			 // Le mur de droite (#2)
-			 objMur = new Object();
-            // objMur.objImage = objImageMur;
-            objMur.intXDebut = objCanvas.width;
-            objMur.intYDebut = 0;
-            objMur.intXFin = objCanvas.width - Math.floor(objCanvas.width / 30);
-            objMur.intYFin = objCanvas.height;
-          //  objMur.strCouleur = 'midnightblue';
-            tabObjMurs.push(objMur);
+			// Le mur de droite (#2)
+			objMur = new Object();
+			// objMur.objImage = objImageMur;
+			objMur.intXDebut = objCanvas.width;
+			objMur.intYDebut = 0;
+			objMur.intXFin = objCanvas.width - Math.floor(objCanvas.width / 30);
+			objMur.intYFin = objCanvas.height;
+			//  objMur.strCouleur = 'midnightblue';
+			tabObjMurs.push(objMur);
 
 		}
+		function initChrono() {
+			objChrono = new Object();
+
+			objChrono.miliSecondes = 0;
+			objChrono.secondes = 0;
+			objChrono.minutes = 0;
+			objChrono.compteurSecondes = 0;
+			objChrono.compteutMinutes = 0;
+			objChrono.binDemarrerChrono = false;
+		}
+
 
 
 		// Un cycle d'animation	
@@ -163,6 +183,8 @@
 
 		// Pour mettre à jour l'animation
 		function mettreAjourAnimation() {
+
+			dessinerChronometre();
 		}
 
 		// Pour dessiner
@@ -170,6 +192,7 @@
 			dessinerFond();
 			dessinerMurs();
 			dessinerScore();
+			//dessinerChronometre();
 			dessinerPlateformesJeu();
 			dessinerPersonnages();
 		}
@@ -178,6 +201,23 @@
 			objC2D.save();  // Sauvegarde le contexte
 			objC2D.drawImage(objImageFond, 0, 0, objCanvas.width, objCanvas.height - 130);
 			objC2D.restore(); // Restaure le contexte
+		}
+		function dessinerChronometre() {
+
+
+			objChrono.miliSecondes++;
+			if (objChrono.miliSecondes > 60) {
+				objChrono.miliSecondes = 0;
+				objChrono.secondes++;
+				if (objChrono.secondes > 59) {
+					objChrono.secondes = 0;
+					objChrono.minutes++;
+				}
+			}
+
+			objChrono.compteurSecondes = objChrono.secondes < 10 ? "0" + objChrono.secondes : objChrono.secondes;
+			objChrono.compteutMinutes = objChrono.minutes < 10 ? "0" + objChrono.minutes : objChrono.minutes;
+
 		}
 		function dessinerScore() {
 			objC2D.save();  // Sauvegarde le contexte
@@ -196,7 +236,14 @@
 			objC2D.font = '25pt fantasy';
 			//Temps
 			objC2D.beginPath();
-			strTextTemps = "Temps: " + "00:00";
+			strTextTemps = "Temps: ";
+			objC2D.textAlign = "center";
+			objC2D.textBaseLine = "bottom";
+			objC2D.font = '25pt fantasy';
+
+			//chrono
+			objC2D.beginPath();
+			strTextChrono = objChrono.compteutMinutes + ":" + objChrono.compteurSecondes;
 			objC2D.textAlign = "center";
 			objC2D.textBaseLine = "bottom";
 			objC2D.font = '25pt fantasy';
@@ -224,20 +271,21 @@
 
 
 			objC2D.fillStyle = 'white';
-			
-			objC2D.fillText(strTextTitre, objCanvas.width/2,29);
+
+			objC2D.fillText(strTextTitre, objCanvas.width / 2, 29);
 
 
 			objC2D.fillText(strTexteScore, 150, 610);
 
-			objC2D.fillText(strTextTemps, 150, 650);
+			objC2D.fillText(strTextTemps, 112, 650);
+
+			objC2D.fillText(strTextChrono, 200, 650);
+
+			objC2D.fillText(strTexteNiveau, 775, 610);
+
+			objC2D.fillText(strTextVies, 775, 650);
 
 
-			objC2D.fillText(strTexteNiveau, 810, 610);
-
-			objC2D.fillText(strTextVies, 810, 650);
-
-		
 
 
 
@@ -249,9 +297,9 @@
 
 		function dessinerPersonnages() { //drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
 			objC2D.save();
-			objC2D.translate(30,30);
-			
-		
+			objC2D.translate(30, 30);
+
+
 			for (let i = 0; i < objPlateformes.tabPlateformes.length; i++) {
 
 				for (let j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
@@ -269,23 +317,23 @@
 			}
 			objC2D.restore();
 		}
-		function dessinerMurs(){
+		function dessinerMurs() {
 			objC2D.save();
 
 			objMotif = objC2D.createPattern(objImageMurs, 'repeat');
 
 			for (let intNoMur = 0; intNoMur < tabObjMurs.length; intNoMur++) {
-                let objMur = tabObjMurs[intNoMur];
+				let objMur = tabObjMurs[intNoMur];
 
 
 				objC2D.fillStyle = objMotif;
 				objC2D.beginPath();
-                objC2D.moveTo(objMur.intXDebut, objMur.intYDebut);
-                objC2D.lineTo(objMur.intXFin, objMur.intYDebut);
-                objC2D.lineTo(objMur.intXFin, objMur.intYFin);
-                objC2D.lineTo(objMur.intXDebut, objMur.intYFin);
-                objC2D.closePath();
-                objC2D.fill();
+				objC2D.moveTo(objMur.intXDebut, objMur.intYDebut);
+				objC2D.lineTo(objMur.intXFin, objMur.intYDebut);
+				objC2D.lineTo(objMur.intXFin, objMur.intYFin);
+				objC2D.lineTo(objMur.intXDebut, objMur.intYFin);
+				objC2D.closePath();
+				objC2D.fill();
 
 			}
 
@@ -295,7 +343,7 @@
 
 		function dessinerPlateformesJeu() {
 			objC2D.save();
-			objC2D.translate(30,30);
+			objC2D.translate(30, 30);
 
 			for (var i = 0; i < objPlateformes.tabPlateformes.length; i++) {
 
@@ -330,7 +378,7 @@
 		function deplacerPersonnages() {
 
 			objC2D.save();
-			objC2D.translate(30,30);
+			objC2D.translate(30, 30);
 			switch (event.keyCode) {
 				case 39:// Flèche-à-droite
 					if (objPersonnages.binGauche) {
@@ -345,8 +393,8 @@
 						objPersonnages.DeplacementHorizontalX = 144.2;
 					}
 					console.log(objPersonnages.PositionXPixel);
-					
-					if (objPersonnages.PositionXPixel < objCanvas.width-90) {
+
+					if (objPersonnages.PositionXPixel < objCanvas.width - 90) {
 						//lespace avant devient vide
 						objPlateformes.tabPlateformes[objPersonnages.PositionYPixel / 30][objPersonnages.PositionXPixel / 15] = 0;
 
@@ -380,15 +428,15 @@
 
 					if (objPersonnages.PositionXPixel > 0) {
 
-					objPlateformes.tabPlateformes[objPersonnages.PositionYPixel / 30][objPersonnages.PositionXPixel / 15] = 0;
-					//on augmente la position des y pour avancer dans le tableau
+						objPlateformes.tabPlateformes[objPersonnages.PositionYPixel / 30][objPersonnages.PositionXPixel / 15] = 0;
+						//on augmente la position des y pour avancer dans le tableau
 
-					objPersonnages.PositionXPixel = (objPersonnages.PositionXPixel / 15) - 1;
+						objPersonnages.PositionXPixel = (objPersonnages.PositionXPixel / 15) - 1;
 
 
 
-					//lespace apres devient la prochaine image
-					objPlateformes.tabPlateformes[(objPersonnages.PositionYPixel / 30)][objPersonnages.PositionXPixel] = 44;
+						//lespace apres devient la prochaine image
+						objPlateformes.tabPlateformes[(objPersonnages.PositionYPixel / 30)][objPersonnages.PositionXPixel] = 44;
 
 					}
 					break;
