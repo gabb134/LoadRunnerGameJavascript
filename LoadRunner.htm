@@ -6,6 +6,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Load Runner </title>
 	<link rel="stylesheet" type="text/css" href="StyleLoadRunner.css" />
+	<script> src = "Briques.js"</script>
 	<!-- Code JavaScript local -->
 	<script type="text/javascript">
 		let objCanvas = null;
@@ -16,6 +17,16 @@
 		let tabObjMurs = null;
 		let objImageMurs = null;
 		let objMotif = null;
+
+		let objBriques = null;
+		let objEchelles = null;
+		let objDragonBalls = null;
+		let objCordes = null;
+
+		let tabBirques = new Array();
+		let tabEchelles = new Array();
+		let tabDragonBalls = new Array();
+		let tabCordes = new Array();
 		//	let miliSecondes = 0;
 		//	let secondes = 0;
 		//	let minutes = 0;
@@ -37,6 +48,17 @@
 		let objPlateformes = null;
 		let objPersonnages = null;
 
+		class Briques {
+			constructor(positionX, positionY, positionFinX, positionFinY) {
+				this.positionX = positionX;
+				this.positionY = positionY;
+
+				this.positionFinX = positionFinX;
+				this.positionFinY = positionFinY;
+			}
+
+		}
+
 		function initAnimation() {
 			objCanvas = document.getElementById('monCanvas');
 			objC2D = objCanvas.getContext('2d');
@@ -46,8 +68,15 @@
 			initChrono();
 			initPlateformesJeu();
 			initPersonnage();
+			initBriques();
+
+			initEchelles();
+			initDragonBalls();
+			initCordes();
+			initDessin();
 			dessiner(); // Dessiner une première fois
 			animer();
+			console.log("Au debut x: " + objPersonnages.PositionXPixel / 15 + ", y: " + objPersonnages.PositionYPixel / 30);
 		}
 		// Aller chercher l'image de fond
 		function initImageFond() {
@@ -105,6 +134,120 @@
 				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]];
 
 
+		}
+		function initBriques() {
+			objBriques = new Briques();
+			objBriques.positionBriquesX = 0;
+			objBriques.positionBriquesY = 0;
+			objBriques.positionBriquesFinX = 0;
+			objBriques.positionBriquesFinY = 0;
+			objBriques.binTrou = false;
+
+		}
+		function initEchelles() {
+			objEchelles = new Object();
+			objEchelles.positionEchellesX = 0;
+			objEchelles.positionEchellesY = 0;
+
+			objBriques.positionEchellesFinX = 0;
+			objBriques.positionEchellesFinY = 0;
+
+
+		}
+
+		function initCordes() {
+			objCordes = new Object();
+			objCordes.positionCordesX = 0;
+			objCordes.positionCordesY = 0;
+
+			objCordes.positionCordesFinX = 0;
+			objCordes.positionCordesFinY = 0;
+		}
+		function initDragonBalls() {
+
+			objDragonBalls = new Object();
+			objDragonBalls.positionDragonBallsX = 0;
+			objDragonBalls.positionDragonBallsY = 0;
+
+
+		}
+		function initDessin() {
+			let compteur = 0;
+			for (var i = 0; i < objPlateformes.tabPlateformes.length; i++) {
+
+				for (var j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
+					if (objPlateformes.tabPlateformes[i][j] == 1) {
+						console.log(compteur++);
+
+						/*objBriques.positionBriquesX = j * 30;
+						objBriques.positionBriquesY = i * 30;
+
+						objBriques.positionBriquesFinX = (j * 30) + 30;
+						objBriques.positionBriquesFinY = (i * 30) + 30;*/
+
+						objBriques.PositionX = j * 30;
+						objBriques.PositionY = i * 30;
+
+						objBriques.binTrou = false;
+						tabBirques.push(objBriques);
+
+						//	alert()
+					}
+					if (objPlateformes.tabPlateformes[i][j] == 2) {
+
+
+						objEchelles.positionEchellesX = j * 30;
+						objEchelles.positionEchellesY = i * 30;
+
+						objEchelles.positionEchellesFinX = (j * 30) + 30;
+						objEchelles.positionEchellesFinY = (i * 30) + 30;
+						tabEchelles.push(objEchelles);
+					}
+					if (objPlateformes.tabPlateformes[i][j] == 3) {
+
+
+						objCordes.positionCordesX = j * 30;
+						objCordes.positionCordesY = i * 30;
+
+						objCordes.positionCordesFinX = (j * 30) + 30;
+						objCordes.positionCordesFinY = (i * 30) + 30;
+						tabCordes.push(objCordes);
+					}
+					switch (objPlateformes.tabPlateformes[i][j]) {
+						case 4:
+							objDragonBalls.positionDragonBallsX = j * 30;
+							objDragonBalls.positionDragonBallsY = i * 30;
+							tabDragonBalls.push(objDragonBalls);
+							break;
+
+						case 5:
+							objDragonBalls.positionDragonBallsX = j * 30;
+							objDragonBalls.positionDragonBallsY = i * 30;
+							tabDragonBalls.push(objDragonBalls); break;
+						case 6:
+							objDragonBalls.positionDragonBallsX = j * 30;
+							objDragonBalls.positionDragonBallsY = i * 30;
+							tabDragonBalls.push(objDragonBalls); break;
+						case 7: objDragonBalls.positionDragonBallsX = j * 30;
+							objDragonBalls.positionDragonBallsY = i * 30;
+							tabDragonBalls.push(objDragonBalls);
+							break;
+						case 8: objDragonBalls.positionDragonBallsX = j * 30;
+							objDragonBalls.positionDragonBallsY = i * 30;
+							tabDragonBalls.push(objDragonBalls); break;
+						case 9: objDragonBalls.positionDragonBallsX = j * 30;
+							objDragonBalls.positionDragonBallsY = i * 30;
+							tabDragonBalls.push(objDragonBalls); break;
+						case 10: objDragonBalls.positionDragonBallsX = j * 30;
+							objDragonBalls.positionDragonBallsY = i * 30;
+							tabDragonBalls.push(objDragonBalls); break;
+					}
+
+
+				}
+
+			}
+			console.log("length tableau : " + tabBirques.length)
 		}
 		//Contruire les murs
 		function initMurs() {
@@ -183,7 +326,7 @@
 
 		// Pour mettre à jour l'animation
 		function mettreAjourAnimation() {
-		
+
 			dessinerChronometre();
 		}
 
@@ -299,6 +442,8 @@
 			objC2D.save();
 			objC2D.translate(30, 30);
 
+			let tailleSpriteX = 23;
+			let tailleSpriteY = 30;
 
 			for (let i = 0; i < objPlateformes.tabPlateformes.length; i++) {
 
@@ -309,7 +454,7 @@
 						objPersonnages.PositionXPixel = j * 15;
 						objPersonnages.PositionYPixel = i * 30;
 
-						objC2D.drawImage(imagePersonnage, objPersonnages.DeplacementHorizontalX, objPersonnages.DeplacementHorizontalY, 23, 30, j*15, i*30 , 30, 30);
+						objC2D.drawImage(imagePersonnage, objPersonnages.DeplacementHorizontalX, objPersonnages.DeplacementHorizontalY, tailleSpriteX, tailleSpriteY, objPersonnages.PositionXPixel, objPersonnages.PositionYPixel, 24.2, 30);
 						//	console.log(j);
 					}
 
@@ -345,33 +490,12 @@
 			objC2D.save();
 			objC2D.translate(30, 30);
 
-			for (var i = 0; i < objPlateformes.tabPlateformes.length; i++) {
-
-				for (var j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
-					if (objPlateformes.tabPlateformes[i][j] == 1) {
-						objC2D.drawImage(imagePlateforme, j * 30, i * 30);
-						//	alert()
-					}
-					if (objPlateformes.tabPlateformes[i][j] == 2) {
-						objC2D.drawImage(imageEchelle, j * 30, i * 30);
-					}
-					if (objPlateformes.tabPlateformes[i][j] == 3) {
-						objC2D.drawImage(imageCorde, j * 30, i * 30 + 5);
-					}
-					switch (objPlateformes.tabPlateformes[i][j]) {
-						case 4: objC2D.drawImage(imageBalle1, j * 30, i * 30); break;
-						case 5: objC2D.drawImage(imageBalle2, j * 30, i * 30); break;
-						case 6: objC2D.drawImage(imageBalle3, j * 30, i * 30); break;
-						case 7: objC2D.drawImage(imageBalle4, j * 30, i * 30); break;
-						case 8: objC2D.drawImage(imageBalle5, j * 30, i * 30 + 4); break;
-						case 9: objC2D.drawImage(imageBalle6, j * 30, i * 30 + 4); break;
-						case 10: objC2D.drawImage(imageBalle7, j * 30, i * 30 + 4); break;
-					}
-
-
-				}
-
+			//	
+			for (var i = 0; i < tabBirques.length; i++) {
+				objC2D.drawImage(imagePlateforme, tabBirques[i].PositionX, tabBirques[i].PositionY);
+				//console.log(tabBirques[i].positionBriquesX  + "---" + tabBirques[i].positionBriquesY)
 			}
+
 			objC2D.restore();
 		}
 
@@ -379,6 +503,7 @@
 
 			objC2D.save();
 			objC2D.translate(30, 30);
+
 			switch (event.keyCode) {
 				case 39:// Flèche-à-droite
 					if (objPersonnages.binGauche) {
@@ -388,23 +513,33 @@
 					//on va augmenter les x pour aller a la prochaine image
 					objPersonnages.DeplacementHorizontalX += 24.2;
 					objPersonnages.binDroite = true;
-					
 					//on va voir si on a atteint la fin du sprite pour recommencer afin  de faire lanimation lorsquil va
 					if (objPersonnages.DeplacementHorizontalX >= 240) {
 						objPersonnages.DeplacementHorizontalX = 144.2;
 					}
-					
+					//	console.log(objPersonnages.PositionXPixel)
 
 					if (objPersonnages.PositionXPixel < objCanvas.width - 90) {
-						//lespace avant devient vide
-						objPlateformes.tabPlateformes[objPersonnages.PositionY][objPersonnages.PositionX] = 0;
 
-						objPersonnages.PositionX= (objPersonnages.PositionX) + 1;
+						if (objPersonnages.PositionYPixel - (objPersonnages.PositionYPixel + 30) % 15 == 0) {
+
+							console.log('on est au milieu');
+
+						} else {
+							console.log('on est au debut');
+						}
+
+						objPlateformes.tabPlateformes[objPersonnages.PositionYPixel / 30][objPersonnages.PositionXPixel / 15] = 0;
+
+						objPersonnages.PositionXPixel = (objPersonnages.PositionXPixel / 15) + 1;
+
+						//	console.log("x: "+objPersonnages.PositionXPixel+", y: "+objPersonnages.PositionYPixel/30);
 
 						//lespace apres devient la prochaine image
-						objPlateformes.tabPlateformes[(objPersonnages.PositionY)][objPersonnages.PositionX] = 44;
+
+						objPlateformes.tabPlateformes[(objPersonnages.PositionYPixel / 30)][objPersonnages.PositionXPixel] = 44;
 					}
-					console.log(objPersonnages.PositionX);
+
 
 
 
@@ -418,7 +553,7 @@
 					}
 
 					objPersonnages.DeplacementHorizontalX -= 24.2;
-						
+					//	console.log(objPersonnages.DeplacementHorizontalX);
 					//on va voir si on a atteint la fin du sprite pour recommencer afin  de faire lanimation lorsquil va
 					if (objPersonnages.DeplacementHorizontalX <= 264) {
 
@@ -429,15 +564,15 @@
 
 					if (objPersonnages.PositionXPixel > 0) {
 
-						objPlateformes.tabPlateformes[objPersonnages.PositionY][objPersonnages.PositionX] = 0;
+						objPlateformes.tabPlateformes[objPersonnages.PositionYPixel / 30][objPersonnages.PositionXPixel / 15] = 0;
 						//on augmente la position des y pour avancer dans le tableau
 
-						objPersonnages.PositionX = (objPersonnages.PositionX) - 1;
+						objPersonnages.PositionXPixel = (objPersonnages.PositionXPixel / 15) - 1;
 
 
 
 						//lespace apres devient la prochaine image
-						objPlateformes.tabPlateformes[(objPersonnages.PositionY)][objPersonnages.PositionX] = 44;
+						objPlateformes.tabPlateformes[(objPersonnages.PositionYPixel / 30)][objPersonnages.PositionXPixel] = 44;
 
 					}
 					break;
