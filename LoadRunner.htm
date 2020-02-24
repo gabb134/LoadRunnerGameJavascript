@@ -183,7 +183,7 @@
 
 		// Pour mettre à jour l'animation
 		function mettreAjourAnimation() {
-
+		
 			dessinerChronometre();
 		}
 
@@ -309,7 +309,7 @@
 						objPersonnages.PositionXPixel = j * 15;
 						objPersonnages.PositionYPixel = i * 30;
 
-						objC2D.drawImage(imagePersonnage, objPersonnages.DeplacementHorizontalX, objPersonnages.DeplacementHorizontalY, 23, 30, j * 15, i * 30, 30, 30);
+						objC2D.drawImage(imagePersonnage, objPersonnages.DeplacementHorizontalX, objPersonnages.DeplacementHorizontalY, 23, 30, j*15, i*30 , 30, 30);
 						//	console.log(j);
 					}
 
@@ -388,22 +388,23 @@
 					//on va augmenter les x pour aller a la prochaine image
 					objPersonnages.DeplacementHorizontalX += 24.2;
 					objPersonnages.binDroite = true;
+					
 					//on va voir si on a atteint la fin du sprite pour recommencer afin  de faire lanimation lorsquil va
 					if (objPersonnages.DeplacementHorizontalX >= 240) {
 						objPersonnages.DeplacementHorizontalX = 144.2;
 					}
-					console.log(objPersonnages.PositionXPixel);
+					
 
 					if (objPersonnages.PositionXPixel < objCanvas.width - 90) {
 						//lespace avant devient vide
-						objPlateformes.tabPlateformes[objPersonnages.PositionYPixel / 30][objPersonnages.PositionXPixel / 15] = 0;
+						objPlateformes.tabPlateformes[objPersonnages.PositionY][objPersonnages.PositionX] = 0;
 
-						objPersonnages.PositionXPixel = (objPersonnages.PositionXPixel / 15) + 1;
+						objPersonnages.PositionX= (objPersonnages.PositionX) + 1;
 
 						//lespace apres devient la prochaine image
-						objPlateformes.tabPlateformes[(objPersonnages.PositionYPixel / 30)][objPersonnages.PositionXPixel] = 44;
+						objPlateformes.tabPlateformes[(objPersonnages.PositionY)][objPersonnages.PositionX] = 44;
 					}
-
+					console.log(objPersonnages.PositionX);
 
 
 
@@ -417,7 +418,7 @@
 					}
 
 					objPersonnages.DeplacementHorizontalX -= 24.2;
-					//	console.log(objPersonnages.DeplacementHorizontalX);
+						
 					//on va voir si on a atteint la fin du sprite pour recommencer afin  de faire lanimation lorsquil va
 					if (objPersonnages.DeplacementHorizontalX <= 264) {
 
@@ -428,15 +429,15 @@
 
 					if (objPersonnages.PositionXPixel > 0) {
 
-						objPlateformes.tabPlateformes[objPersonnages.PositionYPixel / 30][objPersonnages.PositionXPixel / 15] = 0;
+						objPlateformes.tabPlateformes[objPersonnages.PositionY][objPersonnages.PositionX] = 0;
 						//on augmente la position des y pour avancer dans le tableau
 
-						objPersonnages.PositionXPixel = (objPersonnages.PositionXPixel / 15) - 1;
+						objPersonnages.PositionX = (objPersonnages.PositionX) - 1;
 
 
 
 						//lespace apres devient la prochaine image
-						objPlateformes.tabPlateformes[(objPersonnages.PositionYPixel / 30)][objPersonnages.PositionXPixel] = 44;
+						objPlateformes.tabPlateformes[(objPersonnages.PositionY)][objPersonnages.PositionX] = 44;
 
 					}
 					break;
