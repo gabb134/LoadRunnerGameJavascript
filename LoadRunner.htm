@@ -115,13 +115,17 @@
 		}
 
 		function initPersonnage() {
-			imagePersonnage.src = 'GokuDeplacementH.png'
-			imagePersonnageversLehaut = 'GokuDeplacementversLehaut.png';
+			imagePersonnage.src = 'GokuMouvement.png'
+
 			objPersonnages = new Object();
 			objPersonnages.DeplacementHorizontalX = 1;
 			objPersonnages.DeplacementHorizontalY = 1;
 			objPersonnages.binDroite = false;
 			objPersonnages.binGauche = false;
+
+			objPersonnages.binHaut = false;
+			objPersonnages.binBas = false;
+
 
 			objPersonnages.PositionX = 3;
 			objPersonnages.PositionY = 16;
@@ -558,6 +562,8 @@
 
 			switch (event.keyCode) {
 				case 39:// Flèche-à-droite
+				objPersonnages.binHaut = false;
+					objPersonnages.binBas = false;
 					if (objPersonnages.binGauche) {
 						objPersonnages.DeplacementHorizontalX = 459.8;
 						objPersonnages.binGauche = false;
@@ -569,16 +575,13 @@
 					if (objPersonnages.DeplacementHorizontalX >= 240) {
 						objPersonnages.DeplacementHorizontalX = 144.2;
 					}
-					
+
 
 					if (objPersonnages.PositionXPixel < objCanvas.width - 90) {
 						objPersonnages.PositionXPixel += 15;
 						for (let i = 0; i < tabDragonBalls.length; i++) {
 
 							if (tabDragonBalls[i].binAttraper == false && objPersonnages.PositionXPixel >= tabDragonBalls[i].positionDragonBallsX - 15 && objPersonnages.PositionXPixel <= tabDragonBalls[i].positionDragonBallsX + 24 && objPersonnages.PositionYPixel == tabDragonBalls[i].positionDragonBallsY) {
-								//	console.log(objPersonnages.PositionXPixel + ' ' + objPersonnages.PositionYPixel);
-								//	console.log(tabDragonBalls[i].positionDragonBallsX + ' ' + tabDragonBalls[i].positionDragonBallsY);
-								//	console.log(tabDragonBalls[i].binAttraper);
 
 								tabBalleAttrape.push(tabDragonBalls[i].NoDB);
 								console.log(tabBalleAttrape.length);
@@ -597,6 +600,9 @@
 					break;
 				case 37:// Flèche-à-gauche
 					objPersonnages.binGauche = true;
+					objPersonnages.binHaut = false;
+					objPersonnages.binBas = false;
+
 					//	console.log("A gauche");
 					if (objPersonnages.binDroite) {
 						objPersonnages.DeplacementHorizontalX = 459.8;
@@ -618,12 +624,9 @@
 						for (let i = 0; i < tabDragonBalls.length; i++) {
 
 							if (tabDragonBalls[i].binAttraper == false && objPersonnages.PositionXPixel >= tabDragonBalls[i].positionDragonBallsX - 15 && objPersonnages.PositionXPixel <= tabDragonBalls[i].positionDragonBallsX + 24 && objPersonnages.PositionYPixel == tabDragonBalls[i].positionDragonBallsY) {
-								//	console.log(objPersonnages.PositionXPixel + ' ' + objPersonnages.PositionYPixel);
-								//	console.log(tabDragonBalls[i].positionDragonBallsX + ' ' + tabDragonBalls[i].positionDragonBallsY);
-								//	console.log(tabDragonBalls[i].binAttraper);
+
 
 								tabBalleAttrape.push(tabDragonBalls[i].NoDB);
-								console.log(tabBalleAttrape.length);
 								tabDragonBalls[i].binAttraper = true;
 
 
@@ -638,10 +641,22 @@
 				case 38:// Flèche-en-haut
 					if (objPersonnages.PositionYPixel > 0) {
 
+
+
 						for (let i = 0; i < tabEchelles.length; i++) {
-							//		console.log(objPersonnages.PositionYPixel + ' tabechelles= ' + tabEchelles[i].PositionY + ' tabechelles-30 =' + (tabEchelles[i].PositionY -30))
 							if (objPersonnages.PositionYPixel <= tabEchelles[i].PositionY && objPersonnages.PositionYPixel > tabEchelles[i].PositionY - 30 && objPersonnages.PositionXPixel == tabEchelles[i].PositionX) {
-								//	console.log(objPersonnages.PositionYPixel + ' tabechelles= ' + tabEchelles[i].PositionY + ' tabechelles-30 =' + (tabEchelles[i].PositionY -30) + 'inside')
+								if (objPersonnages.binHaut) {
+									if (objPersonnages.DeplacementHorizontalX == 691) {
+										
+										objPersonnages.DeplacementHorizontalX = 482;
+									} else {
+										objPersonnages.DeplacementHorizontalX += 26.125;
+									}
+								} else {
+									console.log(objPersonnages.DeplacementHorizontalX);
+									objPersonnages.DeplacementHorizontalX = 482;
+									objPersonnages.binHaut = true;
+								}
 								objPersonnages.PositionYPixel -= 15;
 
 							}
@@ -652,32 +667,33 @@
 				case 40: // Flèche-en-bas
 					if (objPersonnages.PositionYPixel < 470) {
 
+
 						for (let i = 0; i < tabEchelles.length; i++) {
 							if (objPersonnages.PositionXPixel == tabEchelles[i].PositionX) {
 								if (objPersonnages.PositionYPixel == tabEchelles[i].PositionY - 30) {
 									objPersonnages.PositionYPixel += 15;
-									
-								}else{
-								
-								console.log(objPersonnages.PositionYPixel + ' tabechelles= ' + tabEchelles[i].PositionY);
-								
-									if(objPersonnages.PositionYPixel+15 >= tabEchelles[i].PositionY && objPersonnages.PositionYPixel+45 <= tabEchelles[i].PositionY +30 ){
-										console.log(objPersonnages.PositionYPixel + ' tabechelles= ' + tabEchelles[i].PositionY + 'inside');
+
+								} else {
+
+
+									if (objPersonnages.PositionYPixel + 15 >= tabEchelles[i].PositionY && objPersonnages.PositionYPixel + 45 <= tabEchelles[i].PositionY + 30) {
+
+										if (objPersonnages.binBas) {
+											if (objPersonnages.DeplacementHorizontalX == 482) {
+												objPersonnages.DeplacementHorizontalX = 664.875;
+											} else {
+												objPersonnages.DeplacementHorizontalX -= 26.125;
+											}
+
+										} else {
+											objPersonnages.DeplacementHorizontalX = 691;
+											objPersonnages.binBas = true;
+										}
 										objPersonnages.PositionYPixel += 15;
 										break;
 									}
 								}
 							}
-
-
-
-
-
-							/*	if(((objPersonnages.PositionYPixel <= tabEchelles[i].PositionY+30  && objPersonnages.PositionYPixel >= tabEchelles[i].PositionY) || (objPersonnages.PositionYPixel == tabEchelles[i].PositionY-30) ) && objPersonnages.PositionXPixel == tabEchelles[i].PositionX){
-									console.log(objPersonnages.PositionYPixel + ' tabechelles= ' + tabEchelles[i].PositionY + ' tabechelles + 30 =' + (tabEchelles[i].PositionY  + 30) + 'inside')
-									objPersonnages.PositionYPixel += 15;
-									
-									}*/
 						}
 
 					}
