@@ -27,11 +27,7 @@
 		let tabEchelles = new Array();
 		let tabDragonBalls = new Array();
 		let tabCordes = new Array();
-		//	let miliSecondes = 0;
-		//	let secondes = 0;
-		//	let minutes = 0;
-		//	let compteurSecondes = 0;
-		//	let compteutMinutes = 0;
+
 		let objChrono = null;
 		let imagePlateforme = new Image();
 		let imageEchelle = new Image();
@@ -47,6 +43,7 @@
 		let imagePersonnageversLehaut = new Image();
 		let objPlateformes = null;
 		let objPersonnages = null;
+		let tabBalleAttrape = new Array();
 
 		class Briques {
 			constructor(positionX, positionY, positionFinX, positionFinY) {
@@ -59,7 +56,7 @@
 
 		}
 
-		
+
 		class Echelles {
 			constructor(positionX, positionY, positionFinX, positionFinY) {
 				this.positionX = positionX;
@@ -84,11 +81,11 @@
 		}
 
 		class DragonBalls {
-			constructor(positionX, positionY,NoDB) {
+			constructor(positionX, positionY, NoDB, binAttraper) {
 				this.positionX = positionX;
 				this.positionY = positionY;
 				this.NoDB = NoDB;
-			
+				this.binAttraper = binAttraper;
 			}
 
 		}
@@ -125,6 +122,11 @@
 			objPersonnages.DeplacementHorizontalY = 1;
 			objPersonnages.binDroite = false;
 			objPersonnages.binGauche = false;
+
+			objPersonnages.PositionX = 3;
+			objPersonnages.PositionY = 16;
+			objPersonnages.PositionXPixel = objPersonnages.PositionX * 15;
+			objPersonnages.PositionYPixel = objPersonnages.PositionY * 30;
 		}
 		function initPlateformesJeu() {
 			objPlateformes = new Object();
@@ -164,18 +166,11 @@
 
 
 		}
-	
-
-		function initDragonBalls() {
-
-			objDragonBalls = new Object();
-			objDragonBalls.positionDragonBallsX = 0;
-			objDragonBalls.positionDragonBallsY = 0;
 
 
-		}
 		function initDessin() {
 			let compteur = 0;
+
 			for (var i = 0; i < objPlateformes.tabPlateformes.length; i++) {
 
 				for (var j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
@@ -186,7 +181,7 @@
 						objBriques.PositionY = i * 30;
 
 						objBriques.binTrou = false;
-					//	console.log(compteur++ + 'PX'+ objBriques.positionX + 'PY' + objBriques.positonY);
+						//	console.log(compteur++ + 'PX'+ objBriques.positionX + 'PY' + objBriques.positonY);
 						tabBirques.push(objBriques);
 
 						//	alert()
@@ -209,44 +204,51 @@
 					}
 					objDragonBalls = new DragonBalls();
 					switch (objPlateformes.tabPlateformes[i][j]) {
-						
+
 						case 4:
-							objDragonBalls.positionX = j * 30;
-							objDragonBalls.positionY = i * 30;
+							objDragonBalls.positionDragonBallsX = j * 30;
+							objDragonBalls.positionDragonBallsY = i * 30;
+							objDragonBalls.binAttraper = false;
 							objDragonBalls.NoDB = 4;
 							tabDragonBalls.push(objDragonBalls);
 							break;
 
 						case 5:
-							objDragonBalls.positionX = j * 30;
-							objDragonBalls.positionY = i * 30;
+							objDragonBalls.positionDragonBallsX = j * 30;
+							objDragonBalls.positionDragonBallsY = i * 30;
 							objDragonBalls.NoDB = 5;
+							objDragonBalls.binAttraper = false;
 							tabDragonBalls.push(objDragonBalls); break;
 						case 6:
-							objDragonBalls.positionX = j * 30;
-							objDragonBalls.positionY = i * 30;
+							objDragonBalls.positionDragonBallsX = j * 30;
+							objDragonBalls.positionDragonBallsY = i * 30;
 							objDragonBalls.NoDB = 6;
+							objDragonBalls.binAttraper = false;
 							tabDragonBalls.push(objDragonBalls); break;
-						case 7: 	
-							objDragonBalls.positionX = j * 30;
-							objDragonBalls.positionY = i * 30;
+						case 7:
+							objDragonBalls.positionDragonBallsX = j * 30;
+							objDragonBalls.positionDragonBallsY = i * 30;
 							objDragonBalls.NoDB = 7;
+							objDragonBalls.binAttraper = false;
 							tabDragonBalls.push(objDragonBalls);
 							break;
-						case 8: 	
-							objDragonBalls.positionX = j * 30;
-							objDragonBalls.positionY = i * 30;
+						case 8:
+							objDragonBalls.positionDragonBallsX = j * 30;
+							objDragonBalls.positionDragonBallsY = i * 30;
 							objDragonBalls.NoDB = 8;
+							objDragonBalls.binAttraper = false;
 							tabDragonBalls.push(objDragonBalls); break;
-						case 9: 
-							objDragonBalls.positionX = j * 30;
-							objDragonBalls.positionY = i * 30;
+						case 9:
+							objDragonBalls.positionDragonBallsX = j * 30;
+							objDragonBalls.positionDragonBallsY = i * 30;
 							objDragonBalls.NoDB = 9;
+							objDragonBalls.binAttraper = false;
 							tabDragonBalls.push(objDragonBalls); break;
-						case 10: 
-							objDragonBalls.positionX = j * 30;
-							objDragonBalls.positionY = i * 30;
+						case 10:
+							objDragonBalls.positionDragonBallsX = j * 30;
+							objDragonBalls.positionDragonBallsY = i * 30;
 							objDragonBalls.NoDB = 10;
+							objDragonBalls.binAttraper = false;
 							tabDragonBalls.push(objDragonBalls); break;
 					}
 
@@ -254,7 +256,7 @@
 				}
 
 			}
-		
+
 		}
 		//Contruire les murs
 		function initMurs() {
@@ -452,21 +454,8 @@
 			let tailleSpriteX = 23;
 			let tailleSpriteY = 30;
 
-			for (let i = 0; i < objPlateformes.tabPlateformes.length; i++) {
+			objC2D.drawImage(imagePersonnage, objPersonnages.DeplacementHorizontalX, objPersonnages.DeplacementHorizontalY, tailleSpriteX, tailleSpriteY, objPersonnages.PositionXPixel, objPersonnages.PositionYPixel, 24.2, 30);
 
-				for (let j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
-					if (objPlateformes.tabPlateformes[i][j] == 44) {
-						objPersonnages.PositionX = j;
-						objPersonnages.PositionY = i;
-						objPersonnages.PositionXPixel = j * 15;
-						objPersonnages.PositionYPixel = i * 30;
-
-						objC2D.drawImage(imagePersonnage, objPersonnages.DeplacementHorizontalX, objPersonnages.DeplacementHorizontalY, tailleSpriteX, tailleSpriteY, objPersonnages.PositionXPixel, objPersonnages.PositionYPixel, 24.2, 30);
-						
-					}
-
-				}
-			}
 			objC2D.restore();
 		}
 		function dessinerMurs() {
@@ -502,54 +491,62 @@
 				objC2D.drawImage(imagePlateforme, tabBirques[i].PositionX, tabBirques[i].PositionY);
 			}
 			for (var i = 0; i < tabEchelles.length; i++) {
-				objC2D.drawImage(imageEchelle,tabEchelles[i].PositionX,tabEchelles[i].PositionY);
+				objC2D.drawImage(imageEchelle, tabEchelles[i].PositionX, tabEchelles[i].PositionY);
 			}
-			
+
 			for (var i = 0; i < tabCordes.length; i++) {
-				objC2D.drawImage(imageCorde,tabCordes[i].PositionX,tabCordes[i].PositionY);
+				objC2D.drawImage(imageCorde, tabCordes[i].PositionX, tabCordes[i].PositionY);
 			}
 			//console.log("length tableau : " + tabDragonBalls.length)
 			for (var i = 0; i < tabDragonBalls.length; i++) {
 				switch (tabDragonBalls[i].NoDB) {
 					case 4:
-					objC2D.drawImage(imageBalle1,tabDragonBalls[i].positionX,tabDragonBalls[i].positionY);
+						if (tabDragonBalls[i].binAttraper == false) {
+							objC2D.drawImage(imageBalle1, tabDragonBalls[i].positionDragonBallsX, tabDragonBalls[i].positionDragonBallsY);
+						}
 						break;
 
-						case 5:
-					objC2D.drawImage(imageBalle2,tabDragonBalls[i].positionX,tabDragonBalls[i].positionY);
-
+					case 5:
+						if (tabDragonBalls[i].binAttraper == false) {
+							objC2D.drawImage(imageBalle2, tabDragonBalls[i].positionDragonBallsX, tabDragonBalls[i].positionDragonBallsY);
+						}
 						break;
 
-						case 6:
-					objC2D.drawImage(imageBalle3,tabDragonBalls[i].positionX,tabDragonBalls[i].positionY);
-
+					case 6:
+						if (tabDragonBalls[i].binAttraper == false) {
+							objC2D.drawImage(imageBalle3, tabDragonBalls[i].positionDragonBallsX, tabDragonBalls[i].positionDragonBallsY);
+						}
 						break;
 
-						case 7:
-					objC2D.drawImage(imageBalle4,tabDragonBalls[i].positionX,tabDragonBalls[i].positionY);
-
+					case 7:
+						if (tabDragonBalls[i].binAttraper == false) {
+							objC2D.drawImage(imageBalle4, tabDragonBalls[i].positionDragonBallsX, tabDragonBalls[i].positionDragonBallsY);
+						}
 						break;
 
-						case 8:
-					objC2D.drawImage(imageBalle5,tabDragonBalls[i].positionX,tabDragonBalls[i].positionY);
-
+					case 8:
+						if (tabDragonBalls[i].binAttraper == false) {
+							objC2D.drawImage(imageBalle5, tabDragonBalls[i].positionDragonBallsX, tabDragonBalls[i].positionDragonBallsY);
+						}
 						break;
 
-						case 9:
-					objC2D.drawImage(imageBalle6,tabDragonBalls[i].positionX,tabDragonBalls[i].positionY);
-
+					case 9:
+						if (tabDragonBalls[i].binAttraper == false) {
+							objC2D.drawImage(imageBalle6, tabDragonBalls[i].positionDragonBallsX, tabDragonBalls[i].positionDragonBallsY);
+						}
 						break;
 
-						case 10:
-					objC2D.drawImage(imageBalle7,tabDragonBalls[i].positionX,tabDragonBalls[i].positionY);
-
+					case 10:
+						if (tabDragonBalls[i].binAttraper == false) {
+							objC2D.drawImage(imageBalle7, tabDragonBalls[i].positionDragonBallsX, tabDragonBalls[i].positionDragonBallsY);
+						}
 						break;
-				
+
 					default:
 						break;
 				}
 			}
-			
+
 
 			objC2D.restore();
 		}
@@ -575,10 +572,23 @@
 					
 
 					if (objPersonnages.PositionXPixel < objCanvas.width - 90) {
-				//objC2D.restore();
-						objC2D.translate(objPersonnages.PositionXPixel+30,objPersonnages.PositionYPixel)
-					//	objC2D.drawImage(imagePersonnage, objPersonnages.DeplacementHorizontalX, objPersonnages.DeplacementHorizontalY, tailleSpriteX, tailleSpriteY, objPersonnages.PositionXPixel, objPersonnages.PositionYPixel, 24.2, 30);
-						
+						objPersonnages.PositionXPixel += 15;
+						for (let i = 0; i < tabDragonBalls.length; i++) {
+
+							if (tabDragonBalls[i].binAttraper == false && objPersonnages.PositionXPixel >= tabDragonBalls[i].positionDragonBallsX - 15 && objPersonnages.PositionXPixel <= tabDragonBalls[i].positionDragonBallsX + 24 && objPersonnages.PositionYPixel == tabDragonBalls[i].positionDragonBallsY) {
+								//	console.log(objPersonnages.PositionXPixel + ' ' + objPersonnages.PositionYPixel);
+								//	console.log(tabDragonBalls[i].positionDragonBallsX + ' ' + tabDragonBalls[i].positionDragonBallsY);
+								//	console.log(tabDragonBalls[i].binAttraper);
+
+								tabBalleAttrape.push(tabDragonBalls[i].NoDB);
+								console.log(tabBalleAttrape.length);
+								tabDragonBalls[i].binAttraper = true;
+
+
+							}
+						}
+
+
 					}
 
 
@@ -594,34 +604,83 @@
 					}
 
 					objPersonnages.DeplacementHorizontalX -= 24.2;
-					//	console.log(objPersonnages.DeplacementHorizontalX);
+
 					//on va voir si on a atteint la fin du sprite pour recommencer afin  de faire lanimation lorsquil va
 					if (objPersonnages.DeplacementHorizontalX <= 264) {
 
 						objPersonnages.DeplacementHorizontalX = 340;
 					}
 
-					//lespace avant devient vide
+
 
 					if (objPersonnages.PositionXPixel > 0) {
+						objPersonnages.PositionXPixel -= 15;
+						for (let i = 0; i < tabDragonBalls.length; i++) {
 
-						objPlateformes.tabPlateformes[objPersonnages.PositionYPixel / 30][objPersonnages.PositionXPixel / 15] = 0;
-						//on augmente la position des y pour avancer dans le tableau
+							if (tabDragonBalls[i].binAttraper == false && objPersonnages.PositionXPixel >= tabDragonBalls[i].positionDragonBallsX - 15 && objPersonnages.PositionXPixel <= tabDragonBalls[i].positionDragonBallsX + 24 && objPersonnages.PositionYPixel == tabDragonBalls[i].positionDragonBallsY) {
+								//	console.log(objPersonnages.PositionXPixel + ' ' + objPersonnages.PositionYPixel);
+								//	console.log(tabDragonBalls[i].positionDragonBallsX + ' ' + tabDragonBalls[i].positionDragonBallsY);
+								//	console.log(tabDragonBalls[i].binAttraper);
 
-						objPersonnages.PositionXPixel = (objPersonnages.PositionXPixel / 15) - 1;
+								tabBalleAttrape.push(tabDragonBalls[i].NoDB);
+								console.log(tabBalleAttrape.length);
+								tabDragonBalls[i].binAttraper = true;
+
+
+							}
+						}
 
 
 
-						//lespace apres devient la prochaine image
-						objPlateformes.tabPlateformes[(objPersonnages.PositionYPixel / 30)][objPersonnages.PositionXPixel] = 44;
 
 					}
 					break;
 				case 38:// Flèche-en-haut
-					console.log("En haut");
+					if (objPersonnages.PositionYPixel > 0) {
+
+						for (let i = 0; i < tabEchelles.length; i++) {
+							//		console.log(objPersonnages.PositionYPixel + ' tabechelles= ' + tabEchelles[i].PositionY + ' tabechelles-30 =' + (tabEchelles[i].PositionY -30))
+							if (objPersonnages.PositionYPixel <= tabEchelles[i].PositionY && objPersonnages.PositionYPixel > tabEchelles[i].PositionY - 30 && objPersonnages.PositionXPixel == tabEchelles[i].PositionX) {
+								//	console.log(objPersonnages.PositionYPixel + ' tabechelles= ' + tabEchelles[i].PositionY + ' tabechelles-30 =' + (tabEchelles[i].PositionY -30) + 'inside')
+								objPersonnages.PositionYPixel -= 15;
+
+							}
+						}
+
+					}
 					break;
 				case 40: // Flèche-en-bas
-					console.log("En bas");
+					if (objPersonnages.PositionYPixel < 470) {
+
+						for (let i = 0; i < tabEchelles.length; i++) {
+							if (objPersonnages.PositionXPixel == tabEchelles[i].PositionX) {
+								if (objPersonnages.PositionYPixel == tabEchelles[i].PositionY - 30) {
+									objPersonnages.PositionYPixel += 15;
+									
+								}else{
+								
+								console.log(objPersonnages.PositionYPixel + ' tabechelles= ' + tabEchelles[i].PositionY);
+								
+									if(objPersonnages.PositionYPixel+15 >= tabEchelles[i].PositionY && objPersonnages.PositionYPixel+45 <= tabEchelles[i].PositionY +30 ){
+										console.log(objPersonnages.PositionYPixel + ' tabechelles= ' + tabEchelles[i].PositionY + 'inside');
+										objPersonnages.PositionYPixel += 15;
+										break;
+									}
+								}
+							}
+
+
+
+
+
+							/*	if(((objPersonnages.PositionYPixel <= tabEchelles[i].PositionY+30  && objPersonnages.PositionYPixel >= tabEchelles[i].PositionY) || (objPersonnages.PositionYPixel == tabEchelles[i].PositionY-30) ) && objPersonnages.PositionXPixel == tabEchelles[i].PositionX){
+									console.log(objPersonnages.PositionYPixel + ' tabechelles= ' + tabEchelles[i].PositionY + ' tabechelles + 30 =' + (tabEchelles[i].PositionY  + 30) + 'inside')
+									objPersonnages.PositionYPixel += 15;
+									
+									}*/
+						}
+
+					}
 					break;
 			}
 			objC2D.restore();
