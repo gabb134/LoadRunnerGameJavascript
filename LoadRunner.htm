@@ -13,11 +13,11 @@
 		let objC2D = null;
 		let objCycleAnimation = null;
 		let objImageFond = null;
-		let objImageScore = null;
+		let objImageInfoJeu = null;
 		let tabObjMurs = null;
 		let objImageMurs = null;
 		let objMotif = null;
-		let objScore = null;
+		let objInfoJeu = null;
 
 		let objBriques = null;
 		let objEchelles = null;
@@ -96,7 +96,7 @@
 			objC2D = objCanvas.getContext('2d');
 			initImageFond();
 			initMurs();
-			initScore();
+			initInfoJeu();
 			initChrono();
 			initPlateformesJeu();
 			initPersonnage();
@@ -110,11 +110,13 @@
 			objImageFond = new Image();
 			objImageFond.src = 'backroundLoadRunner.png';
 		}
-		function initScore() {
-			objImageScore = new Image();
-			objImageScore.src = 'dbzNoir.jpg';
-			objScore = new Object();
-			objScore.score = 0
+		function initInfoJeu() {
+			objImageInfoJeu = new Image();
+			objImageInfoJeu.src = 'dbzNoir.jpg';
+			objInfoJeu = new Object();
+			objInfoJeu.score = 0
+			objInfoJeu.niveau = 1;
+			objInfoJeu.vies = 5;
 		}
 
 		function initPersonnage() {
@@ -383,14 +385,14 @@
 			objC2D.save();  // Sauvegarde le contexte
 
 			//Image drangon ball z
-			objC2D.drawImage(objImageScore, 0, 570, objCanvas.width, 100);
+			objC2D.drawImage(objImageInfoJeu, 0, 570, objCanvas.width, 100);
 
 
 
 
 			//Score
 			objC2D.beginPath();
-			strTexteScore = "Score: " +String(Number(objScore.score)).padStart(7,'0');
+			strTexteScore = "Score: " +String(Number(objInfoJeu.score)).padStart(7,'0');
 			objC2D.textAlign = "center";
 			objC2D.textBaseLine = "bottom";
 			objC2D.font = '25pt fantasy';
@@ -410,14 +412,14 @@
 
 			//Niveau
 			objC2D.beginPath();
-			strTexteNiveau = "Niveau: " + "1";
+			strTexteNiveau = "Niveau: " + objInfoJeu.niveau;
 			objC2D.textAlign = "center";
 			objC2D.textBaseLine = "bottom";
 			objC2D.font = '25pt fantasy';
 
 			//Vies
 			objC2D.beginPath();
-			strTextVies = "Vies: " + "5";
+			strTextVies = "Vies: " + objInfoJeu.vies;
 			objC2D.textAlign = "center";
 			objC2D.textBaseLine = "bottom";
 			objC2D.font = '25pt fantasy';
@@ -591,16 +593,16 @@
 								console.log(tabBalleAttrape.length);
 								tabDragonBalls[i].binAttraper = true;
 
-								//	objScore.score+=250;
+								//	objInfoJeu.score+=250;
 
 								let intTest = String(250).padStart(7, '0');
 
 								let intTest2 = String(250).padStart(7, '0');
 
-								objScore.score += 250;
+								objInfoJeu.score += 250;
 
 							//	console.log(String(Number(intTest)+Number(intTest2)).padStart(7,'0') )
-								console.log("score "+Number(objScore.score))
+								console.log("score "+Number(objInfoJeu.score))
 							}
 						}
 
@@ -665,7 +667,7 @@
 								tabBalleAttrape.push(tabDragonBalls[i].NoDB);
 								tabDragonBalls[i].binAttraper = true;
 								//console.log("attrapoer")
-								//objScore.score+= (7).pad(250);
+								//objInfoJeu.score+= (7).pad(250);
 
 
 
@@ -673,7 +675,7 @@
 
 							//	console.log(intTest.valueOf())
 
-								objScore.score += 250;
+								objInfoJeu.score += 250;
 							}
 						}
 
