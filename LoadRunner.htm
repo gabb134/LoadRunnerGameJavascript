@@ -24,6 +24,8 @@
 		let objDragonBalls = null;
 		let objCordes = null;
 
+		let objSons = null;
+
 		let tabBirques = new Array();
 		let tabEchelles = new Array();
 		let tabDragonBalls = new Array();
@@ -101,6 +103,7 @@
 			initPlateformesJeu();
 			initPersonnage();
 			initDessin();
+			initSons();
 			dessiner(); // Dessiner une première fois
 			animer();
 			console.log("Au debut x: " + objPersonnages.PositionXPixel / 15 + ", y: " + objPersonnages.PositionYPixel / 30);
@@ -117,6 +120,11 @@
 			objInfoJeu.score = 0
 			objInfoJeu.niveau = 1;
 			objInfoJeu.vies = 5;
+		}
+		function initSons(){
+			objSons = new Object();
+			objSons.ramasseDragonBalls =  document.getElementById("sonRamasseDragonBalls");
+			objSons.binJouer = false;
 		}
 
 		function initPersonnage() {
@@ -592,7 +600,9 @@
 								tabBalleAttrape.push(tabDragonBalls[i].NoDB);
 								console.log(tabBalleAttrape.length);
 								tabDragonBalls[i].binAttraper = true;
-
+								if(tabDragonBalls[i].binAttraper){
+									objSons.ramasseDragonBalls.play();
+								}
 								//	objInfoJeu.score+=250;
 
 								let intTest = String(250).padStart(7, '0');
@@ -668,7 +678,9 @@
 								tabDragonBalls[i].binAttraper = true;
 								//console.log("attrapoer")
 								//objInfoJeu.score+= (7).pad(250);
-
+								if(tabDragonBalls[i].binAttraper){
+									objSons.ramasseDragonBalls.play();
+								}
 
 
 							//	let intTest = parseInt(String(250).padStart(7, '0'))
@@ -753,6 +765,11 @@
 	<canvas id="monCanvas" width="960" height="670" tabindex="1" onkeydown="deplacerPersonnages()">
 		Votre navigateur ne supporte pas la balise canvas
 	</canvas>
+	<audio id="sonRamasseDragonBalls" >
+		<source src="ramasseDragonBalls.mp3" type="audio/mpeg"/>
+		Ce navigateur ne gère pas l’audio.
+		<!--    <a onClick="jouerSon()">-->
+	</audio>
 </body>
 
 </html>
