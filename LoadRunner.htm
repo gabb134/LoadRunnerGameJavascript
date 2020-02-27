@@ -633,7 +633,30 @@
 
 
 					if (objPersonnages.PositionXPixel > 0) {
-						objPersonnages.PositionXPixel -= 15;
+						let binBriqueSurMonY = false;
+						for (let j = 0; j < tabBirques.length && binBriqueSurMonY == false; j++) {
+							console.log(tabBirques[j].PositionY + '--' + objPersonnages.PositionYPixel);
+							if (tabBirques[j].PositionY == objPersonnages.PositionYPixel) {
+								binBriqueSurMonY = true;
+								
+								console.log(objPersonnages.PositionXPixel + ' < ' + (tabBirques[j].PositionX + 45));
+
+								if(objPersonnages.PositionXPixel > tabBirques[j].PositionX + 60){
+									objPersonnages.PositionXPixel -= 15;
+
+								}
+								
+							}
+							else{
+								
+								
+								binBriqueSurMonY = false;
+							}
+						}
+						if(!binBriqueSurMonY){
+							objPersonnages.PositionXPixel -= 15;
+						}
+						
 						for (let i = 0; i < tabDragonBalls.length; i++) {
 
 							if (tabDragonBalls[i].binAttraper == false && objPersonnages.PositionXPixel >= tabDragonBalls[i].positionDragonBallsX - 15 && objPersonnages.PositionXPixel <= tabDragonBalls[i].positionDragonBallsX + 24 && objPersonnages.PositionYPixel == tabDragonBalls[i].positionDragonBallsY) {
@@ -674,7 +697,7 @@
 										objPersonnages.DeplacementHorizontalX += 26.125;
 									}
 								} else {
-									console.log(objPersonnages.DeplacementHorizontalX);
+									//	console.log(objPersonnages.DeplacementHorizontalX);
 									objPersonnages.DeplacementHorizontalX = 482;
 									objPersonnages.binHaut = true;
 								}
@@ -695,19 +718,18 @@
 									objPersonnages.PositionYPixel += 15;
 
 								} else {
-
-
 									if (objPersonnages.PositionYPixel + 15 >= tabEchelles[i].PositionY && objPersonnages.PositionYPixel + 45 <= tabEchelles[i].PositionY + 30) {
 
 										if (objPersonnages.binBas) {
+											//console.log(objPersonnages.DeplacementHorizontalX + 'a');
 											if (objPersonnages.DeplacementHorizontalX == 482) {
 												objPersonnages.DeplacementHorizontalX = 664.875;
 											} else {
 												objPersonnages.DeplacementHorizontalX -= 26.125;
 											}
-
 										} else {
-											objPersonnages.DeplacementHorizontalX = 691;
+											//	console.log(objPersonnages.DeplacementHorizontalX + 'a');
+											objPersonnages.DeplacementHorizontalX = 664.875;
 											objPersonnages.binBas = true;
 										}
 										objPersonnages.PositionYPixel += 15;
