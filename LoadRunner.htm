@@ -17,6 +17,7 @@
 		let tabObjMurs = null;
 		let objImageMurs = null;
 		let objMotif = null;
+		let objScore = null;
 
 		let objBriques = null;
 		let objEchelles = null;
@@ -112,6 +113,8 @@
 		function initScore() {
 			objImageScore = new Image();
 			objImageScore.src = 'dbzNoir.jpg';
+			objScore = new Object();
+			objScore.score = 0
 		}
 
 		function initPersonnage() {
@@ -202,7 +205,7 @@
 						objCordes = new Cordes();
 
 						objCordes.PositionX = j * 30;
-						objCordes.PositionY = i * 30;
+						objCordes.PositionY = i * 30+4;
 
 						tabCordes.push(objCordes);
 					}
@@ -386,7 +389,7 @@
 
 			//Score
 			objC2D.beginPath();
-			strTexteScore = "Score: " + "00000";
+			strTexteScore = "Score: " +String(Number(objScore.score)).padStart(7,'0');
 			objC2D.textAlign = "center";
 			objC2D.textBaseLine = "bottom";
 			objC2D.font = '25pt fantasy';
@@ -562,7 +565,7 @@
 
 			switch (event.keyCode) {
 				case 39:// Flèche-à-droite
-				objPersonnages.binHaut = false;
+					objPersonnages.binHaut = false;
 					objPersonnages.binBas = false;
 					if (objPersonnages.binGauche) {
 						objPersonnages.DeplacementHorizontalX = 459.8;
@@ -587,7 +590,16 @@
 								console.log(tabBalleAttrape.length);
 								tabDragonBalls[i].binAttraper = true;
 
+								//	objScore.score+=250;
 
+								let intTest = String(250).padStart(7, '0');
+
+								let intTest2 = String(250).padStart(7, '0');
+
+								objScore.score += 250;
+
+							//	console.log(String(Number(intTest)+Number(intTest2)).padStart(7,'0') )
+								console.log("score "+Number(objScore.score))
 							}
 						}
 
@@ -628,8 +640,16 @@
 
 								tabBalleAttrape.push(tabDragonBalls[i].NoDB);
 								tabDragonBalls[i].binAttraper = true;
+								//console.log("attrapoer")
+								//objScore.score+= (7).pad(250);
 
 
+
+							//	let intTest = parseInt(String(250).padStart(7, '0'))
+
+							//	console.log(intTest.valueOf())
+
+								objScore.score += 250;
 							}
 						}
 
@@ -647,7 +667,7 @@
 							if (objPersonnages.PositionYPixel <= tabEchelles[i].PositionY && objPersonnages.PositionYPixel > tabEchelles[i].PositionY - 30 && objPersonnages.PositionXPixel == tabEchelles[i].PositionX) {
 								if (objPersonnages.binHaut) {
 									if (objPersonnages.DeplacementHorizontalX == 691) {
-										
+
 										objPersonnages.DeplacementHorizontalX = 482;
 									} else {
 										objPersonnages.DeplacementHorizontalX += 26.125;
