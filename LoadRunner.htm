@@ -691,35 +691,10 @@
 									binBriqueSurMonY = false;
 								}
 							}
-<<<<<<< HEAD
-							else{
-								
-								
-								binBriqueSurMonY = false;
-							}
-						}
-						if(!binBriqueSurMonY){
-							objPersonnages.PositionXPixel -= 15;
-						}
-						
-						for (let i = 0; i < tabDragonBalls.length; i++) {
-
-							if (tabDragonBalls[i].binAttraper == false && objPersonnages.PositionXPixel >= tabDragonBalls[i].positionDragonBallsX - 15 && objPersonnages.PositionXPixel <= tabDragonBalls[i].positionDragonBallsX + 24 && objPersonnages.PositionYPixel == tabDragonBalls[i].positionDragonBallsY) {
-
-
-								tabBalleAttrape.push(tabDragonBalls[i].NoDB);
-								tabDragonBalls[i].binAttraper = true;
-								//console.log("attrapoer")
-								//objInfoJeu.score+= (7).pad(250);
-								if(tabDragonBalls[i].binAttraper){
-									objSons.ramasseDragonBalls.play();
-								}
-=======
 
 							if (!binBriqueSurMonY) {
 								objPersonnages.PositionXPixel -= 15;
 							}
->>>>>>> db11beb76929b126302bd70f00bbd25c0775fdd4
 
 							for (let i = 0; i < tabDragonBalls.length; i++) {
 
