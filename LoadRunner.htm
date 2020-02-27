@@ -138,7 +138,7 @@
 
 			objPersonnages.binHaut = false;
 			objPersonnages.binBas = false;
-			
+
 
 
 			objPersonnages.PositionX = 3;
@@ -216,7 +216,7 @@
 						objCordes = new Cordes();
 
 						objCordes.PositionX = j * 30;
-						objCordes.PositionY = i * 30+4;
+						objCordes.PositionY = i * 30 + 4;
 
 						tabCordes.push(objCordes);
 					}
@@ -400,7 +400,7 @@
 
 			//Score
 			objC2D.beginPath();
-			strTexteScore = "Score: " +String(Number(objInfoJeu.score)).padStart(7,'0');
+			strTexteScore = "Score: " + String(Number(objInfoJeu.score)).padStart(7, '0');
 			objC2D.textAlign = "center";
 			objC2D.textBaseLine = "bottom";
 			objC2D.font = '25pt fantasy';
@@ -576,6 +576,7 @@
 
 			switch (event.keyCode) {
 				case 39:// Flèche-à-droite
+			
 					objPersonnages.binHaut = false;
 					objPersonnages.binBas = false;
 					if (objPersonnages.binGauche) {
@@ -592,8 +593,33 @@
 
 
 					if (objPersonnages.PositionXPixel < objCanvas.width - 90) {
-						objPersonnages.PositionXPixel += 15;
+					//	objPersonnages.PositionXPixel += 15;
+					let binBriqueDroiteSurMonY = false;
+
+						for (let k = 0; k < tabBirques.length && !binBriqueDroiteSurMonY; k++) {
+								if(tabBirques[k].PositionY == objPersonnages.PositionYPixel || tabBirques[k].PositionY -15 == objPersonnages.PositionYPixel|| tabBirques[k].PositionY +15 == objPersonnages.PositionYPixel){
+								
+								//	console.log('Position Brique : ' + (tabBirques[k].PositionX+30) + '- PositionPersonnage : ' + objPersonnages.PositionXPixel);
+									if ( tabBirques[k].PositionX-30 != objPersonnages.PositionXPixel) {
+							
+									binBriqueDroiteSurMonY = false;
+									}
+									else{
+										binBriqueDroiteSurMonY = true;
+									}
+								}else{
+									binBriqueDroiteSurMonY = false;
+								}
+							}
+
+							if (!binBriqueDroiteSurMonY) {
+								objPersonnages.PositionXPixel += 15;
+							}
+
+			
+			
 						for (let i = 0; i < tabDragonBalls.length; i++) {
+
 
 							if (tabDragonBalls[i].binAttraper == false && objPersonnages.PositionXPixel >= tabDragonBalls[i].positionDragonBallsX - 15 && objPersonnages.PositionXPixel <= tabDragonBalls[i].positionDragonBallsX + 24 && objPersonnages.PositionYPixel == tabDragonBalls[i].positionDragonBallsY) {
 
@@ -611,8 +637,8 @@
 
 								objInfoJeu.score += 250;
 
-							//	console.log(String(Number(intTest)+Number(intTest2)).padStart(7,'0') )
-								console.log("score "+Number(objInfoJeu.score))
+								//	console.log(String(Number(intTest)+Number(intTest2)).padStart(7,'0') )
+								console.log("score " + Number(objInfoJeu.score))
 							}
 						}
 
@@ -621,44 +647,51 @@
 
 
 
-
+				
 					break;
 				case 37:// Flèche-à-gauche
-					objPersonnages.binGauche = true;
-					objPersonnages.binHaut = false;
-					objPersonnages.binBas = false;
+				
+						objPersonnages.binGauche = true;
+					
 
-					//	console.log("A gauche");
-					if (objPersonnages.binDroite) {
-						objPersonnages.DeplacementHorizontalX = 459.8;
-						objPersonnages.binDroite = false;
-					}
+						//	console.log("A gauche");
+						if (objPersonnages.binDroite) {
+							objPersonnages.DeplacementHorizontalX = 459.8;
+							objPersonnages.binDroite = false;
+						}
 
-					objPersonnages.DeplacementHorizontalX -= 24.2;
+						objPersonnages.DeplacementHorizontalX -= 24.2;
 
-					//on va voir si on a atteint la fin du sprite pour recommencer afin  de faire lanimation lorsquil va
-					if (objPersonnages.DeplacementHorizontalX <= 264) {
+						//on va voir si on a atteint la fin du sprite pour recommencer afin  de faire lanimation lorsquil va
+						if (objPersonnages.DeplacementHorizontalX <= 264) {
 
-						objPersonnages.DeplacementHorizontalX = 340;
-					}
+							objPersonnages.DeplacementHorizontalX = 340;
+						}
 
 
 
-					if (objPersonnages.PositionXPixel > 0) {
-						let binBriqueSurMonY = false;
-						for (let j = 0; j < tabBirques.length && binBriqueSurMonY == false; j++) {
-							console.log(tabBirques[j].PositionY + '--' + objPersonnages.PositionYPixel);
-							if (tabBirques[j].PositionY == objPersonnages.PositionYPixel) {
-								binBriqueSurMonY = true;
-								
-								console.log(objPersonnages.PositionXPixel + ' < ' + (tabBirques[j].PositionX + 45));
+						if (objPersonnages.PositionXPixel > 0) {
+							let binBriqueSurMonY = false;
 
-								if(objPersonnages.PositionXPixel > tabBirques[j].PositionX + 60){
-									objPersonnages.PositionXPixel -= 15;
 
+						
+
+							for (let j = 0; j < tabBirques.length && !binBriqueSurMonY; j++) {
+								if(tabBirques[j].PositionY == objPersonnages.PositionYPixel || tabBirques[j].PositionY -15 == objPersonnages.PositionYPixel|| tabBirques[j].PositionY +15 == objPersonnages.PositionYPixel){
+								//	binBriqueSurMonY = true;
+									console.log('Position Brique : ' + (tabBirques[j].PositionX+30) + '- PositionPersonnage : ' + objPersonnages.PositionXPixel);
+									if ( tabBirques[j].PositionX + 30 != objPersonnages.PositionXPixel) {
+									//	objPersonnages.PositionXPixel -= 15;
+									binBriqueSurMonY = false;
+									}
+									else{
+										binBriqueSurMonY = true;
+									}
+								}else{
+									binBriqueSurMonY = false;
 								}
-								
 							}
+<<<<<<< HEAD
 							else{
 								
 								
@@ -681,22 +714,31 @@
 								if(tabDragonBalls[i].binAttraper){
 									objSons.ramasseDragonBalls.play();
 								}
+=======
 
-
-							//	let intTest = parseInt(String(250).padStart(7, '0'))
-
-							//	console.log(intTest.valueOf())
-
-								objInfoJeu.score += 250;
+							if (!binBriqueSurMonY) {
+								objPersonnages.PositionXPixel -= 15;
 							}
+>>>>>>> db11beb76929b126302bd70f00bbd25c0775fdd4
+
+							for (let i = 0; i < tabDragonBalls.length; i++) {
+
+								if (tabDragonBalls[i].binAttraper == false && objPersonnages.PositionXPixel >= tabDragonBalls[i].positionDragonBallsX - 15 && objPersonnages.PositionXPixel <= tabDragonBalls[i].positionDragonBallsX + 24 && objPersonnages.PositionYPixel == tabDragonBalls[i].positionDragonBallsY) {
+
+									tabBalleAttrape.push(tabDragonBalls[i].NoDB);
+									tabDragonBalls[i].binAttraper = true;
+
+									objInfoJeu.score += 250;
+								}
+							}
+
+
+
 						}
-
-
-
-
-					}
+					
 					break;
 				case 38:// Flèche-en-haut
+
 					if (objPersonnages.PositionYPixel > 0) {
 
 
@@ -708,6 +750,7 @@
 
 										objPersonnages.DeplacementHorizontalX = 482;
 									} else {
+
 										objPersonnages.DeplacementHorizontalX += 26.125;
 									}
 								} else {
@@ -715,12 +758,15 @@
 									objPersonnages.DeplacementHorizontalX = 482;
 									objPersonnages.binHaut = true;
 								}
+							
 								objPersonnages.PositionYPixel -= 15;
 
 							}
+							
 						}
 
 					}
+
 					break;
 				case 40: // Flèche-en-bas
 					if (objPersonnages.PositionYPixel < 470) {
@@ -739,6 +785,7 @@
 											if (objPersonnages.DeplacementHorizontalX == 482) {
 												objPersonnages.DeplacementHorizontalX = 664.875;
 											} else {
+
 												objPersonnages.DeplacementHorizontalX -= 26.125;
 											}
 										} else {
@@ -746,6 +793,7 @@
 											objPersonnages.DeplacementHorizontalX = 664.875;
 											objPersonnages.binBas = true;
 										}
+										
 										objPersonnages.PositionYPixel += 15;
 										break;
 									}
