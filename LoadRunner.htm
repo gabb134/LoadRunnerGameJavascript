@@ -121,9 +121,9 @@
 			objInfoJeu.niveau = 1;
 			objInfoJeu.vies = 5;
 		}
-		function initSons(){
+		function initSons() {
 			objSons = new Object();
-			objSons.ramasseDragonBalls =  document.getElementById("sonRamasseDragonBalls");
+			objSons.ramasseDragonBalls = document.getElementById("sonRamasseDragonBalls");
 			objSons.binJouer = false;
 		}
 
@@ -145,6 +145,8 @@
 			objPersonnages.PositionY = 16;
 			objPersonnages.PositionXPixel = objPersonnages.PositionX * 15;
 			objPersonnages.PositionYPixel = objPersonnages.PositionY * 30;
+
+			objPersonnages.gravite = 0;
 		}
 		function initPlateformesJeu() {
 			objPlateformes = new Object();
@@ -355,6 +357,9 @@
 		function mettreAjourAnimation() {
 
 			dessinerChronometre();
+			objPersonnages.gravite +=0.1;
+
+			
 		}
 
 		// Pour dessiner
@@ -576,7 +581,7 @@
 
 			switch (event.keyCode) {
 				case 39:// Flèche-à-droite
-			
+
 					objPersonnages.binHaut = false;
 					objPersonnages.binBas = false;
 					if (objPersonnages.binGauche) {
@@ -593,31 +598,32 @@
 
 
 					if (objPersonnages.PositionXPixel < objCanvas.width - 90) {
-					//	objPersonnages.PositionXPixel += 15;
-					let binBriqueDroiteSurMonY = false;
+						//	objPersonnages.PositionXPixel += 15;
+						let binBriqueDroiteSurMonY = false;
+
 
 						for (let k = 0; k < tabBirques.length && !binBriqueDroiteSurMonY; k++) {
-								if(tabBirques[k].PositionY == objPersonnages.PositionYPixel || tabBirques[k].PositionY -15 == objPersonnages.PositionYPixel|| tabBirques[k].PositionY +15 == objPersonnages.PositionYPixel){
-								
+							if (tabBirques[k].PositionY == objPersonnages.PositionYPixel || tabBirques[k].PositionY - 15 == objPersonnages.PositionYPixel || tabBirques[k].PositionY + 15 == objPersonnages.PositionYPixel) {
+
 								//	console.log('Position Brique : ' + (tabBirques[k].PositionX+30) + '- PositionPersonnage : ' + objPersonnages.PositionXPixel);
-									if ( tabBirques[k].PositionX-30 != objPersonnages.PositionXPixel) {
-							
-									binBriqueDroiteSurMonY = false;
-									}
-									else{
-										binBriqueDroiteSurMonY = true;
-									}
-								}else{
+								if (tabBirques[k].PositionX - 30 != objPersonnages.PositionXPixel) {
+
 									binBriqueDroiteSurMonY = false;
 								}
+								else {
+									binBriqueDroiteSurMonY = true;
+								}
+							} else {
+								binBriqueDroiteSurMonY = false;
 							}
+						}
 
-							if (!binBriqueDroiteSurMonY) {
-								objPersonnages.PositionXPixel += 15;
-							}
+						if (!binBriqueDroiteSurMonY) {
+							objPersonnages.PositionXPixel += 15;
+						}
 
-			
-			
+
+
 						for (let i = 0; i < tabDragonBalls.length; i++) {
 
 
@@ -626,7 +632,7 @@
 								tabBalleAttrape.push(tabDragonBalls[i].NoDB);
 								console.log(tabBalleAttrape.length);
 								tabDragonBalls[i].binAttraper = true;
-								if(tabDragonBalls[i].binAttraper){
+								if (tabDragonBalls[i].binAttraper) {
 									objSons.ramasseDragonBalls.play();
 								}
 								//	objInfoJeu.score+=250;
@@ -642,75 +648,107 @@
 							}
 						}
 
+						//pour la gavite
+
+					/*	let binGravite = false;
+
+						//console.log(objPersonnages.PositionYPixel)
+						console.log(objPersonnages.gravite)
+					
+						for (let l = 0; l < tabBirques.length; l++) {
+
+							//	console.log("briques : "+tabBirques[i].PositionY)
+							if (tabBirques[l].PositionY >= 150) {
+								if (tabBirques[l].PositionY == objPersonnages.PositionYPixel) {
+									console.log("en haut 2iem brique")
+								
+									//binGravite = true;
+									objPersonnages.PositionYPixel +=objPersonnages.gravite;
+
+
+								}
+
+							}
+ 
+						}
+						if(binGravite==true){
+							//if(objPersonnages.PositionYPixel>=480)
+						
+						}
+
+						console.log(binGravite)*/
 
 					}
 
 
 
-				
+
 					break;
 				case 37:// Flèche-à-gauche
-				
-						objPersonnages.binGauche = true;
-					
 
-						//	console.log("A gauche");
-						if (objPersonnages.binDroite) {
-							objPersonnages.DeplacementHorizontalX = 459.8;
-							objPersonnages.binDroite = false;
-						}
-
-						objPersonnages.DeplacementHorizontalX -= 24.2;
-
-						//on va voir si on a atteint la fin du sprite pour recommencer afin  de faire lanimation lorsquil va
-						if (objPersonnages.DeplacementHorizontalX <= 264) {
-
-							objPersonnages.DeplacementHorizontalX = 340;
-						}
+					objPersonnages.binGauche = true;
 
 
+					//	console.log("A gauche");
+					if (objPersonnages.binDroite) {
+						objPersonnages.DeplacementHorizontalX = 459.8;
+						objPersonnages.binDroite = false;
+					}
 
-						if (objPersonnages.PositionXPixel > 0) {
-							let binBriqueSurMonY = false;
+					objPersonnages.DeplacementHorizontalX -= 24.2;
+
+					//on va voir si on a atteint la fin du sprite pour recommencer afin  de faire lanimation lorsquil va
+					if (objPersonnages.DeplacementHorizontalX <= 264) {
+
+						objPersonnages.DeplacementHorizontalX = 340;
+					}
 
 
-						
 
-							for (let j = 0; j < tabBirques.length && !binBriqueSurMonY; j++) {
-								if(tabBirques[j].PositionY == objPersonnages.PositionYPixel || tabBirques[j].PositionY -15 == objPersonnages.PositionYPixel|| tabBirques[j].PositionY +15 == objPersonnages.PositionYPixel){
+					if (objPersonnages.PositionXPixel > 0) {
+						let binBriqueSurMonY = false;
+
+
+
+
+						for (let j = 0; j < tabBirques.length && !binBriqueSurMonY; j++) {
+							if (tabBirques[j].PositionY == objPersonnages.PositionYPixel || tabBirques[j].PositionY - 15 == objPersonnages.PositionYPixel || tabBirques[j].PositionY + 15 == objPersonnages.PositionYPixel) {
 								//	binBriqueSurMonY = true;
-									console.log('Position Brique : ' + (tabBirques[j].PositionX+30) + '- PositionPersonnage : ' + objPersonnages.PositionXPixel);
-									if ( tabBirques[j].PositionX + 30 != objPersonnages.PositionXPixel) {
+								console.log('Position Brique : ' + (tabBirques[j].PositionX + 30) + '- PositionPersonnage : ' + objPersonnages.PositionXPixel);
+								if (tabBirques[j].PositionX + 30 != objPersonnages.PositionXPixel) {
 									//	objPersonnages.PositionXPixel -= 15;
 									binBriqueSurMonY = false;
-									}
-									else{
-										binBriqueSurMonY = true;
-									}
-								}else{
-									binBriqueSurMonY = false;
 								}
-							}
-
-							if (!binBriqueSurMonY) {
-								objPersonnages.PositionXPixel -= 15;
-							}
-
-							for (let i = 0; i < tabDragonBalls.length; i++) {
-
-								if (tabDragonBalls[i].binAttraper == false && objPersonnages.PositionXPixel >= tabDragonBalls[i].positionDragonBallsX - 15 && objPersonnages.PositionXPixel <= tabDragonBalls[i].positionDragonBallsX + 24 && objPersonnages.PositionYPixel == tabDragonBalls[i].positionDragonBallsY) {
-
-									tabBalleAttrape.push(tabDragonBalls[i].NoDB);
-									tabDragonBalls[i].binAttraper = true;
-
-									objInfoJeu.score += 250;
+								else {
+									binBriqueSurMonY = true;
 								}
+							} else {
+								binBriqueSurMonY = false;
 							}
-
-
-
 						}
-					
+
+						if (!binBriqueSurMonY) {
+							objPersonnages.PositionXPixel -= 15;
+						}
+
+						for (let i = 0; i < tabDragonBalls.length; i++) {
+
+							if (tabDragonBalls[i].binAttraper == false && objPersonnages.PositionXPixel >= tabDragonBalls[i].positionDragonBallsX - 15 && objPersonnages.PositionXPixel <= tabDragonBalls[i].positionDragonBallsX + 24 && objPersonnages.PositionYPixel == tabDragonBalls[i].positionDragonBallsY) {
+
+								tabBalleAttrape.push(tabDragonBalls[i].NoDB);
+								tabDragonBalls[i].binAttraper = true;
+								if (tabDragonBalls[i].binAttraper) {
+									objSons.ramasseDragonBalls.play();
+								}
+
+								objInfoJeu.score += 250;
+							}
+						}
+
+
+
+					}
+
 					break;
 				case 38:// Flèche-en-haut
 
@@ -733,11 +771,11 @@
 									objPersonnages.DeplacementHorizontalX = 482;
 									objPersonnages.binHaut = true;
 								}
-							
+
 								objPersonnages.PositionYPixel -= 15;
 
 							}
-							
+
 						}
 
 					}
@@ -768,7 +806,7 @@
 											objPersonnages.DeplacementHorizontalX = 664.875;
 											objPersonnages.binBas = true;
 										}
-										
+
 										objPersonnages.PositionYPixel += 15;
 										break;
 									}
@@ -788,8 +826,8 @@
 	<canvas id="monCanvas" width="960" height="670" tabindex="1" onkeydown="deplacerPersonnages()">
 		Votre navigateur ne supporte pas la balise canvas
 	</canvas>
-	<audio id="sonRamasseDragonBalls" >
-		<source src="ramasseDragonBalls.mp3" type="audio/mpeg"/>
+	<audio id="sonRamasseDragonBalls">
+		<source src="ramasseDragonBalls.mp3" type="audio/mpeg" />
 		Ce navigateur ne gère pas l’audio.
 		<!--    <a onClick="jouerSon()">-->
 	</audio>
