@@ -4,7 +4,7 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Load Runner </title>
+	<title>Lode Runner </title>
 	<link rel="stylesheet" type="text/css" href="StyleLoadRunner.css" />
 	<script> src = "Briques.js"</script>
 	<!-- Code JavaScript local -->
@@ -108,6 +108,7 @@
 			initSons();
 			dessiner(); // Dessiner une première fois
 			animer();
+	
 			console.log("Au debut x: " + objPersonnages.PositionXPixel / 15 + ", y: " + objPersonnages.PositionYPixel / 30);
 		}
 		// Aller chercher l'image de fond
@@ -126,6 +127,7 @@
 		function initSons() {
 			objSons = new Object();
 			objSons.ramasseDragonBalls = document.getElementById("sonRamasseDragonBalls");
+			objSons.demarrerjeu = document.getElementById('sonDuJeu');
 			objSons.binJouer = false;
 		}
 
@@ -358,7 +360,7 @@
 
 		// Pour mettre à jour l'animation
 		function mettreAjourAnimation() {
-
+		
 			dessinerChronometre();
 			objPersonnages.gravite += 0.01;
 			if (objPersonnages.binChute) {
@@ -382,6 +384,8 @@
 			//dessinerChronometre();
 			dessinerPlateformesJeu();
 			dessinerPersonnages();
+
+			objSons.demarrerjeu.play();
 		}
 		// Pour dessiner l'image de fond
 		function dessinerFond() {
@@ -594,7 +598,7 @@
 
 			switch (event.keyCode) {
 				case 39:// Flèche-à-droite
-
+			
 					objPersonnages.binHaut = false;
 					objPersonnages.binBas = false;
 
@@ -781,7 +785,7 @@
 
 					break;
 				case 38:// Flèche-en-haut
-
+			
 					if (objPersonnages.PositionYPixel > 0) {
 
 
@@ -862,6 +866,13 @@
 		Ce navigateur ne gère pas l’audio.
 		<!--    <a onClick="jouerSon()">-->
 	</audio>
+	<audio id="sonDuJeu">
+		<source src="chala.mp3" type="audio/mpeg" />
+		Ce navigateur ne gère pas l’audio.
+		<!--    <a onClick="jouerSon()">-->
+	</audio>
+
+
 </body>
 
 </html>
