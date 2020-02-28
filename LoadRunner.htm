@@ -47,6 +47,8 @@
 		let objPlateformes = null;
 		let objPersonnages = null;
 		let tabBalleAttrape = new Array();
+		
+		let binDansEscalier = false;
 
 		class Briques {
 			constructor(positionX, positionY, positionFinX, positionFinY) {
@@ -138,7 +140,7 @@
 
 			objPersonnages.binHaut = false;
 			objPersonnages.binBas = false;
-
+			objPersonnages.binChute = false;
 
 
 			objPersonnages.PositionX = 3;
@@ -147,6 +149,7 @@
 			objPersonnages.PositionYPixel = objPersonnages.PositionY * 30;
 
 			objPersonnages.gravite = 0;
+
 		}
 		function initPlateformesJeu() {
 			objPlateformes = new Object();
@@ -357,9 +360,18 @@
 		function mettreAjourAnimation() {
 
 			dessinerChronometre();
-			objPersonnages.gravite +=0.1;
+			objPersonnages.gravite += 0.01;
+			if (objPersonnages.binChute) {
 
-			
+
+				objPersonnages.PositionYPixel += objPersonnages.gravite;
+
+			}
+		//	if (objPersonnages.PositionYPixel >= 480)
+		//		objPersonnages.binChute = false;
+//
+
+
 		}
 
 		// Pour dessiner
@@ -577,13 +589,15 @@
 		function deplacerPersonnages() {
 
 			objC2D.save();
-			objC2D.translate(30, 30);
+			//objC2D.translate(30, 30);
+			
 
 			switch (event.keyCode) {
 				case 39:// Flèche-à-droite
 
 					objPersonnages.binHaut = false;
 					objPersonnages.binBas = false;
+
 					if (objPersonnages.binGauche) {
 						objPersonnages.DeplacementHorizontalX = 459.8;
 						objPersonnages.binGauche = false;
@@ -644,40 +658,56 @@
 								objInfoJeu.score += 250;
 
 								//	console.log(String(Number(intTest)+Number(intTest2)).padStart(7,'0') )
-								console.log("score " + Number(objInfoJeu.score))
+								//	console.log("score " + Number(objInfoJeu.score))
 							}
 						}
 
 						//pour la gavite
 
-					/*	let binGravite = false;
+						//let binGravite = false;
 
 						//console.log(objPersonnages.PositionYPixel)
-						console.log(objPersonnages.gravite)
-					
+						//console.log(objPersonnages.gravite)
+
+						//let binNonVide = true;
+
+					//	
+					for(let A = 0; A < tabEchelles.length; A++){
+						console.log('Personnage Y:' + objPersonnages.PositionYPixel + ' X =' +objPersonnages.PositionXPixel + ' echelle : Y ' + tabEchelles[A].PositionY + ' X ' + tabEchelles[A].PositionX)
+						if(objPersonnages.PositionYPixel == tabEchelles[A].PositionY && objPersonnages.PositionXPixel+30 <= tabEchelles[A].PositionX +30 && objPersonnages.PositionXPixel+30 >= tabEchelles[A].PositionX){
+							console.log('dans echeclle')
+							binDansEscalier = true;
+							break;
+							
+						}else{binDansEscalier = false;}
+					}
+
+
 						for (let l = 0; l < tabBirques.length; l++) {
-
-							//	console.log("briques : "+tabBirques[i].PositionY)
-							if (tabBirques[l].PositionY >= 150) {
-								if (tabBirques[l].PositionY == objPersonnages.PositionYPixel) {
-									console.log("en haut 2iem brique")
+						
+							//console.log("briques : Y = " + tabBirques[l].PositionY + 'X = ' + tabBirques[l].PositionX)
+							//console.log("personnage : Y = " + (objPersonnages.PositionYPixel + 30) + '  X= ' + objPersonnages.PositionXPixel)
+					//		console.log("au debut")
+							if (tabBirques[l].PositionY == objPersonnages.PositionYPixel + 30 && objPersonnages.PositionXPixel >= tabBirques[l].PositionX-15 && objPersonnages.PositionXPixel <= tabBirques[l].PositionX + 15) { //il y a qqchose en dessous
+						//		console.log('a')
+										objPersonnages.binChute = false;
+									//	binDansEscalier = true;
 								
-									//binGravite = true;
-									objPersonnages.PositionYPixel +=objPersonnages.gravite;
+								break;
+							}
+							else { // il y a rien
+								objPersonnages.binChute = true;
+
+						//		console.log("vide")
 
 
-								}
 
 							}
- 
-						}
-						if(binGravite==true){
-							//if(objPersonnages.PositionYPixel>=480)
-						
 						}
 
-						console.log(binGravite)*/
-
+						if(binDansEscalier){
+							objPersonnages.binChute = false;
+						}
 					}
 
 
@@ -758,6 +788,7 @@
 
 						for (let i = 0; i < tabEchelles.length; i++) {
 							if (objPersonnages.PositionYPixel <= tabEchelles[i].PositionY && objPersonnages.PositionYPixel > tabEchelles[i].PositionY - 30 && objPersonnages.PositionXPixel == tabEchelles[i].PositionX) {
+								binDansEscalier = true;
 								if (objPersonnages.binHaut) {
 									if (objPersonnages.DeplacementHorizontalX == 691) {
 
