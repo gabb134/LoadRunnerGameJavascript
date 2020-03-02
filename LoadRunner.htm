@@ -113,6 +113,7 @@
 			initSons();
 			dessiner(); // Dessiner une première fois
 			animer();
+			objCanvas.focus() 
 			objDebut.binDebut = true;
 			//if(objDebut.binDebut)
 		//	objDebut.sonDebut.play();
@@ -381,6 +382,7 @@
 
 			dessinerChronometre();
 			objPersonnages.gravite += 0.01;
+	
 			if (objPersonnages.binChute) {
 
 
@@ -400,7 +402,7 @@
 
 			//	objDebut.binDebut = true;
 			//console.log(objDebut.binDebut)
-
+		
 			if (objDebut.binDebut) {
 				dessinerDebut();
 				objSons.demarrerjeu.pause();
@@ -408,7 +410,7 @@
 	
 			}
 			else {
-
+		
 				dessinerFond();
 				dessinerMurs();
 				dessinerScore();
@@ -423,7 +425,7 @@
 		function dessinerDebut() {
 			objC2D.save();
 			//	if (objDebut.binDebut) {
-			objC2D.globalAlpha = 0.5;
+			objC2D.globalAlpha = 0.3;
 			objC2D.drawImage(objImageDebut, 0, 0, objCanvas.width, objCanvas.height);
 			objC2D.globalAlpha = 1;
 			objDebut.textDebut;
@@ -437,8 +439,8 @@
 			//	objC2D.lineWidth = 3;
 
 			//objC2D.strokeText(objDebut.textDebut, objCanvas.width / 2, objCanvas.height / 2);
-			objC2D.fillText(objDebut.textDebut, objCanvas.width / 2, objCanvas.height / 2);
-			objC2D.fillText(objDebut.textEnHaut, objCanvas.width / 2, objCanvas.height / 2 - 40);
+			objC2D.fillText(objDebut.textDebut, objCanvas.width / 2, objCanvas.height / 2-220);
+			objC2D.fillText(objDebut.textEnHaut, objCanvas.width / 2, objCanvas.height / 2 - 280);
 			objC2D.strokeStyle = 'black';
 
 			//	objDebut.sonDebut.play();
