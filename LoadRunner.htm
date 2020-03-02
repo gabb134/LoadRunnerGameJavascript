@@ -101,7 +101,7 @@
 		function initAnimation() {
 			objCanvas = document.getElementById('monCanvas');
 			objC2D = objCanvas.getContext('2d');
-	
+
 			initDebut();
 			initImageFond();
 			initMurs();
@@ -114,6 +114,8 @@
 			dessiner(); // Dessiner une première fois
 			animer();
 			objDebut.binDebut = true;
+			//if(objDebut.binDebut)
+		//	objDebut.sonDebut.play();
 			console.log("Au debut x: " + objPersonnages.PositionXPixel / 15 + ", y: " + objPersonnages.PositionYPixel / 30);
 		}
 		// Aller chercher l'image de fond
@@ -142,7 +144,8 @@
 			objDebut.sonDebut = document.getElementById("sonDebut");
 			objImageDebut.src = 'imageDebut.jpg';
 			objDebut.binDebut = false;
-
+			//	dessinerDebut();
+		//	objDebut.sonDebut.play();
 
 		}
 
@@ -384,6 +387,7 @@
 				objPersonnages.PositionYPixel += objPersonnages.gravite;
 
 			}
+			//	dessinerDebut()
 			//	if (objPersonnages.PositionYPixel >= 480)
 			//		objPersonnages.binChute = false;
 			//
@@ -393,27 +397,32 @@
 
 		// Pour dessiner
 		function dessiner() {
-	
+
+			//	objDebut.binDebut = true;
+			//console.log(objDebut.binDebut)
+
 			if (objDebut.binDebut) {
 				dessinerDebut();
+				objSons.demarrerjeu.pause();
+		
+	
 			}
 			else {
-				objDebut.sonDebut.pause();
+
 				dessinerFond();
 				dessinerMurs();
 				dessinerScore();
 				//dessinerChronometre();
 				dessinerPlateformesJeu();
 				dessinerPersonnages();
-
-				objSons.demarrerjeu.play();
+				objDebut.sonDebut.pause();
+			//	objSons.demarrerjeu.play();
 			}
 
 		}
 		function dessinerDebut() {
 			objC2D.save();
-
-
+			//	if (objDebut.binDebut) {
 			objC2D.globalAlpha = 0.5;
 			objC2D.drawImage(objImageDebut, 0, 0, objCanvas.width, objCanvas.height);
 			objC2D.globalAlpha = 1;
@@ -432,7 +441,9 @@
 			objC2D.fillText(objDebut.textEnHaut, objCanvas.width / 2, objCanvas.height / 2 - 40);
 			objC2D.strokeStyle = 'black';
 
-			objDebut.sonDebut.play();
+			//	objDebut.sonDebut.play();
+			//	}
+			//objDebut.sonDebut.pause();
 			objC2D.restore();
 
 		}
@@ -644,6 +655,7 @@
 			switch (event.keyCode) {
 				case 32:
 					objDebut.binDebut = false;
+					objSons.demarrerjeu.play();
 					console.log("allo")
 					break;
 			}
