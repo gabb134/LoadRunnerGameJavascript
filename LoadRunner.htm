@@ -55,6 +55,8 @@
 		let binEscalierDessous = false;
 		let binBriqueADroite = false;
 
+		//let binBriqueEnDessous = false;
+
 		class Briques {
 			constructor(positionX, positionY, positionFinX, positionFinY) {
 				this.positionX = positionX;
@@ -166,7 +168,7 @@
 			objPersonnages.binChute = false;
 
 
-			objPersonnages.PositionX = 3;
+			objPersonnages.PositionX = 3 ;
 			objPersonnages.PositionY = 16;
 			objPersonnages.PositionXPixel = objPersonnages.PositionX * 15;
 			objPersonnages.PositionYPixel = objPersonnages.PositionY * 30;
@@ -383,18 +385,19 @@
 		function mettreAjourAnimation() {
 
 			dessinerChronometre();
-			objPersonnages.gravite += 0.01;
+			objPersonnages.gravite += 0.005;
 
-			if (objPersonnages.binChute) {
-
+			if (briqueEnDessousPersonnage() == false && echelleEnDessouspersonnage() ==false ) {
 
 				objPersonnages.PositionYPixel += objPersonnages.gravite;
-
 			}
+
+
+
 			//	dessinerDebut()
-			//	if (objPersonnages.PositionYPixel >= 480)
+			//	if (objPersonnages.PositionYPixel >= 510 -30)
 			//		objPersonnages.binChute = false;
-			//
+
 
 
 		}
@@ -747,7 +750,7 @@
 
 						//pour la gavite
 
-						for (let A = 0; A < tabEchelles.length; A++) {
+						/*for (let A = 0; A < tabEchelles.length; A++) {
 							if (objPersonnages.PositionYPixel == tabEchelles[A].PositionY && objPersonnages.PositionXPixel + 30 <= tabEchelles[A].PositionX + 30 && objPersonnages.PositionXPixel + 30 >= tabEchelles[A].PositionX) {
 								binDansEscalier = true;
 								break;
@@ -778,7 +781,7 @@
 						}
 						if (binBriqueADroite) {
 							objPersonnages.binChute = false;
-						}
+						}*/
 					}
 
 
@@ -847,41 +850,46 @@
 							}
 						}
 
-
-						for (let g = 0; g < tabEchelles.length; g++) {
-							console.log("echelle : Y = " + tabEchelles[g].PositionY + 'X = ' + tabEchelles[g].PositionX);
-							console.log("personnage : Y = " + (objPersonnages.PositionYPixel) + '  X= ' + objPersonnages.PositionXPixel);
-							if (objPersonnages.PositionYPixel == tabEchelles[g].PositionY && objPersonnages.PositionXPixel - 30 <= tabEchelles[g].PositionX + 30 && objPersonnages.PositionXPixel - 30 >= tabEchelles[g].PositionX) {
-								binDansEscalier = true;
-								break;
-
-							} else if (objPersonnages.PositionYPixel + 30 == tabEchelles[g].PositionY && objPersonnages.PositionXPixel - 30 <= tabEchelles[g].PositionX + 30 && objPersonnages.PositionXPixel - 30 >= tabEchelles[g].PositionX) {
-								binDansEscalier = true;
-								break;
+						//verifier s'il yu a une echelle pou ne pas qu'il tombre lorsquil y a une echelle 
+						/*	for (let g = 0; g < tabEchelles.length; g++) {
+								//	console.log("echelle : Y = " + tabEchelles[g].PositionY + 'X = ' + tabEchelles[g].PositionX);
+								//	console.log("personnage : Y = " + (objPersonnages.PositionYPixel) + '  X= ' + objPersonnages.PositionXPixel);
+								if (objPersonnages.PositionYPixel == tabEchelles[g].PositionY //lorsquu'il est sur le mem niveau
+									&& objPersonnages.PositionXPixel - 30 <= tabEchelles[g].PositionX + 30
+									&& objPersonnages.PositionXPixel - 30 >= tabEchelles[g].PositionX) {
+									binDansEscalier = true;
+									break;
+	
+								} else if (objPersonnages.PositionYPixel + 30 == tabEchelles[g].PositionY //lorsqu'il est en bas
+									&& objPersonnages.PositionXPixel <= tabEchelles[g].PositionX + 30
+									&& objPersonnages.PositionXPixel >= tabEchelles[g].PositionX) {
+									//	console.log("tombe a gauhce dans echelle")
+									binDansEscalier = true;
+									break;
+								}
+								else {
+									binDansEscalier = false;
+								}
 							}
-							else {
-								binDansEscalier = false;
+	
+							for (let h = 0; h < tabBirques.length; h++) {
+	
+	
+	
+								if (tabBirques[h].PositionY == objPersonnages.PositionYPixel + 30 && objPersonnages.PositionXPixel >= tabBirques[h].PositionX - 15 && objPersonnages.PositionXPixel <= tabBirques[h].PositionX + 15) { //il y a qqchose en dessous
+									objPersonnages.binChute = false;
+									break;
+								}
+								else { // il y a rien
+									objPersonnages.binChute = true;
+								}
 							}
-						}
-
-						for (let h = 0; h < tabBirques.length; h++) {
-
-
-
-							if (tabBirques[h].PositionY == objPersonnages.PositionYPixel + 30 && objPersonnages.PositionXPixel >= tabBirques[h].PositionX - 15 && objPersonnages.PositionXPixel <= tabBirques[h].PositionX + 15) { //il y a qqchose en dessous
+	
+							if (binDansEscalier) {
 								objPersonnages.binChute = false;
-								break;
 							}
-							else { // il y a rien
-								objPersonnages.binChute = true;
-							}
-						}
-
-						/*	if(binDansEscalier){
-								objPersonnages.binChute = false;
-							}*/
-
-
+	
+							*/
 
 
 					}
@@ -890,9 +898,6 @@
 				case 38:// Flèche-en-haut
 
 					if (objPersonnages.PositionYPixel > 0) {
-
-
-
 						for (let i = 0; i < tabEchelles.length; i++) {
 							if (objPersonnages.PositionYPixel <= tabEchelles[i].PositionY && objPersonnages.PositionYPixel > tabEchelles[i].PositionY - 30 && objPersonnages.PositionXPixel == tabEchelles[i].PositionX) {
 								binDansEscalier = true;
@@ -956,6 +961,66 @@
 					break;
 			}
 			objC2D.restore();
+		}
+
+
+
+		function briqueEnDessousPersonnage() {
+			let binBriqueEnDessous = false;
+			console.log("personnage : Y = " + Math.round( objPersonnages.PositionYPixel+32));
+		
+
+
+			//BRIQUE
+			for (let h = 0; h < tabBirques.length; h++) {
+				//	console.log("briques : Y = " + (tabBirques[h].PositionY));
+				if (Math.round(objPersonnages.PositionYPixel) + 32 <= tabBirques[h].PositionY +2  && Math.round(objPersonnages.PositionYPixel) + 28  >= tabBirques[h].PositionY -2 &&
+					objPersonnages.PositionXPixel >= tabBirques[h].PositionX - 15 &&
+					objPersonnages.PositionXPixel <= tabBirques[h].PositionX + 15) { //il y a qqchose en dessous
+					binBriqueEnDessous = true;
+
+					break;
+				}
+				else { // il y a rien
+					binBriqueEnDessous = false;
+				}
+			}
+
+
+
+
+
+
+	
+
+			return binBriqueEnDessous;
+		}
+		function echelleEnDessouspersonnage(){
+			let  binEchelleEnDessous = false;
+			//ECHELLE
+		for (let g = 0; g < tabEchelles.length; g++) {
+				console.log("echelle : Y = " + tabEchelles[g].PositionY + 'X = ' + tabEchelles[g].PositionX);
+				console.log("personnage : Y = " + (objPersonnages.PositionYPixel) + '  X= ' + objPersonnages.PositionXPixel);
+				if (objPersonnages.PositionYPixel == tabEchelles[g].PositionY //lorsquu'il est sur le mem niveau
+					&& objPersonnages.PositionXPixel <= tabEchelles[g].PositionX+30 
+					&& objPersonnages.PositionXPixel  >= tabEchelles[g].PositionX) {
+				 	binEchelleEnDessous = true;
+					console.log("echelle")
+					break;
+
+				} else if (objPersonnages.PositionYPixel + 30 == tabEchelles[g].PositionY //lorsqu'il est en bas
+					&& objPersonnages.PositionXPixel <= tabEchelles[g].PositionX + 30
+					&& objPersonnages.PositionXPixel >= tabEchelles[g].PositionX) {
+					binEchelleEnDessous = true;
+					break;
+				}
+				else {
+					binEchelleEnDessous = false;
+				}
+			}
+
+			return binEchelleEnDessous;
+
 		}
 	</script>
 </head>
