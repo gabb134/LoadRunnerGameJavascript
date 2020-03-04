@@ -168,7 +168,7 @@
 			objPersonnages.binChute = false;
 
 
-			objPersonnages.PositionX = 3 ;
+			objPersonnages.PositionX = 3;
 			objPersonnages.PositionY = 16;
 			objPersonnages.PositionXPixel = objPersonnages.PositionX * 15;
 			objPersonnages.PositionYPixel = objPersonnages.PositionY * 30;
@@ -722,19 +722,27 @@
 							objPersonnages.PositionXPixel += 15;
 						}
 
-
+						//let comptBalles = 0;
 
 						for (let i = 0; i < tabDragonBalls.length; i++) {
 
 
-							if (tabDragonBalls[i].binAttraper == false && objPersonnages.PositionXPixel >= tabDragonBalls[i].positionDragonBallsX - 15 && objPersonnages.PositionXPixel <= tabDragonBalls[i].positionDragonBallsX + 24 && objPersonnages.PositionYPixel == tabDragonBalls[i].positionDragonBallsY) {
+							if (tabDragonBalls[i].binAttraper == false && objPersonnages.PositionXPixel >= tabDragonBalls[i].positionDragonBallsX - 15
+								&& objPersonnages.PositionXPixel <= tabDragonBalls[i].positionDragonBallsX + 24
+								&& objPersonnages.PositionYPixel == tabDragonBalls[i].positionDragonBallsY) {
+
 
 								tabBalleAttrape.push(tabDragonBalls[i].NoDB);
-								console.log(tabBalleAttrape.length);
+								//console.log(tabBalleAttrape.length);
 								tabDragonBalls[i].binAttraper = true;
-								if (tabDragonBalls[i].binAttraper) {
-									objSons.ramasseDragonBalls.play();
-								}
+								//	if (tabDragonBalls[i].binAttraper) {
+
+								objSons.ramasseDragonBalls.play();
+
+
+								//	console.log("tabDragonballs : "+ tabDragonBalls.length)
+								//	}
+
 								//	objInfoJeu.score+=250;
 
 								let intTest = String(250).padStart(7, '0');
@@ -747,7 +755,10 @@
 								//	console.log("score " + Number(objInfoJeu.score))
 							}
 						}
+						if (tabBalleAttrape.length == 7) // faire aparraitre l'echelle et passer au prochain niveau
+							console.log("echelle doit apparaitre")
 
+						console.log(tabBalleAttrape.length)
 						//pour la gavite
 
 						/*for (let A = 0; A < tabEchelles.length; A++) {
@@ -967,14 +978,14 @@
 
 		function briqueEnDessousPersonnage() {
 			let binBriqueEnDessous = false;
-			console.log("personnage : Y = " + Math.round( objPersonnages.PositionYPixel+32));
-		
+			console.log("personnage : Y = " + Math.round(objPersonnages.PositionYPixel + 32));
+
 
 
 			//BRIQUE
 			for (let h = 0; h < tabBirques.length; h++) {
 				//	console.log("briques : Y = " + (tabBirques[h].PositionY));
-				if (Math.round(objPersonnages.PositionYPixel) + 32 <= tabBirques[h].PositionY +2  && Math.round(objPersonnages.PositionYPixel) + 28  >= tabBirques[h].PositionY -2 &&
+				if (Math.round(objPersonnages.PositionYPixel) + 32 <= tabBirques[h].PositionY + 2 && Math.round(objPersonnages.PositionYPixel) + 28 >= tabBirques[h].PositionY - 2 &&
 					objPersonnages.PositionXPixel >= tabBirques[h].PositionX - 15 &&
 					objPersonnages.PositionXPixel <= tabBirques[h].PositionX + 15) { //il y a qqchose en dessous
 					binBriqueEnDessous = true;
@@ -991,20 +1002,20 @@
 
 
 
-	
+
 
 			return binBriqueEnDessous;
 		}
-		function echelleEnDessouspersonnage(){
-			let  binEchelleEnDessous = false;
+		function echelleEnDessouspersonnage() {
+			let binEchelleEnDessous = false;
 			//ECHELLE
-		for (let g = 0; g < tabEchelles.length; g++) {
+			for (let g = 0; g < tabEchelles.length; g++) {
 				console.log("echelle : Y = " + tabEchelles[g].PositionY + 'X = ' + tabEchelles[g].PositionX);
 				console.log("personnage : Y = " + (objPersonnages.PositionYPixel) + '  X= ' + objPersonnages.PositionXPixel);
 				if (objPersonnages.PositionYPixel == tabEchelles[g].PositionY //lorsquu'il est sur le mem niveau
-					&& objPersonnages.PositionXPixel <= tabEchelles[g].PositionX+30 
-					&& objPersonnages.PositionXPixel  >= tabEchelles[g].PositionX) {
-				 	binEchelleEnDessous = true;
+					&& objPersonnages.PositionXPixel <= tabEchelles[g].PositionX + 30
+					&& objPersonnages.PositionXPixel >= tabEchelles[g].PositionX) {
+					binEchelleEnDessous = true;
 					console.log("echelle")
 					break;
 
