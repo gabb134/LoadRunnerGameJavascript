@@ -65,6 +65,8 @@
 
 		let binChangerNiveau = false;
 
+		//let objEchelles2 = null;
+
 		let binApparaitreEchelle = false;
 		class Briques {
 			constructor(positionX, positionY, positionFinX, positionFinY) {
@@ -132,8 +134,8 @@
 			//if(objDebut.binDebut)
 			//	objDebut.sonDebut.play();
 			//console.log("Au debut x: " + objPersonnages.PositionXPixel / 15 + ", y: " + objPersonnages.PositionYPixel / 30);
-
-
+			
+		
 		}
 		// Aller chercher l'image de fond
 		function initImageFond() {
@@ -657,11 +659,15 @@
 			objC2D.save();
 			objC2D.translate(30, 30);
 
-			console.log("binaparaitreechelle = " + binApparaitreEchelle)
+			//	console.log("binaparaitreechelle = " + binApparaitreEchelle)
 			//binApparaitreEchelle = false;
+			if (tabBalleAttrape.length == 1) {
+				binApparaitreEchelle = true;
+			}
 
 			if (binApparaitreEchelle) {
 				//changerNiveau()
+				let objEchelles2 = new Echelles();
 
 				//	binApparaitreEchelle = true
 				objPlateformes.tabPlateformes[4][20] = 2
@@ -673,8 +679,8 @@
 
 				//	for (var j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
 				if (objPlateformes.tabPlateformes[0][20] == 2) {
+				
 					objEchelles2 = new Echelles();
-
 					objEchelles2.PositionX = 20 * 30;
 					objEchelles2.PositionY = 0 * 30;
 					tabEchelles.push(objEchelles2);
@@ -707,7 +713,7 @@
 				if (objPlateformes.tabPlateformes[4][20] == 2) {
 					objEchelles2 = new Echelles();
 
-					objEchelles2.PositionX = 20 * 30;
+					objEchelles2.PositionX = 20 * 30;                      
 					objEchelles2.PositionY = 4 * 30;
 					tabEchelles.push(objEchelles2);
 
@@ -718,7 +724,7 @@
 			}
 			else {
 				console.log("disparaite echelle")
-			//	disparaitreEchelle()
+				//	disparaitreEchelle()
 			}
 
 
@@ -809,9 +815,7 @@
 			//objC2D.translate(30, 30);
 
 			//console.log("binChangerNiveau = " + binChangerNiveau)
-			if (tabBalleAttrape.length == 1) {
-				binApparaitreEchelle = true;
-			}
+
 
 
 			switch (event.keyCode) {
@@ -894,10 +898,7 @@
 								//	console.log("score " + Number(objInfoJeu.score))
 							}
 						}
-						if (tabBalleAttrape.length == 7) // faire aparraitre l'echelle et passer au prochain niveau
-							console.log("echelle doit apparaitre")
 
-						//	console.log(tabBalleAttrape.length)
 
 					}
 
@@ -1022,32 +1023,19 @@
 
 					break;
 				case 38:// Flèche-en-haut
-					console.log("position y goku :" + objPersonnages.PositionYPixel)
+					//	console.log("position y goku :" + objPersonnages.PositionYPixel)
+					//console.log(objEchelles2.PositionY)
 
-					if (objPersonnages.PositionYPixel <= 0) {
-						//binChangerNiveau = true;
-						/*	binApparaitreEchelle = false;
-	
-							//disparaitreEchelle()
-							initPersonnage(30, 16)
-	
-							initDessin()
-							initInfoJeu()
-							initPlateformesJeu(false)
-							initChrono()
-							initGarde();
-							objInfoJeu.niveau += 1;
-							//objDebut.binDebut = true
-							disparaitreEchelle()*/
-
-
-					}
 
 
 
 					if (objPersonnages.PositionYPixel > 0) {
 						for (let i = 0; i < tabEchelles.length; i++) {
-							if (objPersonnages.PositionYPixel <= tabEchelles[i].PositionY && objPersonnages.PositionYPixel > tabEchelles[i].PositionY - 30 && objPersonnages.PositionXPixel == tabEchelles[i].PositionX) {
+							//console.log("position y echelle : " + tabEchelles[i].PositionY)
+							if (objPersonnages.PositionYPixel <= tabEchelles[i].PositionY &&
+								objPersonnages.PositionYPixel > tabEchelles[i].PositionY - 30 &&
+								objPersonnages.PositionXPixel == tabEchelles[i].PositionX) {
+							//	console.log("derniere echelle")
 								binDansEscalier = true;
 								if (objPersonnages.binHaut) {
 									objPersonnages.binBas = false;
@@ -1065,14 +1053,29 @@
 								}
 
 								objPersonnages.PositionYPixel -= 15;
+						
+								break;
+
+							}
+							//voir si il est en haut de lechelle pour passer au prochain niveau
+
+
+						}
+					
+					/*	for (var i = 0; i < tabEchelles.length; i++) {
+							//console.log("pos echelle " + tabEchelles[i].PositionY)
+							if (tabEchelles[i].PositionY == 30) {
+
+								console.log("allo")
 
 							}
 
-						}
+						}*/
+
 
 					}
-					//quand il chage de niveau
-
+						//changement de niveau***
+						console.log("position derniere echelle " + objEchelles.positionX+", "+objEchelles.positionY)
 
 
 					//	changerNiveau()
