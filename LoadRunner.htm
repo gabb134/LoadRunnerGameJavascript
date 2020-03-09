@@ -56,13 +56,7 @@
 		let binEscalierDessous = false;
 		let binBriqueADroite = false;
 
-<<<<<<< HEAD
-		let binAttraperDragonBalls = false;
-		let bintest = false;
-
-=======
 		let binCorde = false;
->>>>>>> db03abd5467d30f2cdbeb743092a5c70ef3585cb
 		//let binBriqueEnDessous = false;
 		let deplacementX = 1;
 		let deplacementY = 0;
@@ -134,8 +128,6 @@
 			//if(objDebut.binDebut)
 			//	objDebut.sonDebut.play();
 			console.log("Au debut x: " + objPersonnages.PositionXPixel / 15 + ", y: " + objPersonnages.PositionYPixel / 30);
-
-
 		}
 		// Aller chercher l'image de fond
 		function initImageFond() {
@@ -216,8 +208,8 @@
 			objPersonnages.binChute = false;
 
 
-			objPersonnages.PositionX = 50;
-			objPersonnages.PositionY = 4;
+			objPersonnages.PositionX = 3;
+			objPersonnages.PositionY = 16;
 			objPersonnages.PositionXPixel = objPersonnages.PositionX * 15;
 			objPersonnages.PositionYPixel = objPersonnages.PositionY * 30;
 
@@ -261,17 +253,11 @@
 				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]];
 
 
-
-
 		}
 
 
 		function initDessin() {
-			objC2D.save();
 			let compteur = 0;
-
-
-
 
 			for (var i = 0; i < objPlateformes.tabPlateformes.length; i++) {
 
@@ -289,9 +275,6 @@
 						//	alert()
 					}
 					if (objPlateformes.tabPlateformes[i][j] == 2) {
-
-
-						//	console.log(i + "," + j)
 						objEchelles = new Echelles();
 
 						objEchelles.PositionX = j * 30;
@@ -361,7 +344,7 @@
 				}
 
 			}
-			objC2D.restore();
+
 		}
 		//Contruire les murs
 		function initMurs() {
@@ -442,28 +425,19 @@
 		function mettreAjourAnimation() {
 
 			dessinerChronometre();
-<<<<<<< HEAD
-=======
 			bougerGarde();
 			/*objPersonnages.gravite += 0.005;
->>>>>>> db03abd5467d30f2cdbeb743092a5c70ef3585cb
 
+			if (briqueEnDessousPersonnage() == false && echelleEnDessouspersonnage() ==false ) {
 
-			/*	if (echelleEnDessouspersonnage() == false && briqueEnDessousPersonnage() == false) {
-					objPersonnages.gravite += 0.005;
-					objPersonnages.PositionYPixel +=  objPersonnages.gravite;
-					objPersonnages.PositionYPixel = Math.round( objPersonnages.PositionYPixel);
-				}*/
+				objPersonnages.PositionYPixel += objPersonnages.gravite;
+			}*/
 
 
 
 			//	dessinerDebut()
 			//	if (objPersonnages.PositionYPixel >= 510 -30)
 			//		objPersonnages.binChute = false;
-			if(bintest){
-				effacerDessin();
-				dessiner()
-			}
 
 
 
@@ -526,10 +500,6 @@
 		function dessinerFond() {
 			objC2D.save();  // Sauvegarde le contexte
 			objC2D.drawImage(objImageFond, 0, 0, objCanvas.width, objCanvas.height - 130);
-
-
-
-
 			objC2D.restore(); // Restaure le contexte
 		}
 		function dessinerChronometre() {
@@ -621,6 +591,7 @@
 
 
 
+
 			objC2D.restore(); // Restaure le contexte
 		}
 
@@ -675,13 +646,9 @@
 		function dessinerPlateformesJeu() {
 			objC2D.save();
 			objC2D.translate(30, 30);
+			//s'il prend les 7 dragon balls, il faut que je dessine une echelle(dans dessiner palteforme jeu)
 
-
-
-
-			//s'il prend les 7 dragon balls, il faut que je dessine une echelle
-
-			if (tabBalleAttrape.length == 1) {
+			if (tabBalleAttrape.length == 7) {
 				objPlateformes.tabPlateformes[4][20] = 2
 				objPlateformes.tabPlateformes[3][20] = 2
 				objPlateformes.tabPlateformes[2][20] = 2
@@ -734,16 +701,13 @@
 
 			}
 
-
+			//	
 			for (var i = 0; i < tabBirques.length; i++) {
 				objC2D.drawImage(imagePlateforme, tabBirques[i].PositionX, tabBirques[i].PositionY);
 			}
 			for (var i = 0; i < tabEchelles.length; i++) {
 				objC2D.drawImage(imageEchelle, tabEchelles[i].PositionX, tabEchelles[i].PositionY);
-
-
 			}
-
 
 			for (var i = 0; i < tabCordes.length; i++) {
 				objC2D.drawImage(imageCorde, tabCordes[i].PositionX, tabCordes[i].PositionY);
@@ -807,13 +771,8 @@
 			switch (event.keyCode) {
 				case 32:
 					objDebut.binDebut = false;
-<<<<<<< HEAD
-					objSons.demarrerjeu.play();
-				//	console.log("allo")
-=======
 					//	objSons.demarrerjeu.play();
 					console.log("allo")
->>>>>>> db03abd5467d30f2cdbeb743092a5c70ef3585cb
 					break;
 			}
 
@@ -827,9 +786,10 @@
 			//objC2D.translate(30, 30);
 
 
-			//console.log("klk")
 			switch (event.keyCode) {
 				case 39:// Flèche-à-droite
+
+			
 
 					binDansEscalier = false;
 					objPersonnages.binHaut = false;
@@ -906,22 +866,10 @@
 								//	console.log("score " + Number(objInfoJeu.score))
 							}
 						}
+						if (tabBalleAttrape.length == 7) // faire aparraitre l'echelle et passer au prochain niveau
+							console.log("echelle doit apparaitre")
 
-<<<<<<< HEAD
-						//pour la gavite
-
-						/*for (let A = 0; A < tabEchelles.length; A++) {
-							if (objPersonnages.PositionYPixel == tabEchelles[A].PositionY && objPersonnages.PositionXPixel + 30 <= tabEchelles[A].PositionX + 30 && objPersonnages.PositionXPixel + 30 >= tabEchelles[A].PositionX) {
-								binDansEscalier = true;
-								break;
-
-							} else if (objPersonnages.PositionYPixel + 30 == tabEchelles[A].PositionY && objPersonnages.PositionXPixel + 30 <= tabEchelles[A].PositionX + 30 && objPersonnages.PositionXPixel + 30 >= tabEchelles[A].PositionX) {
-								binDansEscalier = true;
-								break;
-
-=======
 						//	console.log(tabBalleAttrape.length)
->>>>>>> db03abd5467d30f2cdbeb743092a5c70ef3585cb
 
 					}
 
@@ -1074,34 +1022,10 @@
 						}
 
 					}
-
-
-					if (objPersonnages.PositionYPixel <= 0) {
-						bintest = true;
-
+					//quand il chage de niveau
+					if(objPersonnages.PositionYPixel <=0){
+						objInfoJeu.niveau+=1;
 					}
-					if (bintest) {
-						objInfoJeu.niveau += 1
-
-						//objDebut.binDebut = false;
-
-						//bintest = false
-					}
-
-
-					if (objInfoJeu.niveau > 1) {
-						console.log("restart")
-						//effacerDessin();
-						//dessiner()
-						bintest = false;
-						objC2D.clearRect(0, 0, objCanvas.width, objCanvas.height);
-						
-			
-					}
-
-
-					//console.log(objPersonnages.PositionYPixel)
-
 
 					break;
 				case 40: // Flèche-en-bas
@@ -1166,23 +1090,21 @@
 
 		function briqueEnDessousPersonnage() {
 			let binBriqueEnDessous = false;
-			//	console.log("personnage : Y = " + Math.round(objPersonnages.PositionYPixel + 32));
+			console.log("personnage : Y = " + Math.round(objPersonnages.PositionYPixel + 32));
 
 
 
 			//BRIQUE
 			for (let h = 0; h < tabBirques.length; h++) {
 				//	console.log("briques : Y = " + (tabBirques[h].PositionY));
-				if (Math.round(objPersonnages.PositionYPixel) + 32 <= tabBirques[h].PositionY + 2 &&
-					Math.round(objPersonnages.PositionYPixel) + 28 >= tabBirques[h].PositionY - 2 &&
+				if (Math.round(objPersonnages.PositionYPixel) + 32 <= tabBirques[h].PositionY + 2 && Math.round(objPersonnages.PositionYPixel) + 28 >= tabBirques[h].PositionY - 2 &&
 					objPersonnages.PositionXPixel >= tabBirques[h].PositionX - 15 &&
 					objPersonnages.PositionXPixel <= tabBirques[h].PositionX + 15) { //il y a qqchose en dessous
 					binBriqueEnDessous = true;
-					//	console.log("dans une brique")
+
 					break;
 				}
 				else { // il y a rien
-					//	console.log("pas de  brique ")
 					binBriqueEnDessous = false;
 				}
 			}
@@ -1196,29 +1118,27 @@
 
 			return binBriqueEnDessous;
 		}
-		function echelleEnDessouspersonnage() {//le problee de la gravite est ici
+		function echelleEnDessouspersonnage() {
 			let binEchelleEnDessous = false;
 			//ECHELLE
 			for (let g = 0; g < tabEchelles.length; g++) {
-				//console.log("echelle : Y = " + tabEchelles[g].PositionY + 'X = ' + tabEchelles[g].PositionX);
-				//console.log("personnage : Y = " + (objPersonnages.PositionYPixel) + '  X= ' + objPersonnages.PositionXPixel);
+				console.log("echelle : Y = " + tabEchelles[g].PositionY + 'X = ' + tabEchelles[g].PositionX);
+				console.log("personnage : Y = " + (objPersonnages.PositionYPixel) + '  X= ' + objPersonnages.PositionXPixel);
 				if (objPersonnages.PositionYPixel == tabEchelles[g].PositionY //lorsquu'il est sur le mem niveau
-					&& objPersonnages.PositionXPixel <= tabEchelles[g].PositionX - 15
-					&& objPersonnages.PositionXPixel >= tabEchelles[g].PositionX + 15) {
+					&& objPersonnages.PositionXPixel <= tabEchelles[g].PositionX + 30
+					&& objPersonnages.PositionXPixel >= tabEchelles[g].PositionX) {
 					binEchelleEnDessous = true;
 					console.log("echelle")
 					break;
 
 				} else if (objPersonnages.PositionYPixel + 30 == tabEchelles[g].PositionY //lorsqu'il est en bas
-					&& objPersonnages.PositionXPixel <= tabEchelles[g].PositionX
+					&& objPersonnages.PositionXPixel <= tabEchelles[g].PositionX + 30
 					&& objPersonnages.PositionXPixel >= tabEchelles[g].PositionX) {
 					binEchelleEnDessous = true;
-					console.log("echelle 2")
 					break;
 				}
 				else {
 					binEchelleEnDessous = false;
-					console.log("vide dechelle ")
 				}
 			}
 
