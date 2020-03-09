@@ -65,7 +65,7 @@
 
 		let binChangerNiveau = false;
 
-		let binApparaitreEchelle = true;
+		let binApparaitreEchelle = false;
 		class Briques {
 			constructor(positionX, positionY, positionFinX, positionFinY) {
 				this.positionX = positionX;
@@ -471,7 +471,7 @@
 				dessinerMurs();
 				dessinerScore();
 				//dessinerChronometre();
-				dessinerPlateformesJeu(false);
+				dessinerPlateformesJeu();
 				dessinerPersonnages();
 				dessinerGarde();
 				objDebut.sonDebut.pause();
@@ -653,19 +653,72 @@
 			objC2D.restore();
 		}
 
-		function dessinerPlateformesJeu(binaparaitreechelle) {
+		function dessinerPlateformesJeu() {
 			objC2D.save();
 			objC2D.translate(30, 30);
 
-		//	console.log("binaparaitreechelle = " + binApparaitreEchelle)
-		//binApparaitreEchelle = false;
+			console.log("binaparaitreechelle = " + binApparaitreEchelle)
+			//binApparaitreEchelle = false;
 
-			if (binApparaitreEchelle) { 
-				changerNiveau()
+			if (binApparaitreEchelle) {
+				//changerNiveau()
+
+				//	binApparaitreEchelle = true
+				objPlateformes.tabPlateformes[4][20] = 2
+				objPlateformes.tabPlateformes[3][20] = 2
+				objPlateformes.tabPlateformes[2][20] = 2
+				objPlateformes.tabPlateformes[1][20] = 2
+				objPlateformes.tabPlateformes[0][20] = 2
+				//	for (var i = 0; i < objPlateformes.tabPlateformes.length; i++) {
+
+				//	for (var j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
+				if (objPlateformes.tabPlateformes[0][20] == 2) {
+					objEchelles2 = new Echelles();
+
+					objEchelles2.PositionX = 20 * 30;
+					objEchelles2.PositionY = 0 * 30;
+					tabEchelles.push(objEchelles2);
+
+				}
+				if (objPlateformes.tabPlateformes[1][20] == 2) {
+					objEchelles2 = new Echelles();
+
+					objEchelles2.PositionX = 20 * 30;
+					objEchelles2.PositionY = 1 * 30;
+					tabEchelles.push(objEchelles2);
+
+				}
+				if (objPlateformes.tabPlateformes[2][20] == 2) {
+					objEchelles2 = new Echelles();
+
+					objEchelles2.PositionX = 20 * 30;
+					objEchelles2.PositionY = 2 * 30;
+					tabEchelles.push(objEchelles2);
+
+				}
+				if (objPlateformes.tabPlateformes[3][20] == 2) {
+					objEchelles2 = new Echelles();
+
+					objEchelles2.PositionX = 20 * 30;
+					objEchelles2.PositionY = 3 * 30;
+					tabEchelles.push(objEchelles2);
+
+				}
+				if (objPlateformes.tabPlateformes[4][20] == 2) {
+					objEchelles2 = new Echelles();
+
+					objEchelles2.PositionX = 20 * 30;
+					objEchelles2.PositionY = 4 * 30;
+					tabEchelles.push(objEchelles2);
+
+				}
+
+
+
 			}
 			else {
 				console.log("disparaite echelle")
-				disparaitreEchelle()
+			//	disparaitreEchelle()
 			}
 
 
@@ -742,7 +795,7 @@
 				case 32:
 					objDebut.binDebut = false;
 					//	objSons.demarrerjeu.play();
-				//	console.log("allo")
+					//	console.log("allo")
 					break;
 			}
 
@@ -756,7 +809,9 @@
 			//objC2D.translate(30, 30);
 
 			//console.log("binChangerNiveau = " + binChangerNiveau)
-
+			if (tabBalleAttrape.length == 1) {
+				binApparaitreEchelle = true;
+			}
 
 
 			switch (event.keyCode) {
@@ -969,21 +1024,21 @@
 				case 38:// Flèche-en-haut
 					console.log("position y goku :" + objPersonnages.PositionYPixel)
 
-					if (objPersonnages.PositionYPixel <= 120) {
+					if (objPersonnages.PositionYPixel <= 0) {
 						//binChangerNiveau = true;
-					/*	binApparaitreEchelle = false;
-
-						//disparaitreEchelle()
-						initPersonnage(30, 16)
-
-						initDessin()
-						initInfoJeu()
-						initPlateformesJeu(false)
-						initChrono()
-						initGarde();
-						objInfoJeu.niveau += 1;
-						//objDebut.binDebut = true
-						disparaitreEchelle()*/
+						/*	binApparaitreEchelle = false;
+	
+							//disparaitreEchelle()
+							initPersonnage(30, 16)
+	
+							initDessin()
+							initInfoJeu()
+							initPlateformesJeu(false)
+							initChrono()
+							initGarde();
+							objInfoJeu.niveau += 1;
+							//objDebut.binDebut = true
+							disparaitreEchelle()*/
 
 
 					}
@@ -1136,59 +1191,7 @@
 		function changerNiveau() {
 			//s'il prend les 7 dragon balls, il faut que je dessine une echelle(dans dessiner palteforme jeu)
 
-			if (tabBalleAttrape.length == 1) {
-				//	binApparaitreEchelle = true
-				objPlateformes.tabPlateformes[4][20] = 2
-				objPlateformes.tabPlateformes[3][20] = 2
-				objPlateformes.tabPlateformes[2][20] = 2
-				objPlateformes.tabPlateformes[1][20] = 2
-				objPlateformes.tabPlateformes[0][20] = 2
-				//	for (var i = 0; i < objPlateformes.tabPlateformes.length; i++) {
 
-				//	for (var j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
-				if (objPlateformes.tabPlateformes[0][20] == 2) {
-					objEchelles2 = new Echelles();
-
-					objEchelles2.PositionX = 20 * 30;
-					objEchelles2.PositionY = 0 * 30;
-					tabEchelles.push(objEchelles2);
-
-				}
-				if (objPlateformes.tabPlateformes[1][20] == 2) {
-					objEchelles2 = new Echelles();
-
-					objEchelles2.PositionX = 20 * 30;
-					objEchelles2.PositionY = 1 * 30;
-					tabEchelles.push(objEchelles2);
-
-				}
-				if (objPlateformes.tabPlateformes[2][20] == 2) {
-					objEchelles2 = new Echelles();
-
-					objEchelles2.PositionX = 20 * 30;
-					objEchelles2.PositionY = 2 * 30;
-					tabEchelles.push(objEchelles2);
-
-				}
-				if (objPlateformes.tabPlateformes[3][20] == 2) {
-					objEchelles2 = new Echelles();
-
-					objEchelles2.PositionX = 20 * 30;
-					objEchelles2.PositionY = 3 * 30;
-					tabEchelles.push(objEchelles2);
-
-				}
-				if (objPlateformes.tabPlateformes[4][20] == 2) {
-					objEchelles2 = new Echelles();
-
-					objEchelles2.PositionX = 20 * 30;
-					objEchelles2.PositionY = 4 * 30;
-					tabEchelles.push(objEchelles2);
-
-				}
-
-
-			}
 
 
 
