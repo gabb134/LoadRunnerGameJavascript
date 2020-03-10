@@ -190,7 +190,7 @@
 				objGarde.PositionX = Math.floor(Math.random() * 20);
 				objGarde.PositionY = Math.floor(Math.random() * 15);
 
-		//		console.log(objGarde.PositionX + ' - ' + objGarde.PositionY);
+				//		console.log(objGarde.PositionX + ' - ' + objGarde.PositionY);
 
 
 
@@ -441,12 +441,17 @@
 		function mettreAjourAnimation() {
 
 			dessinerChronometre();
-			
 
-			if (briqueEnDessousPersonnage() == false && echelleEnDessouspersonnage() == false) {
+
+			if (briqueEnDessousPersonnage(objPersonnages) == false && echelleEnDessouspersonnage(objPersonnages) == false) {
 
 				objPersonnages.PositionYPixel += 1;
 			}
+
+			/*if (briqueEnDessousPersonnage(objGarde) == false && echelleEnDessouspersonnage(objGarde) == false) {
+
+				objGarde.PositionYPixel += 1;
+			}*/
 
 
 
@@ -662,82 +667,82 @@
 			objC2D.save();
 			objC2D.translate(30, 30);
 
-	//		console.log("binaparaitreechelle = " + binApparaitreEchelle)
+			//		console.log("binaparaitreechelle = " + binApparaitreEchelle)
 			//binApparaitreEchelle = false;
 			if (tabBalleAttrape.length == 1) {
 				binApparaitreEchelle = true;
 			}
 
 			if (binApparaitreEchelle) {
+
+				/*
+								//changerNiveau()
+								objEchelles2 = new Echelles();
 				
-/*
-				//changerNiveau()
-				objEchelles2 = new Echelles();
-
-				//	binApparaitreEchelle = true
-				objPlateformes.tabPlateformes[4][20] = 2
-				objPlateformes.tabPlateformes[3][20] = 2
-				objPlateformes.tabPlateformes[2][20] = 2
-				objPlateformes.tabPlateformes[1][20] = 2
-				objPlateformes.tabPlateformes[0][20] = 2
-				//	for (var i = 0; i < objPlateformes.tabPlateformes.length; i++) {
-
-				//	for (var j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
-				if (objPlateformes.tabPlateformes[0][20] == 2) {
-
-					objEchelles2 = new Echelles();
-					objEchelles2.PositionX = 20 * 30;
-					objEchelles2.PositionY = 0 * 30;
-
-					posEchelleX = objEchelles2.PositionX;
-					posEchelleY = objEchelles2.PositionY + 30
-					tabEchelles.push(objEchelles2);
-
-				}
-				if (objPlateformes.tabPlateformes[1][20] == 2) {
-					objEchelles2 = new Echelles();
-
-					objEchelles2.PositionX = 20 * 30;
-					objEchelles2.PositionY = 1 * 30;
-					tabEchelles.push(objEchelles2);
-
-				}
-				if (objPlateformes.tabPlateformes[2][20] == 2) {
-					objEchelles2 = new Echelles();
-
-					objEchelles2.PositionX = 20 * 30;
-					objEchelles2.PositionY = 2 * 30;
-					tabEchelles.push(objEchelles2);
-
-				}
-				if (objPlateformes.tabPlateformes[3][20] == 2) {
-					objEchelles2 = new Echelles();
-
-					objEchelles2.PositionX = 20 * 30;
-					objEchelles2.PositionY = 3 * 30;
-					tabEchelles.push(objEchelles2);
-
-				}
-				if (objPlateformes.tabPlateformes[4][20] == 2) {
-					objEchelles2 = new Echelles();
-
-					objEchelles2.PositionX = 20 * 30;
-					objEchelles2.PositionY = 4 * 30;
-					tabEchelles.push(objEchelles2);
-
-
-				}
-
-
-				binApparaitreEchelle = false;*/
+								//	binApparaitreEchelle = true
+								objPlateformes.tabPlateformes[4][20] = 2
+								objPlateformes.tabPlateformes[3][20] = 2
+								objPlateformes.tabPlateformes[2][20] = 2
+								objPlateformes.tabPlateformes[1][20] = 2
+								objPlateformes.tabPlateformes[0][20] = 2
+								//	for (var i = 0; i < objPlateformes.tabPlateformes.length; i++) {
+				
+								//	for (var j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
+								if (objPlateformes.tabPlateformes[0][20] == 2) {
+				
+									objEchelles2 = new Echelles();
+									objEchelles2.PositionX = 20 * 30;
+									objEchelles2.PositionY = 0 * 30;
+				
+									posEchelleX = objEchelles2.PositionX;
+									posEchelleY = objEchelles2.PositionY + 30
+									tabEchelles.push(objEchelles2);
+				
+								}
+								if (objPlateformes.tabPlateformes[1][20] == 2) {
+									objEchelles2 = new Echelles();
+				
+									objEchelles2.PositionX = 20 * 30;
+									objEchelles2.PositionY = 1 * 30;
+									tabEchelles.push(objEchelles2);
+				
+								}
+								if (objPlateformes.tabPlateformes[2][20] == 2) {
+									objEchelles2 = new Echelles();
+				
+									objEchelles2.PositionX = 20 * 30;
+									objEchelles2.PositionY = 2 * 30;
+									tabEchelles.push(objEchelles2);
+				
+								}
+								if (objPlateformes.tabPlateformes[3][20] == 2) {
+									objEchelles2 = new Echelles();
+				
+									objEchelles2.PositionX = 20 * 30;
+									objEchelles2.PositionY = 3 * 30;
+									tabEchelles.push(objEchelles2);
+				
+								}
+								if (objPlateformes.tabPlateformes[4][20] == 2) {
+									objEchelles2 = new Echelles();
+				
+									objEchelles2.PositionX = 20 * 30;
+									objEchelles2.PositionY = 4 * 30;
+									tabEchelles.push(objEchelles2);
+				
+				
+								}
+				
+				
+								binApparaitreEchelle = false;*/
 			}
 			else {
 				//	console.log("disparaite echelle")
 				//	disparaitreEchelle()
 
-			//	disparaitreEchelle()
+				//	disparaitreEchelle()
 
-		//		console.log("dimelo")
+				//		console.log("dimelo")
 			}
 
 
@@ -1238,7 +1243,7 @@
 		}
 
 
-		function briqueEnDessousPersonnage() {
+		function briqueEnDessousPersonnage(objGardeOuPersonnage) {
 			let binBriqueEnDessous = false;
 			//	console.log("personnage : Y = " + Math.round(objPersonnages.PositionYPixel + 32));
 
@@ -1247,9 +1252,9 @@
 			//BRIQUE
 			for (let h = 0; h < tabBirques.length; h++) {
 				//	console.log("briques : Y = " + (tabBirques[h].PositionY));
-				if (Math.round(objPersonnages.PositionYPixel) + 32 <= tabBirques[h].PositionY + 2 && Math.round(objPersonnages.PositionYPixel) + 28 >= tabBirques[h].PositionY - 2 &&
-					objPersonnages.PositionXPixel >= tabBirques[h].PositionX - 15 &&
-					objPersonnages.PositionXPixel <= tabBirques[h].PositionX + 15) { //il y a qqchose en dessous
+				if (Math.round(objGardeOuPersonnage.PositionYPixel) + 32 <= tabBirques[h].PositionY + 2 && Math.round(objGardeOuPersonnage.PositionYPixel) + 28 >= tabBirques[h].PositionY - 2 &&
+					objGardeOuPersonnage.PositionXPixel >= tabBirques[h].PositionX - 15 &&
+					objGardeOuPersonnage.PositionXPixel <= tabBirques[h].PositionX + 15) { //il y a qqchose en dessous
 					binBriqueEnDessous = true;
 
 					break;
@@ -1268,32 +1273,14 @@
 
 			return binBriqueEnDessous;
 		}
-		function echelleEnDessouspersonnage() {
+		function echelleEnDessouspersonnage(objGardeOuPersonnage) {
 			let binEchelleEnDessous = false;
 			//ECHELLE
 			for (let g = 0; g < tabEchelles.length; g++) {
-				//console.log("echelle : Y = " + tabEchelles[g].PositionY + 'X = ' + tabEchelles[g].PositionX);
-				//console.log("personnage : Y = " + (objPersonnages.PositionYPixel) + '  X= ' + objPersonnages.PositionXPixel);
-				/*	if (objPersonnages.PositionYPixel == tabEchelles[g].PositionY //lorsquu'il est sur le mem niveau
-						&& objPersonnages.PositionXPixel <= tabEchelles[g].PositionX + 30
-						&& objPersonnages.PositionXPixel >= tabEchelles[g].PositionX) {
-						binEchelleEnDessous = true;
-						break;
-	
-					} else if (objPersonnages.PositionYPixel + 30 == tabEchelles[g].PositionY //lorsqu'il est en bas
-						&& objPersonnages.PositionXPixel <= tabEchelles[g].PositionX + 30
-						&& objPersonnages.PositionXPixel >= tabEchelles[g].PositionX) {
-						binEchelleEnDessous = true;
-						console.log("echelle : Y = " + tabEchelles[g].PositionY + 'X = ' + tabEchelles[g].PositionX);
-						console.log("personnage : Y = " + (objPersonnages.PositionYPixel) + '  X= ' + objPersonnages.PositionXPixel);
-						break;
-					}
-					else {
-						binEchelleEnDessous = false;
-					}*/
-				if (objPersonnages.PositionYPixel <= tabEchelles[g].PositionY
-					&& objPersonnages.PositionYPixel >= tabEchelles[g].PositionY - 30
-					&& objPersonnages.PositionXPixel == tabEchelles[g].PositionX) {
+				if (objGardeOuPersonnage.PositionYPixel <= tabEchelles[g].PositionY
+					&& objGardeOuPersonnage.PositionYPixel >= tabEchelles[g].PositionY - 30
+					&& objGardeOuPersonnage.PositionXPixel >= tabEchelles[g].PositionX
+					&& objGardeOuPersonnage.PositionXPixel <= tabEchelles[g].PositionX) {
 					binEchelleEnDessous = true;
 					break;
 				} else {
@@ -1308,65 +1295,93 @@
 
 
 		function bougerGarde() {
+			let binBriqueSurMonY = false;
 
-			//	console.log(binMonter);
-
+			console.log(echelleEnDessouspersonnage(objGarde));
 			if (objGarde.PositionYPixel == objPersonnages.PositionYPixel) {
-				console.log('yahne');
+				//console.log('aa')
 				if (objGarde.PositionXPixel > objPersonnages.PositionXPixel) {
-					deplacementX = -1;
+
+					for (let j = 0; j < tabBirques.length && !binBriqueSurMonY; j++) {
+
+						if (tabBirques[j].PositionY == objGarde.PositionYPixel) {
+							
+							if (tabBirques[j].PositionX + 30 != objGarde.PositionXPixel) {
+								binBriqueSurMonY = false;
+
+							}
+							else {
+
+								binBriqueSurMonY = true;
+							}
+						} else {
+
+							binBriqueSurMonY = false;
+						}
+					}
+
+					if (!binBriqueSurMonY) {
+						
+						deplacementX = -1;
+					} else {
+						
+						deplacementX = 0;
+					}
+
+
 				}
-				else {
+				else if(objGarde.PositionXPixel < objPersonnages.PositionXPixel){
+						
 					deplacementX = 1;
 				}
-			} else if(objGarde.PositionYPixel > objPersonnages.PositionYPixel){
+			} else if (objGarde.PositionYPixel > objPersonnages.PositionYPixel) {
 				//trouver echelle pour aller au meme niveau que le personnage.
-				
-				for (let h = 0; h < tabEchelles.length; h++) {
-					
-					
-					if (objGarde.PositionYPixel <= tabEchelles[h].PositionY && objGarde.PositionYPixel > tabEchelles[h].PositionY -30)  {
-						//console.log(objGarde.PositionXPixel + '-' + objGarde.PositionYPixel);
-						//console.log('yahne2');
-						if (objGarde.PositionXPixel > tabEchelles[h].PositionX) {
-							deplacementX = -1;
-						}
-						else if(objGarde.PositionXPixel < tabEchelles[h].PositionX){
-							//inverse
-							deplacementX = 1;
-						}else if(objGarde.PositionXPixel == tabEchelles[h].PositionX){
-							
-						/*	console.log(objGarde.PositionXPixel + '-' + objGarde.PositionYPixel);
-							console.log('-_-')
-							console.log(tabEchelles[h].PositionX + '-' + tabEchelles[h].PositionY);*/
-							deplacementX = 0;
-							objGarde.PositionYPixel -= 1;
-							}
-						}
-					
-				
-					
-				}
-			}else if(objGarde.PositionYPixel < objPersonnages.PositionYPixel){
 
 				for (let h = 0; h < tabEchelles.length; h++) {
-					
-					if (objGarde.PositionYPixel <= tabEchelles[h].PositionY && objGarde.PositionYPixel > tabEchelles[h].PositionY -30)  {
-						console.log(objGarde.PositionXPixel + '-' + objGarde.PositionYPixel);
+
+
+					if (objGarde.PositionYPixel <= tabEchelles[h].PositionY && objGarde.PositionYPixel > tabEchelles[h].PositionY - 30) {
+
+						if (objGarde.PositionXPixel > tabEchelles[h].PositionX) {
+
+
+							deplacementX = -1;
+
+						}
+						else if (objGarde.PositionXPixel < tabEchelles[h].PositionX) {
+							//inverse
+
+							deplacementX = 1;
+						} else if (objGarde.PositionXPixel == tabEchelles[h].PositionX) {
+							deplacementX = 0;
+							objGarde.PositionYPixel -= 1;
+							break;
+						}
+					}
+
+
+
+				}
+			} else if (objGarde.PositionYPixel < objPersonnages.PositionYPixel) {
+
+				for (let h = 0; h < tabEchelles.length; h++) {
+
+					if (objGarde.PositionYPixel <= tabEchelles[h].PositionY && objGarde.PositionYPixel > tabEchelles[h].PositionY - 30) {
+						//	console.log(objGarde.PositionXPixel + '-' + objGarde.PositionYPixel);
 						if (objGarde.PositionXPixel > tabEchelles[h].PositionX) {
 							deplacementX = -1;
 						}
-						else if(objGarde.PositionXPixel < tabEchelles[h].PositionX){
+						else if (objGarde.PositionXPixel < tabEchelles[h].PositionX) {
 							//inverse
 							deplacementX = 1;
-						}else if(objGarde.PositionXPixel == tabEchelles[h].PositionX){
-			
+						} else if (objGarde.PositionXPixel == tabEchelles[h].PositionX) {
+
 							deplacementX = 0;
 							objGarde.PositionYPixel += 1;
 						}
-						
+
 					}
-					
+
 				}
 			}
 
@@ -1376,7 +1391,7 @@
 
 
 
-
+	//		console.log(objGarde.PositionXPixel)
 			objGarde.PositionXPixel += deplacementX;
 
 		}
