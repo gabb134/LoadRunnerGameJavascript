@@ -190,7 +190,7 @@
 				objGarde.PositionX = Math.floor(Math.random() * 20);
 				objGarde.PositionY = Math.floor(Math.random() * 15);
 
-				console.log(objGarde.PositionX + ' - ' + objGarde.PositionY);
+		//		console.log(objGarde.PositionX + ' - ' + objGarde.PositionY);
 
 
 
@@ -441,7 +441,7 @@
 		function mettreAjourAnimation() {
 
 			dessinerChronometre();
-			bougerGarde();
+			
 
 			if (briqueEnDessousPersonnage() == false && echelleEnDessouspersonnage() == false) {
 
@@ -455,7 +455,7 @@
 			//		objPersonnages.binChute = false;
 
 
-
+			bougerGarde();
 		}
 
 		// Pour dessiner
@@ -662,13 +662,15 @@
 			objC2D.save();
 			objC2D.translate(30, 30);
 
-					console.log("binaparaitreechelle = " + binApparaitreEchelle)
+	//		console.log("binaparaitreechelle = " + binApparaitreEchelle)
 			//binApparaitreEchelle = false;
 			if (tabBalleAttrape.length == 1) {
 				binApparaitreEchelle = true;
 			}
 
 			if (binApparaitreEchelle) {
+				
+/*
 				//changerNiveau()
 				objEchelles2 = new Echelles();
 
@@ -723,18 +725,19 @@
 					objEchelles2.PositionY = 4 * 30;
 					tabEchelles.push(objEchelles2);
 
+
 				}
 
 
-
+				binApparaitreEchelle = false;*/
 			}
 			else {
 				//	console.log("disparaite echelle")
 				//	disparaitreEchelle()
 
-				disparaitreEchelle()
+			//	disparaitreEchelle()
 
-				console.log("dimelo")
+		//		console.log("dimelo")
 			}
 
 
@@ -824,7 +827,7 @@
 			objC2D.save();
 			//objC2D.translate(30, 30);
 
-			//console.log("binChangerNiveau = " + binChangerNiveau)
+			console.log("perso Y = " + objPersonnages.PositionYPixel)
 
 
 
@@ -1092,22 +1095,22 @@
 
 					if (objPersonnages.PositionYPixel == posEchelleY - 30) {
 						console.log("goku est dans la derniere echelle")
-						
+
 						//effacerDessin()
 						//dessiner()
 						binApparaitreEchelle = false;
 						//initPlateformesJeu()
 						initChrono()
-						initPersonnage(50,4)
+						initPersonnage(50, 4)
 						initGarde()
-					//	initInfoJeu()
-						objInfoJeu.niveau+=1;
-						objInfoJeu.score= 0;
+						//	initInfoJeu()
+						objInfoJeu.niveau += 1;
+						objInfoJeu.score = 0;
 						initDessin()
 
 
 
-			
+
 					}
 
 
@@ -1237,11 +1240,7 @@
 
 		function briqueEnDessousPersonnage() {
 			let binBriqueEnDessous = false;
-<<<<<<< HEAD
-			console.log("personnage : Y = " + Math.round(objPersonnages.PositionYPixel + 32));
-=======
 			//	console.log("personnage : Y = " + Math.round(objPersonnages.PositionYPixel + 32));
->>>>>>> c27e0e3a0fd7b1459708841a6915bd03a7957ed5
 
 
 
@@ -1310,76 +1309,76 @@
 
 		function bougerGarde() {
 
-<<<<<<< HEAD
-				//	console.log(binMonter);
-					
-				/*		 
-						for(let i = 0; i< tabEchelles.length ;i++){
-							if(objGarde.PositionYPixel <= tabEchelles[i].PositionY && objGarde.PositionYPixel > tabEchelles[i].PositionY - 30
-								&& objGarde.PositionXPixel >= tabEchelles[i].PositionX
-								&& objGarde.PositionXPixel <= tabEchelles[i].PositionX +30){
-		 							deplacementX = 0;
-									binMonter =true;
-									break;
-								}
-								else{
-									binMonter =false;
-								}
-						}
-						
-						if(binMonter){
-							objGarde.PositionYPixel -= 1;
-						}else{
-						//	
-						 	if (objGarde.PositionXPixel >= 870) {
-								deplacementX = deplacementX * -1;
-							}else if(objGarde.PositionXPixel == 0){
-								deplacementX = deplacementX * -1;
-							}else{
-								//deplacementX = deplacementX * -1;
-							}
-							console.log(objGarde.PositionXPixel);
-						}
-		
-						
-
-					objGarde.PositionXPixel += deplacementX;
-					*/
-		
-=======
 			//	console.log(binMonter);
 
-
-			for (let i = 0; i < tabEchelles.length; i++) {
-				if (objGarde.PositionYPixel <= tabEchelles[i].PositionY && objGarde.PositionYPixel > tabEchelles[i].PositionY - 30
-					&& objGarde.PositionXPixel >= tabEchelles[i].PositionX
-					&& objGarde.PositionXPixel <= tabEchelles[i].PositionX + 30) {
-					deplacementX = 0;
-					binMonter = true;
-					break;
+			if (objGarde.PositionYPixel == objPersonnages.PositionYPixel) {
+				console.log('yahne');
+				if (objGarde.PositionXPixel > objPersonnages.PositionXPixel) {
+					deplacementX = -1;
 				}
 				else {
-					binMonter = false;
+					deplacementX = 1;
+				}
+			} else if(objGarde.PositionYPixel > objPersonnages.PositionYPixel){
+				//trouver echelle pour aller au meme niveau que le personnage.
+				
+				for (let h = 0; h < tabEchelles.length; h++) {
+					
+					
+					if (objGarde.PositionYPixel <= tabEchelles[h].PositionY && objGarde.PositionYPixel > tabEchelles[h].PositionY -30)  {
+						//console.log(objGarde.PositionXPixel + '-' + objGarde.PositionYPixel);
+						//console.log('yahne2');
+						if (objGarde.PositionXPixel > tabEchelles[h].PositionX) {
+							deplacementX = -1;
+						}
+						else if(objGarde.PositionXPixel < tabEchelles[h].PositionX){
+							//inverse
+							deplacementX = 1;
+						}else if(objGarde.PositionXPixel == tabEchelles[h].PositionX){
+							
+						/*	console.log(objGarde.PositionXPixel + '-' + objGarde.PositionYPixel);
+							console.log('-_-')
+							console.log(tabEchelles[h].PositionX + '-' + tabEchelles[h].PositionY);*/
+							deplacementX = 0;
+							objGarde.PositionYPixel -= 1;
+							}
+						}
+					
+				
+					
+				}
+			}else if(objGarde.PositionYPixel < objPersonnages.PositionYPixel){
+
+				for (let h = 0; h < tabEchelles.length; h++) {
+					
+					if (objGarde.PositionYPixel <= tabEchelles[h].PositionY && objGarde.PositionYPixel > tabEchelles[h].PositionY -30)  {
+						console.log(objGarde.PositionXPixel + '-' + objGarde.PositionYPixel);
+						if (objGarde.PositionXPixel > tabEchelles[h].PositionX) {
+							deplacementX = -1;
+						}
+						else if(objGarde.PositionXPixel < tabEchelles[h].PositionX){
+							//inverse
+							deplacementX = 1;
+						}else if(objGarde.PositionXPixel == tabEchelles[h].PositionX){
+			
+							deplacementX = 0;
+							objGarde.PositionYPixel += 1;
+						}
+						
+					}
+					
 				}
 			}
 
-			if (binMonter) {
-				objGarde.PositionYPixel -= 1;
-			} else {
-				if (objGarde.PositionXPixel > 870) {
-					deplacementX = -1;
-				} else if (objGarde.PositionXPixel <= 10) {
-					deplacementX = 1;
-				} else {
-					deplacementX = 1;
-				}
-			}
+
+
+
+
 
 
 
 			objGarde.PositionXPixel += deplacementX;
 
->>>>>>> c27e0e3a0fd7b1459708841a6915bd03a7957ed5
 		}
 
 
