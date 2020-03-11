@@ -13,6 +13,7 @@
 		let objC2D = null;
 		let objCycleAnimation = null;
 		let objImageFond = null;
+		let objImageBeton = null
 		let objImageInfoJeu = null;
 		let tabObjMurs = null;
 		let objImageMurs = null;
@@ -73,6 +74,15 @@
 
 		let binApparaitreEchelle = false;
 		let binDescendCorde = false
+
+		let binQQchoseDansTrous = false;
+		let binTrousRempli = false;
+		let binTempsTrous = false;
+
+
+
+
+
 		class Briques {
 			constructor(positionX, positionY, positionFinX, positionFinY) {
 				this.positionX = positionX;
@@ -86,12 +96,13 @@
 
 
 		class Echelles {
-			constructor(positionX, positionY, positionFinX, positionFinY) {
+			constructor(positionX, positionY, positionFinX, positionFinY, binEchelleAfficher) {
 				this.positionX = positionX;
 				this.positionY = positionY;
 
 				this.positionFinX = positionFinX;
 				this.positionFinY = positionFinY;
+				this.binEchelleAfficher = binEchelleAfficher;
 			}
 
 		}
@@ -128,7 +139,7 @@
 			initInfoJeu();
 			initChrono();
 			initPlateformesJeu();
-			initPersonnage(30, 16);
+			initPersonnage(50, 4);
 			initGarde();
 			initDessin();
 			initSons();
@@ -145,7 +156,9 @@
 		// Aller chercher l'image de fond
 		function initImageFond() {
 			objImageFond = new Image();
+			objImageBeton = new Image();
 			objImageFond.src = 'backroundLoadRunner.png';
+			objImageBeton.src = 'beton12.png'
 		}
 		function initInfoJeu() {
 			objImageInfoJeu = new Image();
@@ -281,6 +294,7 @@
 		}
 
 
+
 		function initDessin() {
 			let compteur = 0;
 
@@ -299,11 +313,15 @@
 
 						//	alert()
 					}
-					if (objPlateformes.tabPlateformes[i][j] == 2) {
+					if (objPlateformes.tabPlateformes[i][j] == 2) {//echelle
 						objEchelles = new Echelles();
+
 
 						objEchelles.PositionX = j * 30;
 						objEchelles.PositionY = i * 30;
+
+						objEchelles.binEchelleAfficher = true;
+
 
 						tabEchelles.push(objEchelles);
 					}
@@ -452,7 +470,10 @@
 			dessinerChronometre();
 
 
-			if (briqueEnDessousPersonnage(objPersonnages) == false && echelleEnDessouspersonnage(objPersonnages) == false && cordeSurPersonnage() == false && objPersonnages.PositionYPixel!= 510) {
+
+
+
+			if (briqueEnDessousPersonnage(objPersonnages) == false && echelleEnDessouspersonnage(objPersonnages) == false && cordeSurPersonnage() == false && objPersonnages.PositionYPixel != 510) {
 
 				objPersonnages.PositionYPixel += 1;
 				binDescendCorde = false;
@@ -460,7 +481,13 @@
 
 				objPersonnages.binArretDroite = true;
 				objPersonnages.binArretGauche = true;
+				binQQchoseDansTrous = true;
 			}
+
+			if (binQQchoseDansTrous)
+				console.log("dans le trous")
+			else
+				console.log("dehors")
 
 			/*if (briqueEnDessousPersonnage(objGarde) == false && echelleEnDessouspersonnage(objGarde) == false) {
 
@@ -534,6 +561,8 @@
 		function dessinerFond() {
 			objC2D.save();  // Sauvegarde le contexte
 			objC2D.drawImage(objImageFond, 0, 0, objCanvas.width, objCanvas.height - 130);
+
+
 			objC2D.restore(); // Restaure le contexte
 		}
 		function dessinerChronometre() {
@@ -556,8 +585,16 @@
 		function dessinerScore() {
 			objC2D.save();  // Sauvegarde le contexte
 
+
+
+
+
 			//Image drangon ball z
-			objC2D.drawImage(objImageInfoJeu, 0, 570, objCanvas.width, 100);
+			objC2D.drawImage(objImageInfoJeu, 0, 590, objCanvas.width, 140);
+
+
+
+			objC2D.drawImage(objImageBeton, 30, 570, objCanvas.width - 60, 30);
 
 
 
@@ -609,15 +646,15 @@
 			objC2D.fillText(strTextTitre, objCanvas.width / 2, 29);
 
 
-			objC2D.fillText(strTexteScore, 150, 610);
+			objC2D.fillText(strTexteScore, 150, 650);
 
-			objC2D.fillText(strTextTemps, 112, 650);
+			objC2D.fillText(strTextTemps, 112, 700);
 
-			objC2D.fillText(strTextChrono, 200, 650);
+			objC2D.fillText(strTextChrono, 200, 700);
 
-			objC2D.fillText(strTexteNiveau, 775, 610);
+			objC2D.fillText(strTexteNiveau, 775, 650);
 
-			objC2D.fillText(strTextVies, 775, 650);
+			objC2D.fillText(strTextVies, 775, 700);
 
 
 
@@ -690,7 +727,13 @@
 				objC2D.drawImage(imagePlateforme, tabBirques[i].PositionX, tabBirques[i].PositionY);
 			}
 			for (var i = 0; i < tabEchelles.length; i++) {
-				objC2D.drawImage(imageEchelle, tabEchelles[i].PositionX, tabEchelles[i].PositionY);
+
+
+				if (tabEchelles[i].binEchelleAfficher) {
+					objC2D.drawImage(imageEchelle, tabEchelles[i].PositionX, tabEchelles[i].PositionY);
+					console.log("nb echelle" + tabEchelles.length)
+				}
+
 			}
 
 			for (var i = 0; i < tabCordes.length; i++) {
@@ -772,18 +815,15 @@
 			//console.log("perso Y = " + objPersonnages.PositionYPixel)
 
 			//	console.log("perso Y = " + objPersonnages.PositionYPixel)
-			if (tabBalleAttrape.length == 7) {
-				binApparaitreEchelle = true;
 
+			/*	if (binApparaitreEchelle) {
+					//	changerNiveau()
+					//	binApparaitreEchelle = false
+				}
+	
+				binApparaitreEchelle = false*/
 
-			}
-
-			if (binApparaitreEchelle) {
-				//		changerNiveau()
-				//	binApparaitreEchelle = false
-			}
-
-			binApparaitreEchelle = false
+			console.log("longuer du tab: " + tabBalleAttrape.length)
 
 
 
@@ -858,6 +898,11 @@
 
 									objSons.ramasseDragonBalls.play();
 
+									if (tabBalleAttrape.length == 1) {
+										binApparaitreEchelle = true;
+										changerNiveau()
+
+									}
 
 									//	console.log("tabDragonballs : "+ tabDragonBalls.length)
 									//	}
@@ -993,6 +1038,12 @@
 										objSons.ramasseDragonBalls.play();
 									}
 
+									if (tabBalleAttrape.length == 1) {
+										binApparaitreEchelle = true;
+										changerNiveau()
+
+									}
+
 									objInfoJeu.score += 250;
 								}
 							}
@@ -1061,13 +1112,23 @@
 
 					//console.log("position goku dans les y " + objPersonnages.PositionYPixel)
 
-
+					//console.log("longuer echelle " + tabEchelles.length)
 					if (objPersonnages.PositionYPixel == posEchelleY - 30) {
-						//console.log("goku est dans la derniere echelle")
+						console.log("goku est dans la derniere echelle")
 
 						//effacerDessin()
 						//dessiner()
 						binApparaitreEchelle = false;
+
+
+						for (let i = tabEchelles.length - 1; i >= tabEchelles.length - 5; i--) {
+
+
+							tabEchelles[i].binEchelleAfficher = false;
+							//	console.log("bin ehclle = : " + tabEchelles[i].binEchelleAfficher)
+						}
+
+
 						//initPlateformesJeu()
 						initChrono()
 						initPersonnage(30, 16)
@@ -1075,7 +1136,64 @@
 						//	initInfoJeu()
 						objInfoJeu.niveau += 1;
 						objInfoJeu.score = 0;
-						initDessin()
+						//initDessin()
+						for (var i = 0; i < objPlateformes.tabPlateformes.length; i++) {
+
+							for (var j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
+								objDragonBalls = new DragonBalls();
+								switch (objPlateformes.tabPlateformes[i][j]) {
+
+									case 4:
+										objDragonBalls.positionDragonBallsX = j * 30;
+										objDragonBalls.positionDragonBallsY = i * 30;
+										objDragonBalls.binAttraper = false;
+										objDragonBalls.NoDB = 4;
+										tabDragonBalls.push(objDragonBalls);
+										break;
+
+									case 5:
+										objDragonBalls.positionDragonBallsX = j * 30;
+										objDragonBalls.positionDragonBallsY = i * 30;
+										objDragonBalls.NoDB = 5;
+										objDragonBalls.binAttraper = false;
+										tabDragonBalls.push(objDragonBalls); break;
+									case 6:
+										objDragonBalls.positionDragonBallsX = j * 30;
+										objDragonBalls.positionDragonBallsY = i * 30;
+										objDragonBalls.NoDB = 6;
+										objDragonBalls.binAttraper = false;
+										tabDragonBalls.push(objDragonBalls); break;
+									case 7:
+										objDragonBalls.positionDragonBallsX = j * 30;
+										objDragonBalls.positionDragonBallsY = i * 30;
+										objDragonBalls.NoDB = 7;
+										objDragonBalls.binAttraper = false;
+										tabDragonBalls.push(objDragonBalls);
+										break;
+									case 8:
+										objDragonBalls.positionDragonBallsX = j * 30;
+										objDragonBalls.positionDragonBallsY = i * 30;
+										objDragonBalls.NoDB = 8;
+										objDragonBalls.binAttraper = false;
+										tabDragonBalls.push(objDragonBalls); break;
+									case 9:
+										objDragonBalls.positionDragonBallsX = j * 30;
+										objDragonBalls.positionDragonBallsY = i * 30;
+										objDragonBalls.NoDB = 9;
+										objDragonBalls.binAttraper = false;
+										tabDragonBalls.push(objDragonBalls); break;
+									case 10:
+										objDragonBalls.positionDragonBallsX = j * 30;
+										objDragonBalls.positionDragonBallsY = i * 30;
+										objDragonBalls.NoDB = 10;
+										objDragonBalls.binAttraper = false;
+										tabDragonBalls.push(objDragonBalls); break;
+								}
+							}
+						}
+
+						tabBalleAttrape = [];
+
 
 
 
@@ -1195,7 +1313,7 @@
 							//	console.log("briques : Y = " + (tabBirques[h].PositionY));
 							if (Math.round(objPersonnages.PositionYPixel) + 32 <= tabBirques[h].PositionY + 2 && Math.round(objPersonnages.PositionYPixel) + 28 >= tabBirques[h].PositionY - 2 &&
 								objPersonnages.PositionXPixel >= tabBirques[h].PositionX - 15 &&
-								objPersonnages.PositionXPixel <= tabBirques[h].PositionX - 15	) { //il y a qqchose en dessous
+								objPersonnages.PositionXPixel <= tabBirques[h].PositionX - 15) { //il y a qqchose en dessous
 								//efaccer la prochaine brique pour 8 secondes
 
 								tabBirques[h] = 0;
@@ -1204,7 +1322,7 @@
 								//objSons.chuteGoku.pause()
 								break;
 							}
-							if(tabBirques[h]==0){ //mettre la case vide(blanche) en gris
+							if (tabBirques[h] == 0) { //mettre la case vide(blanche) en gris
 								console.log("gris")
 							}
 
@@ -1242,7 +1360,7 @@
 		}
 
 		function disparaitreEchelle() {
-			binApparaitreEchelle = false;
+			//binApparaitreEchelle = false;
 			objPlateformes.tabPlateformes[4][20] = 0
 			objPlateformes.tabPlateformes[3][20] = 0
 			objPlateformes.tabPlateformes[2][20] = 0
@@ -1309,6 +1427,8 @@
 				objEchelles2.PositionX = 20 * 30;
 				objEchelles2.PositionY = 0 * 30;
 
+				objEchelles2.binEchelleAfficher = true;
+
 				posEchelleX = objEchelles2.PositionX;
 				posEchelleY = objEchelles2.PositionY + 30
 				tabEchelles.push(objEchelles2);
@@ -1316,6 +1436,7 @@
 			}
 			if (objPlateformes.tabPlateformes[1][20] == 2) {
 				objEchelles2 = new Echelles();
+				objEchelles2.binEchelleAfficher = true;
 
 				objEchelles2.PositionX = 20 * 30;
 				objEchelles2.PositionY = 1 * 30;
@@ -1324,6 +1445,7 @@
 			}
 			if (objPlateformes.tabPlateformes[2][20] == 2) {
 				objEchelles2 = new Echelles();
+				objEchelles2.binEchelleAfficher = true;
 
 				objEchelles2.PositionX = 20 * 30;
 				objEchelles2.PositionY = 2 * 30;
@@ -1332,6 +1454,7 @@
 			}
 			if (objPlateformes.tabPlateformes[3][20] == 2) {
 				objEchelles2 = new Echelles();
+				objEchelles2.binEchelleAfficher = true;
 
 				objEchelles2.PositionX = 20 * 30;
 				objEchelles2.PositionY = 3 * 30;
@@ -1340,6 +1463,7 @@
 			}
 			if (objPlateformes.tabPlateformes[4][20] == 2) {
 				objEchelles2 = new Echelles();
+				objEchelles2.binEchelleAfficher = true;
 
 				objEchelles2.PositionX = 20 * 30;
 				objEchelles2.PositionY = 4 * 30;
@@ -1586,7 +1710,7 @@
 </head>
 
 <body onload="initAnimation()">
-	<canvas id="monCanvas" width="960" height="670" tabindex="1" onkeydown="deplacerPersonnages()"
+	<canvas id="monCanvas" width="960" height="730" tabindex="1" onkeydown="deplacerPersonnages()"
 		onkeyup="debutDuJeu()">
 		Votre navigateur ne supporte pas la balise canvas
 	</canvas>
