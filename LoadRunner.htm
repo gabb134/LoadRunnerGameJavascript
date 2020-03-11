@@ -173,6 +173,8 @@
 			objSons.ramasseDragonBalls = document.getElementById("sonRamasseDragonBalls");
 			objSons.demarrerjeu = document.getElementById('sonDuJeu');
 			objSons.chuteGoku = document.getElementById('sonChute');
+			objSons.victoireGoku = document.getElementById('sonVictroire');
+			objSons.creuserTrous = document.getElementById('sonCreuserTrous');
 			objSons.binJouer = false;
 		}
 		function initDebut() {
@@ -582,6 +584,10 @@
 			objChrono.compteutMinutes = objChrono.minutes < 10 ? "0" + objChrono.minutes : objChrono.minutes;
 
 		}
+
+		function compteurBrique(){
+			
+		}
 		function dessinerScore() {
 			objC2D.save();  // Sauvegarde le contexte
 
@@ -798,7 +804,7 @@
 			switch (event.keyCode) {
 				case 32:
 					objDebut.binDebut = false;
-					objSons.demarrerjeu.play();
+				//	objSons.demarrerjeu.play();
 					//	console.log("allo")
 					break;
 			}
@@ -898,7 +904,7 @@
 
 									objSons.ramasseDragonBalls.play();
 
-									if (tabBalleAttrape.length == 1) {
+									if (tabBalleAttrape.length == 7) {
 										binApparaitreEchelle = true;
 										changerNiveau()
 
@@ -1038,7 +1044,7 @@
 										objSons.ramasseDragonBalls.play();
 									}
 
-									if (tabBalleAttrape.length == 1) {
+									if (tabBalleAttrape.length == 7) {
 										binApparaitreEchelle = true;
 										changerNiveau()
 
@@ -1127,7 +1133,7 @@
 							tabEchelles[i].binEchelleAfficher = false;
 							//	console.log("bin ehclle = : " + tabEchelles[i].binEchelleAfficher)
 						}
-
+						objSons.victoireGoku.play()
 
 						//initPlateformesJeu()
 						initChrono()
@@ -1317,6 +1323,7 @@
 								//efaccer la prochaine brique pour 8 secondes
 
 								tabBirques[h] = 0;
+								objSons.creuserTrous.play()
 
 
 								//objSons.chuteGoku.pause()
@@ -1495,6 +1502,7 @@
 					objPersonnages.binArretDroite = false;
 					objPersonnages.binArretGauche = false;
 
+					//objSons.chuteGoku.currentTime = 0;
 					objSons.chuteGoku.pause()
 					break;
 				}
@@ -1715,7 +1723,7 @@
 		Votre navigateur ne supporte pas la balise canvas
 	</canvas>
 	<audio id="sonRamasseDragonBalls">
-		<source src="ramasseDragonBalls.mp3" type="audio/mpeg" />
+		<source src="ramasseDb.mp3" type="audio/mpeg" />
 		Ce navigateur ne gère pas l’audio.
 		<!--    <a onClick="jouerSon()">-->
 	</audio>
@@ -1730,7 +1738,32 @@
 		<!--    <a onClick="jouerSon()">-->
 	</audio>
 	<audio id="sonChute">
-		<source src="chuteGoku.mp3" type="audio/mpeg" />
+		<source src="descendChute.mp3" type="audio/mpeg" />
+		Ce navigateur ne gère pas l’audio.
+		<!--    <a onClick="jouerSon()">-->
+	</audio>
+	<audio id="sonVictroire">
+		<source src="gokuGagnePartie.mp3" type="audio/mpeg" />
+		Ce navigateur ne gère pas l’audio.
+		<!--    <a onClick="jouerSon()">-->
+	</audio>
+	<audio id="sonCreuserTrous">
+		<source src="creuserTrous.mp3" type="audio/mpeg" />
+		Ce navigateur ne gère pas l’audio.
+		<!--    <a onClick="jouerSon()">-->
+	</audio>
+	<audio id="sonPerdUneVie">
+		<source src="gokuPerdVie.mp3" type="audio/mpeg" />
+		Ce navigateur ne gère pas l’audio.
+		<!--    <a onClick="jouerSon()">-->
+	</audio>
+	<audio id="sonConstructionBrique">
+		<source src="briqueConstruction.mp3" type="audio/mpeg" />
+		Ce navigateur ne gère pas l’audio.
+		<!--    <a onClick="jouerSon()">-->
+	</audio>
+	<audio id="sonGameOver">
+		<source src="gokuGameOver.mp3" type="audio/mpeg" />
 		Ce navigateur ne gère pas l’audio.
 		<!--    <a onClick="jouerSon()">-->
 	</audio>
