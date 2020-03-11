@@ -225,6 +225,10 @@
 			//	objPersonnages.PositionX = 3;
 			//	objPersonnages.PositionY = 16;
 
+
+			objPersonnages.binArretDroite = false;
+			objPersonnages.binArretGauche = false;
+
 			objPersonnages.PositionX = x;
 			objPersonnages.PositionY = y;
 
@@ -450,6 +454,9 @@
 				objPersonnages.PositionYPixel += 1;
 				binDescendCorde = false;
 				objSons.chuteGoku.play()
+
+				objPersonnages.binArretDroite = true;
+				objPersonnages.binArretGauche = true;
 			}
 
 			/*if (briqueEnDessousPersonnage(objGarde) == false && echelleEnDessouspersonnage(objGarde) == false) {
@@ -780,7 +787,8 @@
 			switch (event.keyCode) {
 				case 39:// Flèche-à-droite
 
-
+				if(!objPersonnages.binArretDroite){
+					
 					objPersonnages.binDroite = true;
 					binDansEscalier = false;
 
@@ -864,11 +872,15 @@
 
 
 					}
+				}
+
 
 
 
 					break;
 				case 37:// Flèche-à-gauche
+
+				if(!objPersonnages.binArretGauche)	{
 					binDansEscalier = false;
 					objPersonnages.binGauche = true;
 
@@ -984,6 +996,9 @@
 
 					}
 
+				}
+
+					
 					break;
 				case 38:// Flèche-en-haut
 					//	console.log("position y goku :" + objPersonnages.PositionYPixel)
@@ -1262,7 +1277,8 @@
 					objGardeOuPersonnage.PositionXPixel >= tabBirques[h].PositionX - 15 &&
 					objGardeOuPersonnage.PositionXPixel <= tabBirques[h].PositionX + 15) { //il y a qqchose en dessous
 					binBriqueEnDessous = true;
-
+					objPersonnages.binArretDroite = false;
+					objPersonnages.binArretGauche = false;
 					break;
 				}
 				else { // il y a rien
@@ -1286,8 +1302,10 @@
 				if (objGardeOuPersonnage.PositionYPixel <= tabEchelles[g].PositionY
 					&& objGardeOuPersonnage.PositionYPixel >= tabEchelles[g].PositionY - 30
 					&& objGardeOuPersonnage.PositionXPixel >= tabEchelles[g].PositionX
-					&& objGardeOuPersonnage.PositionXPixel <= tabEchelles[g].PositionX) {
+					&& objGardeOuPersonnage.PositionXPixel <= tabEchelles[g].PositionX+15) {
 					binEchelleEnDessous = true;
+
+					console.log("dana echelle")
 					break;
 				} else {
 					binEchelleEnDessous = false;
