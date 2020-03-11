@@ -34,7 +34,11 @@
 		let tabDragonBalls = new Array();
 		let tabCordes = new Array();
 
+		let tabBriquesTroues = new Array();
+		let dateBriquesTroues = "";
+
 		let objChrono = null;
+		let objConstructionBrique = null;
 		let imagePlateforme = new Image();
 		let imageEchelle = new Image();
 		let imageCorde = new Image();
@@ -76,7 +80,7 @@
 		let binDescendCorde = false
 
 		let binQQchoseDansTrous = false;
-		let binTrousRempli = false;
+		//let binTrousRempli = false;
 		let binTempsTrous = false;
 
 
@@ -84,12 +88,17 @@
 
 
 		class Briques {
-			constructor(positionX, positionY, positionFinX, positionFinY) {
+			constructor(positionX, positionY, positionFinX, positionFinY, binTrousRempli) {
 				this.positionX = positionX;
 				this.positionY = positionY;
 
 				this.positionFinX = positionFinX;
 				this.positionFinY = positionFinY;
+				this.binTrousRempli = binTrousRempli;
+				//this.miliSecondes = miliSecondes
+				//this.secondes = secondes
+				//this.minutes = minutes
+				//this.binDemarrerChrono = binDemarrerChrono
 			}
 
 		}
@@ -138,6 +147,7 @@
 			initMurs();
 			initInfoJeu();
 			initChrono();
+			initConstructionBrique()
 			initPlateformesJeu();
 			initPersonnage(50, 4);
 			initGarde();
@@ -440,6 +450,16 @@
 			objChrono.compteutMinutes = 0;
 			objChrono.binDemarrerChrono = false;
 		}
+		function initConstructionBrique() {
+			objConstructionBrique = new Object();
+
+			objConstructionBrique.miliSecondes = 0;
+			objConstructionBrique.secondes = 0;
+			objConstructionBrique.minutes = 0;
+			objConstructionBrique.heures = 0;
+			objConstructionBrique.compteurSecondes = 0;
+			objConstructionBrique.binDemarrerChrono = false;
+		}
 
 
 
@@ -471,6 +491,20 @@
 
 			dessinerChronometre();
 
+			//chronoConstructionBrique();
+			/*if (objConstructionBrique.compteurSecondes >= 5) {
+
+				//	chronoConstructionBrique();
+				//objConstructionBrique.binDemarrerChrono = true;
+				for (let h = 0; h < tabBirques.length; h++) {
+					tabBirques[h].binTrousRempli = false
+					//tabBirques[h] = 1;
+
+					console.log("8 secondesss")
+					//objConstructionBrique.binDemarrerChrono = true;
+				}
+
+			}*/
 
 
 
@@ -584,9 +618,34 @@
 			objChrono.compteutMinutes = objChrono.minutes < 10 ? "0" + objChrono.minutes : objChrono.minutes;
 
 		}
+		/*	function chronoConstructionBrique(objBriquesChrono) {
+	
+	
+				if (objBriquesChrono.binDemarrerChrono) {
+					objBriquesChrono.miliSecondes++;
+	
+	
+					if (objBriquesChrono.miliSecondes > 60) {
+						objBriquesChrono.secondes++;
+						if (objBriquesChrono.secondes > 59) {
+							objBriquesChrono.secondes = 0;
+							objBriquesChrono.minutes++;
+						}
+					}
+	
+	
+					//	objConstructionBrique.compteurSecondes = objConstructionBrique.minutes
+				}
+	
+	
+				console.log("les secondes : " + objBriquesChrono.minutes)
+			}*/
 
-		function compteurBrique(){
-			
+		function remettreBriquesTroues() {
+			for(let  i = 0 ; i < tabBriquesTroues.length;i++){
+
+			}
+
 		}
 		function dessinerScore() {
 			objC2D.save();  // Sauvegarde le contexte
@@ -727,17 +786,19 @@
 
 
 
-
 			//	
 			for (var i = 0; i < tabBirques.length; i++) {
-				objC2D.drawImage(imagePlateforme, tabBirques[i].PositionX, tabBirques[i].PositionY);
+				if (!tabBirques[i].binTrousRempli) {
+					objC2D.drawImage(imagePlateforme, tabBirques[i].PositionX, tabBirques[i].PositionY);
+				}
+
 			}
 			for (var i = 0; i < tabEchelles.length; i++) {
 
 
 				if (tabEchelles[i].binEchelleAfficher) {
 					objC2D.drawImage(imageEchelle, tabEchelles[i].PositionX, tabEchelles[i].PositionY);
-					console.log("nb echelle" + tabEchelles.length)
+					//	console.log("nb echelle" + tabEchelles.length)
 				}
 
 			}
@@ -804,7 +865,7 @@
 			switch (event.keyCode) {
 				case 32:
 					objDebut.binDebut = false;
-				//	objSons.demarrerjeu.play();
+					//	objSons.demarrerjeu.play();
 					//	console.log("allo")
 					break;
 			}
@@ -1311,6 +1372,7 @@
 						}
 					}
 
+
 					if (binCreuser)
 						console.log("il ne peut pas creuser")
 					else {
@@ -1322,20 +1384,32 @@
 								objPersonnages.PositionXPixel <= tabBirques[h].PositionX - 15) { //il y a qqchose en dessous
 								//efaccer la prochaine brique pour 8 secondes
 
-								tabBirques[h] = 0;
+								tabBirques[h].binTrousRempli = true // brique a vide
+
+								tabBriquesTroues.push(tabBirques[h]);
+
+								console.log("Nb briques troues : "+ tabBriquesTroues.length)
+								
+								dateBriquesTroues = new Date(); 
+
+								console.log("date  : "+ dateBriquesTroues.getTime())
+
+								//	chronoConstructionBrique(tabBirques[h]);
+
+								//tabBirques[h].binDemarrerChrono = true; // demarrer le chrono
 								objSons.creuserTrous.play()
 
-
-								//objSons.chuteGoku.pause()
 								break;
 							}
-							if (tabBirques[h] == 0) { //mettre la case vide(blanche) en gris
-								console.log("gris")
-							}
+
+
+
 
 						}
 
 					}
+
+
 
 
 
@@ -1497,7 +1571,7 @@
 				//	console.log("briques : Y = " + (tabBirques[h].PositionY));
 				if (Math.round(objGardeOuPersonnage.PositionYPixel) + 32 <= tabBirques[h].PositionY + 2 && Math.round(objGardeOuPersonnage.PositionYPixel) + 28 >= tabBirques[h].PositionY - 2 &&
 					objGardeOuPersonnage.PositionXPixel >= tabBirques[h].PositionX - 15 &&
-					objGardeOuPersonnage.PositionXPixel <= tabBirques[h].PositionX + 15) { //il y a qqchose en dessous
+					objGardeOuPersonnage.PositionXPixel <= tabBirques[h].PositionX + 15 && !tabBirques[h].binTrousRempli) { //il y a qqchose en dessous
 					binBriqueEnDessous = true;
 					objPersonnages.binArretDroite = false;
 					objPersonnages.binArretGauche = false;
