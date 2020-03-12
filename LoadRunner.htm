@@ -87,6 +87,9 @@
 		let secondesEntreDeuxDates = 0;
 
 
+		let binAfficherBalle = true;
+
+
 		class Briques {
 			constructor(positionX, positionY, positionFinX, positionFinY, binTrousRempli, dateBriquesTroues) {
 				this.positionX = positionX;
@@ -142,7 +145,7 @@
 		function initAnimation() {
 			objCanvas = document.getElementById('monCanvas');
 			objC2D = objCanvas.getContext('2d');
-
+			
 			initDebut();
 			initImageFond();
 			initMurs();
@@ -161,7 +164,7 @@
 			//if(objDebut.binDebut)
 			//	objDebut.sonDebut.play();
 			//console.log("Au debut x: " + objPersonnages.PositionXPixel / 15 + ", y: " + objPersonnages.PositionYPixel / 30);
-
+		
 
 		}
 		// Aller chercher l'image de fond
@@ -190,6 +193,7 @@
 
 			objSons.perdUneVie = document.getElementById('sonPerdUneVie');
 			objSons.gameOver = document.getElementById('sonGameOver');
+			objSons.constructionBrique = document.getElementById('sonConstructionBrique');
 			objSons.binJouer = false;
 		}
 		function initDebut() {
@@ -199,6 +203,9 @@
 			objDebut.sonDebut = document.getElementById("sonDebut");
 			objImageDebut.src = 'dbzAuDebut1.png';
 			objDebut.binDebut = false;
+
+			
+		
 			//	dessinerDebut();
 			//	objDebut.sonDebut.play();
 
@@ -219,8 +226,8 @@
 
 
 			for (var i = 0; !random; i++) {
-				objGarde.PositionX = Math.floor(Math.random() * 20);
-				objGarde.PositionY = Math.floor(Math.random() * 15);
+				objGarde.PositionX = Math.floor(Math.random() * 60);
+				objGarde.PositionY = Math.floor(Math.random() * 12);
 
 				//		console.log(objGarde.PositionX + ' - ' + objGarde.PositionY);
 
@@ -234,8 +241,8 @@
 
 
 
-			objGarde.PositionXPixel = 35 * 15;
-			objGarde.PositionYPixel = 16 * 30;
+			objGarde.PositionXPixel = objGarde.PositionX  * 15;
+			objGarde.PositionYPixel = objGarde.PositionY * 30;
 		}
 
 		function initPersonnage(x, y) {
@@ -256,11 +263,11 @@
 			//	objPersonnages.PositionY = 16;
 
 
-			objPersonnages.binArretDroite = false;
-			objPersonnages.binArretGauche = false;
+			objPersonnages.binArretDroite = true;
+			objPersonnages.binArretGauche = true;
 
 
-
+			objPersonnages.binEnMouvement = false;
 
 			objPersonnages.PositionX = x;
 			objPersonnages.PositionY = y;
@@ -651,61 +658,12 @@
 			}*/
 
 		function remettreDragonBalles() {
-			for (var i = 0; i < objPlateformes.tabPlateformes.length; i++) {
 
-				for (var j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
-					objDragonBalls = new DragonBalls();
-					switch (objPlateformes.tabPlateformes[i][j]) {
-
-						case 4:
-							objDragonBalls.positionDragonBallsX = j * 30;
-							objDragonBalls.positionDragonBallsY = i * 30;
-							objDragonBalls.binAttraper = false;
-							objDragonBalls.NoDB = 4;
-							tabDragonBalls.push(objDragonBalls);
-							break;
-
-						case 5:
-							objDragonBalls.positionDragonBallsX = j * 30;
-							objDragonBalls.positionDragonBallsY = i * 30;
-							objDragonBalls.NoDB = 5;
-							objDragonBalls.binAttraper = false;
-							tabDragonBalls.push(objDragonBalls); break;
-						case 6:
-							objDragonBalls.positionDragonBallsX = j * 30;
-							objDragonBalls.positionDragonBallsY = i * 30;
-							objDragonBalls.NoDB = 6;
-							objDragonBalls.binAttraper = false;
-							tabDragonBalls.push(objDragonBalls); break;
-						case 7:
-							objDragonBalls.positionDragonBallsX = j * 30;
-							objDragonBalls.positionDragonBallsY = i * 30;
-							objDragonBalls.NoDB = 7;
-							objDragonBalls.binAttraper = false;
-							tabDragonBalls.push(objDragonBalls);
-							break;
-						case 8:
-							objDragonBalls.positionDragonBallsX = j * 30;
-							objDragonBalls.positionDragonBallsY = i * 30;
-							objDragonBalls.NoDB = 8;
-							objDragonBalls.binAttraper = false;
-							tabDragonBalls.push(objDragonBalls); break;
-						case 9:
-							objDragonBalls.positionDragonBallsX = j * 30;
-							objDragonBalls.positionDragonBallsY = i * 30;
-							objDragonBalls.NoDB = 9;
-							objDragonBalls.binAttraper = false;
-							tabDragonBalls.push(objDragonBalls); break;
-						case 10:
-							objDragonBalls.positionDragonBallsX = j * 30;
-							objDragonBalls.positionDragonBallsY = i * 30;
-							objDragonBalls.NoDB = 10;
-							objDragonBalls.binAttraper = false;
-							tabDragonBalls.push(objDragonBalls); break;
-					}
-				}
+			for (var i = 0; i < tabDragonBalls.length; i++) {
+				tabDragonBalls[i].binAttraper = false;
 			}
 		}
+			
 
 		function gameOver() {
 			if (objInfoJeu.vies == 0) {
@@ -713,11 +671,12 @@
 				initChrono()
 				initGarde()
 				initPersonnage(30, 16);
-				remettreDragonBalles()
-				objInfoJeu.score = 0;
-				objInfoJeu.vies = 5;
 
 				tabBalleAttrape = [];
+					remettreDragonBalles()
+				objInfoJeu.score = 0;
+				objInfoJeu.vies = 5;
+				binAfficherBalle = true;
 				objSons.gameOver.play()
 
 			}
@@ -730,10 +689,11 @@
 			objSons.perdUneVie.play()
 
 			objInfoJeu.score = objInfoJeu.scoreAncienNiveaux
+			tabBalleAttrape = [];
 			remettreDragonBalles()
 
+			binAfficherBalle = true;
 
-			tabBalleAttrape = [];
 			if (objInfoJeu.vies < 1) {
 				objSons.perdUneVie.pause()
 				gameOver()
@@ -758,7 +718,7 @@
 					//	for (let i = 0; i < tabBriquesTroues.length; i++) {
 					tabBriquesTroues[i].binTrousRempli = false
 
-
+					objSons.constructionBrique.play()
 
 					//	tabBriquesTroues[i] = []
 
@@ -774,7 +734,7 @@
 
 			}
 
-			console.log("secondes entres : " + secondesEntreDeuxDates)
+			//console.log("secondes entres : " + secondesEntreDeuxDates)
 
 
 
@@ -943,7 +903,8 @@
 				objC2D.drawImage(imageCorde, tabCordes[i].PositionX, tabCordes[i].PositionY);
 			}
 			//console.log("length tableau : " + tabDragonBalls.length)
-			for (var i = 0; i < tabDragonBalls.length; i++) {
+		
+				for (var i = 0; i < tabDragonBalls.length; i++) {
 				switch (tabDragonBalls[i].NoDB) {
 					case 4:
 						if (tabDragonBalls[i].binAttraper == false) {
@@ -991,18 +952,22 @@
 						break;
 				}
 			}
+			
+			
 
 
 			objC2D.restore();
 		}
 		function debutDuJeu() {
 			objC2D.save();
+			
 
 			switch (event.keyCode) {
 				case 32:
 					objDebut.binDebut = false;
 					//	objSons.demarrerjeu.play();
 					//	console.log("allo")
+
 					break;
 			}
 
@@ -1034,7 +999,7 @@
 
 			switch (event.keyCode) {
 				case 39:// Flèche-à-droite
-
+				objPersonnages.binEnMouvement = true;
 					if (!objPersonnages.binArretDroite) {
 
 						objPersonnages.binDroite = true;
@@ -1117,6 +1082,7 @@
 									let intTest2 = String(250).padStart(7, '0');
 
 									objInfoJeu.score += 250;
+									//break;
 
 									//	console.log(String(Number(intTest)+Number(intTest2)).padStart(7,'0') )
 									//	console.log("score " + Number(objInfoJeu.score))
@@ -1132,7 +1098,8 @@
 
 					break;
 				case 37:// Flèche-à-gauche
-
+				objPersonnages.binEnMouvement = true;
+					console.log("taille tabballe : " + tabBalleAttrape.length)
 					if (!objPersonnages.binArretGauche) {
 						binDansEscalier = false;
 						objPersonnages.binGauche = true;
@@ -1237,9 +1204,11 @@
 
 									tabBalleAttrape.push(tabDragonBalls[i].NoDB);
 									tabDragonBalls[i].binAttraper = true;
-									if (tabDragonBalls[i].binAttraper) {
-										objSons.ramasseDragonBalls.play();
-									}
+									//if (tabDragonBalls[i].binAttraper) {
+									objSons.ramasseDragonBalls.play();
+									//	}
+
+									binAfficherBalle = false;
 
 									if (tabBalleAttrape.length == 7) {
 										binApparaitreEchelle = true;
@@ -1248,6 +1217,7 @@
 									}
 
 									objInfoJeu.score += 250;
+									//break;
 								}
 							}
 
@@ -1345,7 +1315,10 @@
 						//initDessin()
 
 						remettreDragonBalles()
+						binAfficherBalle = true;
 						tabBalleAttrape = [];
+
+
 
 
 
@@ -1821,7 +1794,9 @@
 
 
 		function bougerGarde() {
-			let binBriqueSurMonY = false;
+
+			if(objPersonnages.binEnMouvement){
+					let binBriqueSurMonY = false;
 
 			//console.log(echelleEnDessouspersonnage(objGarde));
 			if (objGarde.PositionYPixel == objPersonnages.PositionYPixel) {
@@ -1860,10 +1835,10 @@
 
 					deplacementX = 1;
 				}
-				
-				 if (objGarde.PositionXPixel == objPersonnages.PositionXPixel){
-					 perdUneVie();
-			
+
+				if (objGarde.PositionXPixel == objPersonnages.PositionXPixel) {
+					perdUneVie();
+
 				}
 			} else if (objGarde.PositionYPixel > objPersonnages.PositionYPixel) {
 				//trouver echelle pour aller au meme niveau que le personnage.
@@ -1918,6 +1893,8 @@
 
 
 			objGarde.PositionXPixel += deplacementX;
+			}
+		
 
 		}
 
