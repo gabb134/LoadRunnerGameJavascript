@@ -35,7 +35,7 @@
 		let tabCordes = new Array();
 
 		let tabBriquesTroues = new Array();
-		let dateBriquesTroues = "";
+
 
 		let objChrono = null;
 		let objConstructionBrique = null;
@@ -82,19 +82,20 @@
 		let binQQchoseDansTrous = false;
 		//let binTrousRempli = false;
 		let binTempsTrous = false;
+		let binCreuser = false;
 
-
-
+		let secondesEntreDeuxDates = 0;
 
 
 		class Briques {
-			constructor(positionX, positionY, positionFinX, positionFinY, binTrousRempli) {
+			constructor(positionX, positionY, positionFinX, positionFinY, binTrousRempli, dateBriquesTroues) {
 				this.positionX = positionX;
 				this.positionY = positionY;
 
 				this.positionFinX = positionFinX;
 				this.positionFinY = positionFinY;
 				this.binTrousRempli = binTrousRempli;
+				this.dateBriquesTroues = dateBriquesTroues;
 				//this.miliSecondes = miliSecondes
 				//this.secondes = secondes
 				//this.minutes = minutes
@@ -149,7 +150,7 @@
 			initChrono();
 			initConstructionBrique()
 			initPlateformesJeu();
-			initPersonnage(50, 4);
+			initPersonnage(30, 16);
 			initGarde();
 			initDessin();
 			initSons();
@@ -175,6 +176,7 @@
 			objImageInfoJeu.src = 'dbzNoir.jpg';
 			objInfoJeu = new Object();
 			objInfoJeu.score = 0
+			objInfoJeu.scoreAncienNiveaux = 0;
 			objInfoJeu.niveau = 1;
 			objInfoJeu.vies = 5;
 		}
@@ -185,6 +187,9 @@
 			objSons.chuteGoku = document.getElementById('sonChute');
 			objSons.victoireGoku = document.getElementById('sonVictroire');
 			objSons.creuserTrous = document.getElementById('sonCreuserTrous');
+
+			objSons.perdUneVie = document.getElementById('sonPerdUneVie');
+			objSons.gameOver = document.getElementById('sonGameOver');
 			objSons.binJouer = false;
 		}
 		function initDebut() {
@@ -491,6 +496,10 @@
 
 			dessinerChronometre();
 
+			remettreBriquesTroues()
+
+
+
 			//chronoConstructionBrique();
 			/*if (objConstructionBrique.compteurSecondes >= 5) {
 
@@ -520,10 +529,10 @@
 				binQQchoseDansTrous = true;
 			}
 
-			if (binQQchoseDansTrous)
-				console.log("dans le trous")
-			else
-				console.log("dehors")
+			//	if (binQQchoseDansTrous)
+			//console.log("dans le trous")
+			//	else
+			//console.log("dehors")
 
 			/*if (briqueEnDessousPersonnage(objGarde) == false && echelleEnDessouspersonnage(objGarde) == false) {
 
@@ -641,10 +650,133 @@
 				console.log("les secondes : " + objBriquesChrono.minutes)
 			}*/
 
-		function remettreBriquesTroues() {
-			for(let  i = 0 ; i < tabBriquesTroues.length;i++){
+		function remettreDragonBalles() {
+			for (var i = 0; i < objPlateformes.tabPlateformes.length; i++) {
+
+				for (var j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
+					objDragonBalls = new DragonBalls();
+					switch (objPlateformes.tabPlateformes[i][j]) {
+
+						case 4:
+							objDragonBalls.positionDragonBallsX = j * 30;
+							objDragonBalls.positionDragonBallsY = i * 30;
+							objDragonBalls.binAttraper = false;
+							objDragonBalls.NoDB = 4;
+							tabDragonBalls.push(objDragonBalls);
+							break;
+
+						case 5:
+							objDragonBalls.positionDragonBallsX = j * 30;
+							objDragonBalls.positionDragonBallsY = i * 30;
+							objDragonBalls.NoDB = 5;
+							objDragonBalls.binAttraper = false;
+							tabDragonBalls.push(objDragonBalls); break;
+						case 6:
+							objDragonBalls.positionDragonBallsX = j * 30;
+							objDragonBalls.positionDragonBallsY = i * 30;
+							objDragonBalls.NoDB = 6;
+							objDragonBalls.binAttraper = false;
+							tabDragonBalls.push(objDragonBalls); break;
+						case 7:
+							objDragonBalls.positionDragonBallsX = j * 30;
+							objDragonBalls.positionDragonBallsY = i * 30;
+							objDragonBalls.NoDB = 7;
+							objDragonBalls.binAttraper = false;
+							tabDragonBalls.push(objDragonBalls);
+							break;
+						case 8:
+							objDragonBalls.positionDragonBallsX = j * 30;
+							objDragonBalls.positionDragonBallsY = i * 30;
+							objDragonBalls.NoDB = 8;
+							objDragonBalls.binAttraper = false;
+							tabDragonBalls.push(objDragonBalls); break;
+						case 9:
+							objDragonBalls.positionDragonBallsX = j * 30;
+							objDragonBalls.positionDragonBallsY = i * 30;
+							objDragonBalls.NoDB = 9;
+							objDragonBalls.binAttraper = false;
+							tabDragonBalls.push(objDragonBalls); break;
+						case 10:
+							objDragonBalls.positionDragonBallsX = j * 30;
+							objDragonBalls.positionDragonBallsY = i * 30;
+							objDragonBalls.NoDB = 10;
+							objDragonBalls.binAttraper = false;
+							tabDragonBalls.push(objDragonBalls); break;
+					}
+				}
+			}
+		}
+
+		function gameOver() {
+			if (objInfoJeu.vies == 0) {
+
+				initChrono()
+				initGarde()
+				initPersonnage(30, 16);
+				remettreDragonBalles()
+				objInfoJeu.score = 0;
+				objInfoJeu.vies = 5;
+
+				tabBalleAttrape = [];
+				objSons.gameOver.play()
 
 			}
+		}
+
+		function remettreBriquesTroues() {
+			let dateCourantre = new Date();
+
+			let difEntreDeux = 0;
+			//let bin = false;
+
+
+			for (let i = 0; i < tabBriquesTroues.length; i++) {
+
+				difEntreDeux = dateCourantre.getTime() - tabBriquesTroues[i].dateBriquesTroues.getTime();
+
+				secondesEntreDeuxDates = Math.round(difEntreDeux / 1000);
+
+				if (secondesEntreDeuxDates == 8) {
+					//	for (let i = 0; i < tabBriquesTroues.length; i++) {
+					tabBriquesTroues[i].binTrousRempli = false
+
+
+
+					//	tabBriquesTroues[i] = []
+
+					//}
+				}
+				//lorsque goku reste dans le trou, et il se ferme, il meurt
+				if (binQQchoseDansTrous && secondesEntreDeuxDates == 8 && objPersonnages.PositionYPixel == 510) {
+					console.log("dans le trous, goku est suposer mourir")
+					initPersonnage(30, 16);
+					initChrono()
+					objInfoJeu.vies -= 1;
+					objSons.perdUneVie.play()
+
+					objInfoJeu.score = objInfoJeu.scoreAncienNiveaux
+					remettreDragonBalles()
+
+
+					tabBalleAttrape = [];
+					if (objInfoJeu.vies < 1) {
+						objSons.perdUneVie.pause()
+						gameOver()
+					}
+
+
+				}
+
+
+			}
+
+			console.log("secondes entres : " + secondesEntreDeuxDates)
+
+
+
+			//bin = true;
+
+			//	return bin;
 
 		}
 		function dessinerScore() {
@@ -1202,63 +1334,13 @@
 						initGarde()
 						//	initInfoJeu()
 						objInfoJeu.niveau += 1;
-						objInfoJeu.score = 0;
+						objInfoJeu.score += 1500;
+
+						objInfoJeu.scoreAncienNiveaux = objInfoJeu.score;
+						//objInfoJeu.score = 0;
 						//initDessin()
-						for (var i = 0; i < objPlateformes.tabPlateformes.length; i++) {
 
-							for (var j = 0; j < objPlateformes.tabPlateformes[i].length; j++) {
-								objDragonBalls = new DragonBalls();
-								switch (objPlateformes.tabPlateformes[i][j]) {
-
-									case 4:
-										objDragonBalls.positionDragonBallsX = j * 30;
-										objDragonBalls.positionDragonBallsY = i * 30;
-										objDragonBalls.binAttraper = false;
-										objDragonBalls.NoDB = 4;
-										tabDragonBalls.push(objDragonBalls);
-										break;
-
-									case 5:
-										objDragonBalls.positionDragonBallsX = j * 30;
-										objDragonBalls.positionDragonBallsY = i * 30;
-										objDragonBalls.NoDB = 5;
-										objDragonBalls.binAttraper = false;
-										tabDragonBalls.push(objDragonBalls); break;
-									case 6:
-										objDragonBalls.positionDragonBallsX = j * 30;
-										objDragonBalls.positionDragonBallsY = i * 30;
-										objDragonBalls.NoDB = 6;
-										objDragonBalls.binAttraper = false;
-										tabDragonBalls.push(objDragonBalls); break;
-									case 7:
-										objDragonBalls.positionDragonBallsX = j * 30;
-										objDragonBalls.positionDragonBallsY = i * 30;
-										objDragonBalls.NoDB = 7;
-										objDragonBalls.binAttraper = false;
-										tabDragonBalls.push(objDragonBalls);
-										break;
-									case 8:
-										objDragonBalls.positionDragonBallsX = j * 30;
-										objDragonBalls.positionDragonBallsY = i * 30;
-										objDragonBalls.NoDB = 8;
-										objDragonBalls.binAttraper = false;
-										tabDragonBalls.push(objDragonBalls); break;
-									case 9:
-										objDragonBalls.positionDragonBallsX = j * 30;
-										objDragonBalls.positionDragonBallsY = i * 30;
-										objDragonBalls.NoDB = 9;
-										objDragonBalls.binAttraper = false;
-										tabDragonBalls.push(objDragonBalls); break;
-									case 10:
-										objDragonBalls.positionDragonBallsX = j * 30;
-										objDragonBalls.positionDragonBallsY = i * 30;
-										objDragonBalls.NoDB = 10;
-										objDragonBalls.binAttraper = false;
-										tabDragonBalls.push(objDragonBalls); break;
-								}
-							}
-						}
-
+						remettreDragonBalles()
 						tabBalleAttrape = [];
 
 
@@ -1334,7 +1416,7 @@
 					}
 					break;
 				case 88://creuser avec X
-					let binCreuser = false;
+
 
 
 					//veifier si il a une echelle  a droite
@@ -1388,11 +1470,11 @@
 
 								tabBriquesTroues.push(tabBirques[h]);
 
-								console.log("Nb briques troues : "+ tabBriquesTroues.length)
-								
-								dateBriquesTroues = new Date(); 
+								console.log("Nb briques troues : " + tabBriquesTroues.length)
 
-								console.log("date  : "+ dateBriquesTroues.getTime())
+								tabBirques[h].dateBriquesTroues = new Date();
+
+								console.log("date  : " + tabBirques[h].dateBriquesTroues.getTime())
 
 								//	chronoConstructionBrique(tabBirques[h]);
 
@@ -1423,16 +1505,84 @@
 
 					break;
 
-				case 90://creuser avec Y
-
-					//veifier si il a une echelle  a gauche
+				case 90://creuser avec Z
 
 
-					/*if (creuserTrous()) {
-						console.log("il peut creuser")
-					}else{
+
+					//veifier si il a une echelle  a droite
+					for (let g = 0; g < tabEchelles.length; g++) {
+						if (objPersonnages.PositionYPixel <= tabEchelles[g].PositionY
+							&& objPersonnages.PositionYPixel >= tabEchelles[g].PositionY - 30
+							&& objPersonnages.PositionXPixel >= tabEchelles[g].PositionX + 60
+							&& objPersonnages.PositionXPixel <= tabEchelles[g].PositionX) {
+							binCreuser = true
+
+							//	console.log("dana echelle")
+							break;
+						}
+
+					}
+
+					//verfier si il ya une dragon ball
+
+					for (let i = 0; i < tabDragonBalls.length; i++) {
+
+
+						if (tabDragonBalls[i].binAttraper == false && objPersonnages.PositionXPixel >= tabDragonBalls[i].positionDragonBallsX + 30
+							&& objPersonnages.PositionXPixel <= tabDragonBalls[i].positionDragonBallsX + 24
+							&& objPersonnages.PositionYPixel == tabDragonBalls[i].positionDragonBallsY) {
+							binCreuser = true
+						}
+					}
+
+					//verifier si  il ya une corde
+					for (let i = 0; i < tabCordes.length && !binCreuser; i++) {
+						if (objPersonnages.PositionYPixel + 4 == tabCordes[i].PositionY
+							&& objPersonnages.PositionXPixel <= tabCordes[i].PositionX + 30
+							&& objPersonnages.PositionXPixel >= tabCordes[i].PositionX) {
+							binCreuser = true
+						}
+					}
+
+
+					if (binCreuser)
 						console.log("il ne peut pas creuser")
-					}*/
+					else {
+						console.log("il peut creuser")
+						for (let h = 0; h < tabBirques.length; h++) {
+							//	console.log("briques : Y = " + (tabBirques[h].PositionY));
+							if (Math.round(objPersonnages.PositionYPixel) + 32 <= tabBirques[h].PositionY + 2 && Math.round(objPersonnages.PositionYPixel) + 28 >= tabBirques[h].PositionY - 2 &&
+								objPersonnages.PositionXPixel >= tabBirques[h].PositionX - 15 &&
+								objPersonnages.PositionXPixel <= tabBirques[h].PositionX + 30) { //il y a qqchose en dessous
+								//efaccer la prochaine brique pour 8 secondes
+
+								tabBirques[h].binTrousRempli = true // brique a vide
+
+								tabBriquesTroues.push(tabBirques[h]);
+
+								console.log("Nb briques troues : " + tabBriquesTroues.length)
+
+								tabBirques[h].dateBriquesTroues = new Date();
+
+								console.log("date  : " + tabBirques[h].dateBriquesTroues.getTime())
+
+								//	chronoConstructionBrique(tabBirques[h]);
+
+								//tabBirques[h].binDemarrerChrono = true; // demarrer le chrono
+								objSons.creuserTrous.play()
+
+								break;
+							}
+
+
+
+
+						}
+
+					}
+
+
+
 					break;
 			}
 
