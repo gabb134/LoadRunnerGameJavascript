@@ -722,6 +722,24 @@
 
 			}
 		}
+		function perdUneVie() {
+			initPersonnage(30, 16);
+			initChrono()
+			initGarde()
+			objInfoJeu.vies -= 1;
+			objSons.perdUneVie.play()
+
+			objInfoJeu.score = objInfoJeu.scoreAncienNiveaux
+			remettreDragonBalles()
+
+
+			tabBalleAttrape = [];
+			if (objInfoJeu.vies < 1) {
+				objSons.perdUneVie.pause()
+				gameOver()
+			}
+
+		}
 
 		function remettreBriquesTroues() {
 			let dateCourantre = new Date();
@@ -747,25 +765,10 @@
 					//}
 				}
 				//lorsque goku reste dans le trou, et il se ferme, il meurt
-				if (binQQchoseDansTrous && secondesEntreDeuxDates == 8 && objPersonnages.PositionYPixel == 510) {
+				if (binQQchoseDansTrous && secondesEntreDeuxDates == 8 && objPersonnages.PositionYPixel == tabBriquesTroues[i].PositionY && tabBriquesTroues[i].PositionX + 30 >= objPersonnages.PositionXPixel && tabBriquesTroues[i].PositionX <= objPersonnages.PositionXPixel) {
 					console.log("dans le trous, goku est suposer mourir")
-					initPersonnage(30, 16);
-					initChrono()
-					initGarde()
-					objInfoJeu.vies -= 1;
-					objSons.perdUneVie.play()
 
-					objInfoJeu.score = objInfoJeu.scoreAncienNiveaux
-					remettreDragonBalles()
-
-
-					tabBalleAttrape = [];
-					if (objInfoJeu.vies < 1) {
-						objSons.perdUneVie.pause()
-						gameOver()
-					}
-
-
+					perdUneVie();
 				}
 
 
