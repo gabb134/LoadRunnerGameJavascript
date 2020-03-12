@@ -1857,6 +1857,10 @@
 
 					deplacementX = 1;
 				}
+				
+				 if (objGarde.PositionXPixel == objPersonnages.PositionXPixel){
+					console.log('GAMEOVER');
+				}
 			} else if (objGarde.PositionYPixel > objPersonnages.PositionYPixel) {
 				//trouver echelle pour aller au meme niveau que le personnage.
 
@@ -1909,12 +1913,6 @@
 			}
 
 
-
-
-
-
-
-			//		console.log(objGarde.PositionXPixel)
 			objGarde.PositionXPixel += deplacementX;
 
 		}
